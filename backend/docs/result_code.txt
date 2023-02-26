@@ -1,0 +1,12 @@
+          </> RESPONSE RESULT CODE MEANING </>
+          ------------------------------------
+  
+  #1: SUCCESS = 0 (STATUS === 200 || 201)
+  #2: FAILED (Error) = 1 (STATUS === 400 || 401)
+  #3: SERVER SIDE ERROR = 2 (STATUS === 500)
+  #4: ACCESS FORBIDDEN (Required Authorization Headers) = 3 (STATUS === 403)
+  #5: UNKNOWN ACCESS (Not Found) = 4 (STATUS === 404)
+  #6: UNABLE TO ACCESS (Only Admin Accessible)  = 6 (STATUS === 406)
+  #7: ALREADY EXIST (Conflict) = 9 (STATUS === 409)
+  #8: TOO MANY REQUEST = 29 (STATUS === 429)
+  #9: JWT TOKEN INVALID = 11 (STATUS === 401 || 403)
