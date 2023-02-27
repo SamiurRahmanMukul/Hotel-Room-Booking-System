@@ -1,0 +1,43 @@
+{
+  "name": "hotel-room-booking-system-frontend",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.8.0",
+    "@reduxjs/toolkit": "^1.9.1",
+    "antd": "^5.0.0",
+    "axios": "^1.2.1",
+    "dayjs": "^1.11.7",
+    "jsonwebtoken": "^8.5.1",
+    "next": "13.0.6",
+    "next-connect": "^0.13.0",
+    "next-seo": "^5.15.0",
+    "prop-types": "^15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-redux": "^8.0.5",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2",
+    "yup": "^0.32.11"
+  },
+  "browser": {
+    "fs": false,
+    "path": false
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^13.2.1",
+    "eslint": "^8.30.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.8.1"
+  }
+}
