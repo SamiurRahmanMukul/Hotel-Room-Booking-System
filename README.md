@@ -37,5 +37,5 @@ Hello 👋, I'm <strong>Samiur Rahman Mukul</strong>. At this repository i will 
 [github-shield]: https://img.shields.io/badge/-Github-black.svg?style=flat-square&logo=github&color=555&logoColor=white
 
 <p align="center">
-  <strong> HAPPY PROGRAMMING 😀 & I LOVE PROGRAMMING 💖 </strong>
+  <strong> HAPPY DEVELOPMENT 😀 & I LOVE PROGRAMMING 💖 </strong>
 </p>

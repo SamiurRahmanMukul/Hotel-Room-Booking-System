@@ -1,0 +1,629 @@
+{
+  "info": {
+    "_postman_id": "40413d5f-15a5-44aa-9c83-625aaa2bc63f",
+    "name": "Node Express App Boilerplate",
+    "description": "# **Complete MERN E-commerce Website**",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "19093157"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Password",
+          "item": [
+            {
+              "name": "Forgot Password - ALL",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"cedobox471@keshitv.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{APP_URL}}/api/v1/auth/forgot-password",
+                  "host": ["{{APP_URL}}"],
+                  "path": ["api", "v1", "auth", "forgot-password"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Reset Password - ALL",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"password\": 12345678,\r\n    \"confirmPassword\": 12345678\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{APP_URL}}/api/v1/auth/reset-password/3b0a6b4d09086605ece4b2e379b877d285259532",
+                  "host": ["{{APP_URL}}"],
+                  "path": ["api", "v1", "auth", "reset-password", "3b0a6b4d09086605ece4b2e379b877d285259532"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Change Password - ALL",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjNjMDliYjRlNjlhNzkzNWI4MjNkYyIsImlhdCI6MTY3Mjk4MTE3NSwiZXhwIjoxNjczMDY3NTc1fQ.1iVl9y8e7Txc4rpOTQwj7qZkLyimEIS5Sy2G5YfR9FY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"oldPassword\": 12345678,\r\n    \"newPassword\": 12345678\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{APP_URL}}/api/v1/auth/change-password",
+                  "host": ["{{APP_URL}}"],
+                  "path": ["api", "v1", "auth", "change-password"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Registration - ALL",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "userName",
+                  "value": "Testing-02",
+                  "description": "required && unique",
+                  "type": "text"
+                },
+                {
+                  "key": "fullName",
+                  "value": "Md. Samiur Rahman Mukul",
+                  "description": "required",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "test_02@mail.com",
+                  "description": "required && unique",
+                  "type": "text"
+                },
+                {
+                  "key": "phone",
+                  "value": "01611111112",
+                  "description": "optional but unique",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "12345678",
+                  "description": "required",
+                  "type": "text"
+                },
+                {
+                  "key": "dob",
+                  "value": "10-30-2010",
+                  "type": "text"
+                },
+                {
+                  "key": "gender",
+                  "value": "male",
+                  "description": "optional",
+                  "type": "text"
+                },
+                {
+                  "key": "address",
+                  "value": "Modho Barear (Nijam Nagor), Mymensingh",
+                  "description": "required",
+                  "type": "text"
+                },
+                {
+                  "key": "avatar",
+                  "description": "optional",
+                  "type": "file",
+                  "src": "/C:/Users/srmuk/Downloads/images/8b167af653c2399dd93b952a48740620.jpg"
+                },
+                {
+                  "key": "role",
+                  "value": "user",
+                  "description": "required but optional (user/admin)",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/auth/registration",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "auth", "registration"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login - ALL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X_Ecommymmart",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJodHRwOi8vbG9jYWxob3N0OjUwMDUvYXBpL3YxL2F1dGgvbG9naW4_bG9naW5UeXBlPWFkbWluIiwiaWF0IjoxNjYxNjU0MjQxfQ.A1nM17GI3de8m1k0W-Q2XbTWYZyofc4E6dd3CREAUqg",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "email",
+                  "value": "test_01@gmail.com",
+                  "description": "required",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "12345678",
+                  "description": "required",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/auth/login?loginType=admin",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "auth", "login"],
+              "query": [
+                {
+                  "key": "loginType",
+                  "value": "admin"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout - ALL",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZWM3ZDIzOTJlYzZhZGIyNDQ3MDRmNyIsImlhdCI6MTY3NjcwNDkyNCwiZXhwIjoxNjc2NzkxMzI0fQ.fH-AW4QDpycWp0ntwyD_uY_HuiTqejlyntwCswAQhvM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/auth/logout",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "auth", "logout"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token API - ALL",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjNjMDliYjRlNjlhNzkzNWI4MjNkYyIsImlhdCI6MTY2ODc1NzY4OSwiZXhwIjoxNjY5NjIxNjg5fQ.bvUZvIRmqNlJEq2_-neN6CyG7fOLTWb1m1MuFkLOsl8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/auth/refresh-token",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "auth", "refresh-token"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Verification",
+      "item": [
+        {
+          "name": "Send Email Verification LInk - ALL",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjA3YjI1NjhhZmUzNzQ1MTZmZTRlNyIsImlhdCI6MTY3NjcwNDcwMSwiZXhwIjoxNjc2NzkxMTAxfQ.-t5HHLpvjejKyKLCtlBgRedSA1h7gWT96M_bfyte2-o",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/auth/send-email-verification-link",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "auth", "send-email-verification-link"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Email Verify - ALL",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjA3YjI1NjhhZmUzNzQ1MTZmZTRlNyIsImlhdCI6MTY3NjcwNDcwMSwiZXhwIjoxNjc2NzkxMTAxfQ.-t5HHLpvjejKyKLCtlBgRedSA1h7gWT96M_bfyte2-o",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/auth/verify-email/9d8dd8ae04e5122c33ca039ce8086ea577216c1a",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "auth", "verify-email", "9d8dd8ae04e5122c33ca039ce8086ea577216c1a"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get User Info - ALL",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZWM3ZDIzOTJlYzZhZGIyNDQ3MDRmNyIsImlhdCI6MTY3NjYxNDM1NSwiZXhwIjoxNjc2NzAwNzU1fQ.U1siFBYw3XF1hNJ0Qdg1YnTobxlkP6COtqbbN6dS7ps",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/get-user",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "get-user"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User - ALL",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjE4YTVhMGM5OTUzNjhkMjgzM2U5OSIsImlhdCI6MTY3Njc3NDA3NSwiZXhwIjoxNjc2ODYwNDc1fQ.nFlztVS_2qteG_O2RqzdAkOdpkZuuQmZ9-QOGZ4a6mk",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "fullName",
+                  "value": "Md. Samiur Rahman Mukul",
+                  "description": "required",
+                  "type": "text"
+                },
+                {
+                  "key": "phone",
+                  "value": "01600000001",
+                  "description": "required",
+                  "type": "text"
+                },
+                {
+                  "key": "gender",
+                  "value": "male",
+                  "description": "required",
+                  "type": "text"
+                },
+                {
+                  "key": "dob",
+                  "value": "2022-10-31",
+                  "type": "text"
+                },
+                {
+                  "key": "address",
+                  "value": "Modho Barear (Nijam Nagor), Mymensingh",
+                  "description": "required",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/update-user",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "update-user"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User - ALL",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmJhNGEwNTZjNzkyYmI2Njc1NWIxZCIsImlhdCI6MTY3NDI5ODg4OCwiZXhwIjoxNjc0Mzg1Mjg4fQ.ESCRlhZCUUmfGJmf-2W-73JW_RofKzDgBIViE17u5y8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/delete-user",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "delete-user"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Avatar Update - ALL",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZDEwOWExZGFmODhiZmFlNmI1NDZkZSIsImlhdCI6MTY3NzM4NTcxMCwiZXhwIjoxNjc3NDcyMTEwfQ.Q_bL8K62ndo0vgdgkuhRBMgbKOteOKpiehvcG7M8bbo",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "src": "/C:/Users/srmuk/Downloads/images/8b167af653c2399dd93b952a48740620.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/avatar-update",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "avatar-update"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Users - Admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZDEwOWExZGFmODhiZmFlNmI1NDZkZSIsImlhdCI6MTY3NzEzMjM0OCwiZXhwIjoxNjc3MjE4NzQ4fQ.SknmqFdzDjT3N7fQmBNbTFNtq3rXW4xdG2WOYAPhmNA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/all-users-list?keyword=mukul&limit=5&page=1&sort=aesc",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "all-users-list"],
+              "query": [
+                {
+                  "key": "keyword",
+                  "value": "mukul"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "sort",
+                  "value": "aesc",
+                  "description": "asce / desc"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Blocked User - Admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzY2JjNmI4MDE5ZTFhMTUzNmFiNzk3YSIsImlhdCI6MTY3NDQ1NjU4MywiZXhwIjoxNjc0NTQyOTgzfQ.qkymzS7xHBxuUAhdNLZrjgpy8aqcwhqtuEQpr7DO-n0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/blocked-user/6363c09bb4e69a7935b823dc",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "blocked-user", "6363c09bb4e69a7935b823dc"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Unblocked User - Admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzY2JjNmI4MDE5ZTFhMTUzNmFiNzk3YSIsImlhdCI6MTY3NDQ1ODIwMiwiZXhwIjoxNjc0NTQ0NjAyfQ.7irSx0pW1Dk1NVnjq6ZC1NY1wJ658eP9WKkdR7tYun0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/unblocked-user/6363c09bb4e69a7935b823dc",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "unblocked-user", "6363c09bb4e69a7935b823dc"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User By Id - Admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZWM3ZDIzOTJlYzZhZGIyNDQ3MDRmNyIsImlhdCI6MTY3NjYxNDM1NSwiZXhwIjoxNjc2NzAwNzU1fQ.U1siFBYw3XF1hNJ0Qdg1YnTobxlkP6COtqbbN6dS7ps",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/get-user/6363c09bb4e69a7935b823dc",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "get-user", "6363c09bb4e69a7935b823dc"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User By Id - Admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZWM3ZDIzOTJlYzZhZGIyNDQ3MDRmNyIsImlhdCI6MTY3NjYxNDM1NSwiZXhwIjoxNjc2NzAwNzU1fQ.U1siFBYw3XF1hNJ0Qdg1YnTobxlkP6COtqbbN6dS7ps",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/delete-user/6363c09bb4e69a7935b823dc",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "delete-user", "6363c09bb4e69a7935b823dc"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Apps",
+      "item": [
+        {
+          "name": "Dashboard - Admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZDEwOWExZGFmODhiZmFlNmI1NDZkZSIsImlhdCI6MTY3NzEzMjM0OCwiZXhwIjoxNjc3MjE4NzQ4fQ.SknmqFdzDjT3N7fQmBNbTFNtq3rXW4xdG2WOYAPhmNA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/dashboard",
+              "host": ["{{APP_URL}}"],
+              "path": ["api", "v1", "dashboard"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Home - ALL",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{APP_URL}}/",
+          "host": ["{{APP_URL}}"],
+          "path": [""]
+        }
+      },
+      "response": []
+    }
+  ]
+}
