@@ -6,8 +6,8 @@ export const appSlice = createSlice({
     timeZone: '',
     isLoading: false,
     theme: {
-      colorPrimary: '#6773FF',
-      colorLink: '#5189f5'
+      colorPrimary: '#af9a7d',
+      colorLink: '#ececec'
     }
   },
   reducers: {
