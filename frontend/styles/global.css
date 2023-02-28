@@ -523,26 +523,43 @@ h6 {
 
 /* start of footer style */
 .footer {
+  padding: 20px 0px;
   text-align: center;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  background-color: #222;
+  background-color: var(--mainBlack);
 }
-.footer h2,
-p {
-  color: white;
+
+.footer h2 {
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--mainWhite);
 }
-.footer a {
-  color: white;
+
+.footer p {
+  font-size: 14px;
+  color: var(--mainWhite);
+}
+
+.footer p a {
+  color: var(--mainWhite);
   text-decoration: none;
 }
-.footer a:hover {
-  color: red;
+.footer p a:hover {
+  color: var(--primaryColor);
   text-decoration: underline;
   transition: var(--mainTransition);
   -webkit-transition: var(--mainTransition);
   -moz-transition: var(--mainTransition);
   -ms-transition: var(--mainTransition);
   -o-transition: var(--mainTransition);
+}
+
+@media screen and (max-width: 776px) {
+  .footer h2 {
+    font-size: 18px;
+  }
+
+  .footer p {
+    font-size: 10px;
+  }
 }
 /* end of footer style */
