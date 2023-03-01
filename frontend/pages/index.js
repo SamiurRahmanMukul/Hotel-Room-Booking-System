@@ -1,12 +1,24 @@
+import Link from 'next/link';
 import React from 'react';
-import MainLayout from '../components/main-layout';
+import Banner from '../components/home/Banner';
+import Hero from '../components/home/Hero';
+import Services from '../components/home/Services';
+import MainLayout from '../components/layout';
 
 function Home() {
   return (
-    <MainLayout title='Beach Resort - Home'>
-      <h2 style={{ textAlign: 'center', marginTop: '20px', marginBottom: 'calc(100vh - 270px)' }}>
-        Welcome to Beach Resort
-      </h2>
+    <MainLayout title='Beach Resort ― Home'>
+      <Hero>
+        <Banner
+          title='luxurious rooms'
+          subtitle='deluxe rooms starting at $299'
+        >
+          <Link href='/rooms' className='btn-primary'>
+            our rooms
+          </Link>
+        </Banner>
+      </Hero>
+      <Services />
     </MainLayout>
   );
 }

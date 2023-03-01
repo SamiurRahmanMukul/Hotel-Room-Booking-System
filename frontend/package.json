@@ -26,6 +26,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
     "styled-components": "^5.3.6",
+    "uuid": "^9.0.0",
     "yup": "^0.32.11"
   },
   "browser": {
