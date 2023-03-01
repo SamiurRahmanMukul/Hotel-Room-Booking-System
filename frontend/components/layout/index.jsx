@@ -8,7 +8,7 @@ function MainLayout({ children, title }) {
     <>
       <Head>
         <title>{title || 'Beach Resort'}</title>
-        <meta name='description' content='EMS ― Event Management System' />
+        <meta name='description' content='Beach Resort ― Hotel Room Booking System' />
         <meta content='width=device-width, initial-scale=1' name='viewport' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
