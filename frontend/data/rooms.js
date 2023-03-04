@@ -25,28 +25,28 @@ const data = [
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-2.jpeg'
+              url: '/images/jpeg/details-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-3.jpeg'
+              url: '/images/jpeg/details-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         }
@@ -80,28 +80,28 @@ const data = [
         {
           fields: {
             file: {
-              url: '/img/jpeg/room-2.jpeg'
+              url: '/images/jpeg/room-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-2.jpeg'
+              url: '/images/jpeg/details-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-3.jpeg'
+              url: '/images/jpeg/details-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         }
@@ -135,28 +135,28 @@ const data = [
         {
           fields: {
             file: {
-              url: '/img/jpeg/room-3.jpeg'
+              url: '/images/jpeg/room-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-2.jpeg'
+              url: '/images/jpeg/details-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-3.jpeg'
+              url: '/images/jpeg/details-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         }
@@ -190,28 +190,28 @@ const data = [
         {
           fields: {
             file: {
-              url: '/img/jpeg/room-4.jpeg'
+              url: '/images/jpeg/room-4.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-2.jpeg'
+              url: '/images/jpeg/details-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-3.jpeg'
+              url: '/images/jpeg/details-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         }
@@ -245,28 +245,28 @@ const data = [
         {
           fields: {
             file: {
-              url: '/img/jpeg/room-5.jpeg'
+              url: '/images/jpeg/room-5.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-2.jpeg'
+              url: '/images/jpeg/details-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-3.jpeg'
+              url: '/images/jpeg/details-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         }
@@ -300,28 +300,28 @@ const data = [
         {
           fields: {
             file: {
-              url: '/img/jpeg/room-6.jpeg'
+              url: '/images/jpeg/room-6.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-2.jpeg'
+              url: '/images/jpeg/details-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-3.jpeg'
+              url: '/images/jpeg/details-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         }
@@ -355,28 +355,28 @@ const data = [
         {
           fields: {
             file: {
-              url: '/img/jpeg/room-7.jpeg'
+              url: '/images/jpeg/room-7.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-2.jpeg'
+              url: '/images/jpeg/details-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-3.jpeg'
+              url: '/images/jpeg/details-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         }
@@ -410,28 +410,28 @@ const data = [
         {
           fields: {
             file: {
-              url: '/img/jpeg/room-8.jpeg'
+              url: '/images/jpeg/room-8.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-2.jpeg'
+              url: '/images/jpeg/details-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-3.jpeg'
+              url: '/images/jpeg/details-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         }
@@ -465,28 +465,28 @@ const data = [
         {
           fields: {
             file: {
-              url: '/img/jpeg/room-9.jpeg'
+              url: '/images/jpeg/room-9.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-2.jpeg'
+              url: '/images/jpeg/details-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-3.jpeg'
+              url: '/images/jpeg/details-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         }
@@ -520,28 +520,28 @@ const data = [
         {
           fields: {
             file: {
-              url: '/img/jpeg/room-10.jpeg'
+              url: '/images/jpeg/room-10.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-2.jpeg'
+              url: '/images/jpeg/details-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-3.jpeg'
+              url: '/images/jpeg/details-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         }
@@ -575,28 +575,28 @@ const data = [
         {
           fields: {
             file: {
-              url: '/img/jpeg/room-11.jpeg'
+              url: '/images/jpeg/room-11.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-2.jpeg'
+              url: '/images/jpeg/details-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-3.jpeg'
+              url: '/images/jpeg/details-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         }
@@ -630,28 +630,28 @@ const data = [
         {
           fields: {
             file: {
-              url: '/img/jpeg/room-12.jpeg'
+              url: '/images/jpeg/room-12.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-2.jpeg'
+              url: '/images/jpeg/details-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-3.jpeg'
+              url: '/images/jpeg/details-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         }
@@ -685,28 +685,28 @@ const data = [
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-1.jpeg'
+              url: '/images/jpeg/details-1.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-2.jpeg'
+              url: '/images/jpeg/details-2.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-3.jpeg'
+              url: '/images/jpeg/details-3.jpeg'
             }
           }
         },
         {
           fields: {
             file: {
-              url: '/img/jpeg/details-4.jpeg'
+              url: '/images/jpeg/details-4.jpeg'
             }
           }
         }

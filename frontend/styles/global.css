@@ -304,6 +304,7 @@ h6 {
 
 /* start of room */
 .room {
+  height: 200px;
   box-shadow: var(--lightShadow);
   transition: var(--mainTransition);
 }
@@ -357,6 +358,7 @@ h6 {
   transform: translate(-50%, -50%) scale(1);
 }
 .room-info {
+  color: var(--mainWhite);
   background: var(--mainBlack);
   text-transform: capitalize;
   padding: 0.5rem 0;
