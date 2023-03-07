@@ -304,7 +304,7 @@ h6 {
 
 /* start of room */
 .room {
-  height: 200px;
+  height: 190px;
   box-shadow: var(--lightShadow);
   transition: var(--mainTransition);
 }
