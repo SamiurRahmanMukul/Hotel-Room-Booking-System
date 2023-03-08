@@ -567,3 +567,29 @@ h6 {
   }
 }
 /* end of footer style */
+
+/* start of auth style */
+
+.btn-forgot-password {
+  color: var(--mainBlack);
+  transition: var(--mainTransition);
+  margin-left: 170px;
+  font-weight: 600;
+}
+.btn-forgot-password:hover {
+  color: var(--primaryColor);
+}
+
+.btn-login-registration {
+  color: var(--mainBlack);
+  transition: var(--mainTransition);
+  font-size: 16px;
+  font-weight: 600;
+  display: block;
+  text-align: center;
+}
+.btn-login-registration:hover {
+  color: var(--primaryColor);
+}
+
+/* end of auth style */

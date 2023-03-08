@@ -14,7 +14,9 @@ function MainLayout({ children, title }) {
       </Head>
 
       <Navbar />
-      <main>{children}</main>
+      <main style={{ overflow: 'auto' }}>
+        {children}
+      </main>
       <Footers />
     </>
   );

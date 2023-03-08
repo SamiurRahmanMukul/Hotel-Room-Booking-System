@@ -1,9 +1,12 @@
+import { Button } from 'antd';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FaAlignRight } from 'react-icons/fa';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState();
+  const router = useRouter();
 
   return (
     <nav className='navbar'>
@@ -22,7 +25,18 @@ function Navbar() {
           >
             <FaAlignRight className='nav-icon' />
           </button>
+
         </div>
+
+        {/* navbar login button */}
+        <Button
+          style={{ position: 'absolute', right: '100px', top: '20px' }}
+          onClick={() => router.push('/auth/login')}
+          type='primary'
+          size='large'
+        >
+          Login
+        </Button>
 
         {/* navbar link */}
         <ul className={isOpen ? 'nav-links show-nav' : 'nav-links'}>
