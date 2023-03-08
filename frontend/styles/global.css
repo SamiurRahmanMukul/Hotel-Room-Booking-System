@@ -76,9 +76,11 @@ h6 {
   margin-top: 3rem;
 }
 .error {
+  height: calc(100vh - 270px);
   text-align: center;
   text-transform: uppercase;
   margin: 2rem 0;
+  padding-top: 12rem;
 }
 .empty-search {
   text-align: center;
