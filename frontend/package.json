@@ -14,7 +14,6 @@
     "antd": "^5.0.0",
     "axios": "^1.2.1",
     "dayjs": "^1.11.7",
-    "jsonwebtoken": "^8.5.1",
     "next": "13.0.6",
     "next-connect": "^0.13.0",
     "next-seo": "^5.15.0",
@@ -26,8 +25,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
     "styled-components": "^5.3.6",
-    "uuid": "^9.0.0",
-    "yup": "^0.32.11"
+    "uuid": "^9.0.0"
   },
   "browser": {
     "fs": false,
