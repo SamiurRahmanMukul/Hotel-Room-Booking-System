@@ -216,7 +216,7 @@ function Main() {
         <Content className='bg-bg-white overflow-y-scroll m-2 p-2'>
           {selectedKeys === '1' && (<Dashboard />)}
           {selectedKeys === '2' && (<Users />)}
-          {selectedKeys === '8' && (<MyProfile />)}
+          {selectedKeys === '5' && (<MyProfile />)}
         </Content>
 
         <Footer className='text-center font-text-font font-medium '>

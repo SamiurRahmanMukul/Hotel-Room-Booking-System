@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getSessionToken, removeSessionAndLogoutUser } from './authentication';
+import { getSessionToken } from './authentication';
 
 const ApiService = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL
@@ -24,13 +24,7 @@ ApiService.interceptors.request.use(
 
     return config;
   },
-  (error) => {
-    if (error?.response?.data?.result_code === 11) {
-      removeSessionAndLogoutUser();
-    } else {
-      Promise.reject(error);
-    }
-  }
+  (error) => Promise.reject(error)
 );
 
 /**
@@ -45,13 +39,7 @@ ApiService.interceptors.response.use(
   /**
   * Add logic for any error from backend
   */
-  (error) => {
-    if (error?.response?.data?.result_code === 11) {
-      removeSessionAndLogoutUser();
-    } else {
-      Promise.reject(error);
-    }
-  }
+  (error) => Promise.reject(error)
 );
 
 export default ApiService;
