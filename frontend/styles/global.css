@@ -91,6 +91,14 @@ h6 {
 }
 /* end of globals */
 
+/* start of and customize */
+
+.ant-picker-today-btn {
+  color: var(--primaryColor) !important;
+}
+
+/* end of and customize */
+
 /* start of navbar */
 .navbar {
   position: fixed;

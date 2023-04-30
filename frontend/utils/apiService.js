@@ -1,6 +1,6 @@
 import axios from 'axios';
 import getConfig from 'next/config';
-import { getSessionToken, removeSessionAndLogoutUser } from './authentication';
+import { getSessionToken } from './authentication';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -27,13 +27,7 @@ ApiService.interceptors.request.use(
 
     return config;
   },
-  (error) => {
-    if (error?.response?.data?.result_code === 11) {
-      removeSessionAndLogoutUser();
-    } else {
-      Promise.reject(error);
-    }
-  }
+  (error) => Promise.reject(error)
 );
 
 /**
@@ -48,13 +42,7 @@ ApiService.interceptors.response.use(
   /**
   * Add logic for any error from backend
   */
-  (error) => {
-    if (error?.response?.data?.result_code === 11) {
-      removeSessionAndLogoutUser();
-    } else {
-      Promise.reject(error);
-    }
-  }
+  (error) => Promise.reject(error)
 );
 
 export default ApiService;

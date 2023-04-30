@@ -35,7 +35,7 @@ function Navbar() {
           type='primary'
           size='large'
         >
-          Login
+          Log In
         </Button>
 
         {/* navbar link */}
