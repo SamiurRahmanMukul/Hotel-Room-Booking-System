@@ -3,19 +3,42 @@ import {
   Button, Checkbox, Form, Input
 } from 'antd';
 import Link from 'next/link';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import MainLayout from '../../components/layout';
+import ApiService from '../../utils/apiService';
+import { setSessionUserAndToken } from '../../utils/authentication';
+import notificationWithIcon from '../../utils/notification';
 
 function Login() {
+  const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
+  const router = useRouter();
+
   const onFinish = (values) => {
-    // eslint-disable-next-line no-console
-    console.log('Received values of form: ', values);
+    ApiService.post('/api/v1/auth/login', values)
+      .then((response) => {
+        setLoading(false);
+        if (response?.result_code === 0) {
+          notificationWithIcon('success', 'SUCCESS', response?.result?.message || 'Your password reset mail send successful');
+          setSessionUserAndToken(response?.result?.data, response?.access_token, response?.refresh_token);
+          form.resetFields();
+          router.push('/profile?tab=my-profile');
+        } else {
+          notificationWithIcon('error', 'ERROR', 'Sorry! Something went wrong. App server error');
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        notificationWithIcon('error', 'ERROR', err?.response?.data?.result?.error?.message || err?.response?.data?.result?.error || 'Sorry! Something went wrong. App server error');
+      });
   };
 
   return (
     <MainLayout title='Beach Resort ― Login'>
       <div style={{ width: '400px', height: 'calc(100vh - 205px)', margin: '0 auto' }}>
         <Form
+          form={form}
           className='login-form'
           style={{ paddingTop: '160px' }}
           initialValues={{ remember: true }}
@@ -75,8 +98,10 @@ function Login() {
               type='primary'
               size='large'
               block
+              loading={loading}
+              disabled={loading}
             >
-              Login
+              Log In
             </Button>
           </Form.Item>
 
@@ -84,7 +109,7 @@ function Login() {
             className='btn-login-registration'
             href='/auth/registration'
           >
-            or Registration Here!
+            Or Registration Here!
           </Link>
         </Form>
       </div>

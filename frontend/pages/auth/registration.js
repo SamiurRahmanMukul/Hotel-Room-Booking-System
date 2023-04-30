@@ -1,23 +1,60 @@
-import { MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  LockOutlined, MailOutlined, PhoneOutlined, UserOutlined
+} from '@ant-design/icons';
 import {
   Button, DatePicker, Form, Input, Select
 } from 'antd';
+import dayjs from 'dayjs';
 import Link from 'next/link';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import MainLayout from '../../components/layout';
+import ApiService from '../../utils/apiService';
+import notificationWithIcon from '../../utils/notification';
 
 const { TextArea } = Input;
 
 function Registration() {
+  const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
+  const router = useRouter();
+
+  // function to handle register new user
   const onFinish = (values) => {
-    // eslint-disable-next-line no-console
-    console.log('Received values of form: ', values);
+    setLoading(true);
+    const data = {
+      userName: values.userName,
+      fullName: values.fullName,
+      email: values.email,
+      phone: values.phone,
+      dob: dayjs(values.dob).format('YYYY-MM-DD'),
+      gender: values.gender,
+      address: values.address,
+      password: values.password
+    };
+
+    ApiService.post('/api/v1/auth/registration', data)
+      .then((response) => {
+        setLoading(false);
+        if (response?.result_code === 0) {
+          notificationWithIcon('success', 'SUCCESS', response?.result?.message || 'Your registration successful');
+          form.resetFields();
+          router.push('/auth/login');
+        } else {
+          notificationWithIcon('error', 'ERROR', 'Sorry! Something went wrong. App server error');
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        notificationWithIcon('error', 'ERROR', err?.response?.data?.result?.error?.message || err?.response?.data?.result?.error || 'Sorry! Something went wrong. App server error');
+      });
   };
 
   return (
     <MainLayout title='Beach Resort ― Registration'>
       <div style={{ width: '400px', height: 'calc(100vh - 205px)', margin: '0 auto' }}>
         <Form
+          form={form}
           className='login-form'
           style={{ padding: '20px 0' }}
           initialValues={{ remember: true }}
@@ -35,6 +72,7 @@ function Registration() {
               prefix={<UserOutlined className='site-form-item-icon' />}
               placeholder='User Name'
               size='large'
+              allowClear
             />
           </Form.Item>
 
@@ -49,6 +87,7 @@ function Registration() {
               prefix={<UserOutlined className='site-form-item-icon' />}
               placeholder='Full Name'
               size='large'
+              allowClear
             />
           </Form.Item>
 
@@ -63,6 +102,7 @@ function Registration() {
               prefix={<MailOutlined className='site-form-item-icon' />}
               placeholder='Email'
               size='large'
+              allowClear
             />
           </Form.Item>
 
@@ -73,11 +113,12 @@ function Registration() {
               message: 'Please input your Phone!'
             }]}
           >
-            <Input.Password
+            <Input
               prefix={<PhoneOutlined className='site-form-item-icon' />}
               placeholder='Phone'
-              type='password'
               size='large'
+              allowClear
+              type='tel'
             />
           </Form.Item>
 
@@ -90,8 +131,9 @@ function Registration() {
           >
             <DatePicker
               style={{ width: '100%' }}
-              placeholder='Date Of Birth'
+              placeholder='Pick your Date Of Birth'
               size='large'
+              allowClear
             />
           </Form.Item>
 
@@ -102,7 +144,7 @@ function Registration() {
               message: 'Please input your Gender!'
             }]}
           >
-            <Select placeholder='-- select your gender --' size='large'>
+            <Select placeholder='-- select your gender --' size='large' allowClear>
               <Select.Option value='male'>Male</Select.Option>
               <Select.Option value='female'>Female</Select.Option>
             </Select>
@@ -115,16 +157,40 @@ function Registration() {
               message: 'Please input your Address!'
             }]}
           >
-            <TextArea placeholder='Address' rows={4} size='large' />
+            <TextArea
+              placeholder='Address'
+              size='large'
+              allowClear
+              rows={2}
+            />
+          </Form.Item>
+
+          <Form.Item
+            name='password'
+            rules={[{
+              required: true,
+              message: 'Please input your Password!'
+            }]}
+          >
+            <Input.Password
+              prefix={<LockOutlined className='site-form-item-icon' />}
+              placeholder='Password'
+              size='large'
+              allowClear
+              type='tel'
+            />
           </Form.Item>
 
           <Form.Item>
             <Button
+              style={{ marginTop: '10px' }}
               className='login-form-button'
               htmlType='submit'
               type='primary'
               size='large'
               block
+              loading={loading}
+              disabled={loading}
             >
               Registration
             </Button>
@@ -134,7 +200,7 @@ function Registration() {
             className='btn-login-registration'
             href='/auth/login'
           >
-            or Login Here!
+            Or Login Here!
           </Link>
         </Form>
       </div>
