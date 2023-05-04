@@ -20,6 +20,16 @@ function Profile() {
     }
   }, [router]);
 
+  const handleTabClick = (key) => {
+    if (key === 1) {
+      router.push({ pathname: '/profile', query: { tab: 'my-profile' } });
+    } else if (key === 2) {
+      router.push({ pathname: '/profile', query: { tab: 'booking-history' } });
+    } else {
+      router.push('/profile');
+    }
+  };
+
   return (
     <PrivateRoute>
       <MainLayout title='Beach Resort ― My Profile'>
@@ -27,7 +37,7 @@ function Profile() {
           <Tabs
             tabPosition='left'
             activeKey={activeTab}
-            onTabClick={(key) => setActiveTab(key)}
+            onTabClick={handleTabClick}
             size='large'
             type='line'
             items={[

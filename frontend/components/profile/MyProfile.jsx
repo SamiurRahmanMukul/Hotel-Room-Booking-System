@@ -1,21 +1,24 @@
-import { EditOutlined } from '@ant-design/icons';
+import { EditOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import {
-  Button, Descriptions, Image, Result, Skeleton, Tag, Tooltip, Upload
+  Button, Descriptions, Image, Modal, Result, Skeleton, Tag, Tooltip, Upload
 } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import getConfig from 'next/config';
 import React, { useState } from 'react';
 import useFetchData from '../../hooks/useFetchData';
-import { getSessionToken, setSessionUserKeyAgainstValue } from '../../utils/authentication';
+import ApiService from '../../utils/apiService';
+import { getSessionToken, getSessionUser, setSessionUserKeyAgainstValue } from '../../utils/authentication';
 import notificationWithIcon from '../../utils/notification';
 import { userStatusAsResponse } from '../../utils/responseAsStatus';
 import ProfileEditModal from './ProfileEditModal';
 
 const { publicRuntimeConfig } = getConfig();
+const { confirm } = Modal;
 
 function MyProfile() {
-  const token = getSessionToken();
   const [editProfileModal, setEditProfileModal] = useState(false);
+  const token = getSessionToken();
+  const user = getSessionUser();
 
   // fetch user profile API data
   const [loading, error, response] = useFetchData('/api/v1/get-user');
@@ -44,6 +47,33 @@ function MyProfile() {
     }
   };
 
+  // function handle verify user email mail send
+  const handleVerifyEmail = () => {
+    confirm({
+      title: 'SEND EMAIL VERIFICATION LINK',
+      icon: <ExclamationCircleFilled />,
+      content: 'Are you sure send your email verification link?',
+      onOk() {
+        return new Promise((resolve, reject) => {
+          ApiService.post('/api/v1/auth/send-email-verification-link')
+            .then((res) => {
+              if (res?.result_code === 0) {
+                notificationWithIcon('success', 'SUCCESS', res?.result?.message || 'Verification link send successful');
+                resolve();
+              } else {
+                notificationWithIcon('error', 'ERROR', 'Sorry! Something went wrong. App server error');
+                reject();
+              }
+            })
+            .catch((err) => {
+              notificationWithIcon('error', 'ERROR', err?.response?.data?.result?.error?.message || err?.response?.data?.result?.error || 'Sorry! Something went wrong. App server error');
+              reject();
+            });
+        }).catch(() => notificationWithIcon('error', 'ERROR', 'Oops errors!'));
+      }
+    });
+  };
+
   return (
     <>
       <Skeleton loading={loading} paragraph={{ rows: 10 }} active avatar>
@@ -58,15 +88,29 @@ function MyProfile() {
             title='Profile Information'
             bordered
             extra={(
-              <Button
-                style={{ marginTop: '10px', marginRight: '20px' }}
-                onClick={() => setEditProfileModal(true)}
-                shape='default'
-                type='primary'
-                size='large'
-              >
-                Edit Profile
-              </Button>
+              <>
+                {!user?.verified && (
+                  <Button
+                    style={{ marginTop: '10px', marginRight: '20px' }}
+                    onClick={handleVerifyEmail}
+                    shape='default'
+                    type='primary'
+                    size='large'
+                  >
+                    Verify Email
+                  </Button>
+                )}
+
+                <Button
+                  style={{ marginTop: '10px', marginRight: '20px' }}
+                  onClick={() => setEditProfileModal(true)}
+                  shape='default'
+                  type='primary'
+                  size='large'
+                >
+                  Edit Profile
+                </Button>
+              </>
             )}
           >
             <Descriptions.Item label='Avatar' span={3}>

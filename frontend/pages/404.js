@@ -2,7 +2,7 @@ import { Result } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 
-function Error() {
+function ErrorPage() {
   return (
     <Result
       status='404'
@@ -17,4 +17,4 @@ function Error() {
   );
 }
 
-export default Error;
+export default ErrorPage;
