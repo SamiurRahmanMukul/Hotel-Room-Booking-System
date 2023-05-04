@@ -22,6 +22,7 @@ bin-release/
 
 # app logs
 /logs
+audit.json
 
 # environment variables
 .env
