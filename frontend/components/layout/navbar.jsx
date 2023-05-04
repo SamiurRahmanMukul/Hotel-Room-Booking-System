@@ -3,9 +3,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FaAlignRight } from 'react-icons/fa';
+import { getSessionToken, getSessionUser } from '../../utils/authentication';
+import UserPopover from './popover';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState();
+  const user = getSessionUser();
+  const token = getSessionToken();
   const router = useRouter();
 
   return (
@@ -29,14 +33,16 @@ function Navbar() {
         </div>
 
         {/* navbar login button */}
-        <Button
-          style={{ position: 'absolute', right: '100px', top: '20px' }}
-          onClick={() => router.push('/auth/login')}
-          type='primary'
-          size='large'
-        >
-          Log In
-        </Button>
+        {user?.id && token ? (<UserPopover />) : (
+          <Button
+            style={{ position: 'absolute', right: '100px', top: '20px' }}
+            onClick={() => router.push('/auth/login')}
+            type='primary'
+            size='large'
+          >
+            Log In
+          </Button>
+        )}
 
         {/* navbar link */}
         <ul className={isOpen ? 'nav-links show-nav' : 'nav-links'}>

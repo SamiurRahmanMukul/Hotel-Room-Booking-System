@@ -14,11 +14,7 @@ function LoadApp({ Component, pageProps }) {
   return (
     <>
       <DefaultSeo {...SEO} />
-      <ConfigProvider
-        theme={{
-          token: theme
-        }}
-      >
+      <ConfigProvider theme={{ token: theme }}>
         <Component {...pageProps} />
       </ConfigProvider>
     </>
