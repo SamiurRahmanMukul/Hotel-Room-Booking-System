@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import MainLayout from '../../../components/layout';
+import PublicRoute from '../../../components/routes/PublicRoute';
 import ApiService from '../../../utils/apiService';
 import notificationWithIcon from '../../../utils/notification';
 
@@ -31,53 +32,55 @@ function ForgotPassword() {
   };
 
   return (
-    <MainLayout title='Beach Resort ― Forgot Password'>
-      <div style={{ width: '400px', height: 'calc(100vh - 205px)', margin: '0 auto' }}>
-        <Form
-          form={form}
-          className='login-form'
-          style={{ paddingTop: '200px' }}
-          initialValues={{ remember: true }}
-          name='beach-resort-forgot-password-form'
-          onFinish={onFinish}
-        >
-          <Form.Item
-            name='email'
-            rules={[{
-              required: true,
-              message: 'Please input your Email!'
-            }]}
+    <PublicRoute>
+      <MainLayout title='Beach Resort ― Forgot Password'>
+        <div style={{ width: '400px', height: 'calc(100vh - 205px)', margin: '0 auto' }}>
+          <Form
+            form={form}
+            className='login-form'
+            style={{ paddingTop: '200px' }}
+            initialValues={{ remember: true }}
+            name='beach-resort-forgot-password-form'
+            onFinish={onFinish}
           >
-            <Input
-              prefix={<MailOutlined className='site-form-item-icon' />}
-              placeholder='Email'
-              size='large'
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <Button
-              className='login-form-button'
-              htmlType='submit'
-              type='primary'
-              size='large'
-              block
-              loading={loading}
-              disabled={loading}
+            <Form.Item
+              name='email'
+              rules={[{
+                required: true,
+                message: 'Please input your Email!'
+              }]}
             >
-              Forgot Password
-            </Button>
-          </Form.Item>
+              <Input
+                prefix={<MailOutlined className='site-form-item-icon' />}
+                placeholder='Email'
+                size='large'
+              />
+            </Form.Item>
 
-          <Link
-            className='btn-login-registration'
-            href='/auth/login'
-          >
-            Or Login Here!
-          </Link>
-        </Form>
-      </div>
-    </MainLayout>
+            <Form.Item>
+              <Button
+                className='login-form-button'
+                htmlType='submit'
+                type='primary'
+                size='large'
+                block
+                loading={loading}
+                disabled={loading}
+              >
+                Forgot Password
+              </Button>
+            </Form.Item>
+
+            <Link
+              className='btn-login-registration'
+              href='/auth/login'
+            >
+              Or Login Here!
+            </Link>
+          </Form>
+        </div>
+      </MainLayout>
+    </PublicRoute>
   );
 }
 
