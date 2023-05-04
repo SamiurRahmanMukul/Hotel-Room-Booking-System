@@ -12,6 +12,7 @@
     "@ant-design/icons": "^4.8.0",
     "@reduxjs/toolkit": "^1.9.1",
     "antd": "^5.0.0",
+    "antd-img-crop": "^4.12.2",
     "axios": "^1.2.1",
     "dayjs": "^1.11.7",
     "next": "13.0.6",

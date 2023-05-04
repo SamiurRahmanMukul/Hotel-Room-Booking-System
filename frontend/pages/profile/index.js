@@ -1,0 +1,63 @@
+import { HistoryOutlined, UserOutlined } from '@ant-design/icons';
+import { Tabs } from 'antd';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import MainLayout from '../../components/layout';
+import MyProfile from '../../components/profile/MyProfile';
+import PrivateRoute from '../../components/routes/PrivateRoute';
+
+function Profile() {
+  const [activeTab, setActiveTab] = useState(1);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router?.query?.tab === 'my-profile') {
+      setActiveTab(1);
+    } else if (router?.query?.tab === 'booking-history') {
+      setActiveTab(2);
+    } else {
+      setActiveTab(1);
+    }
+  }, [router]);
+
+  return (
+    <PrivateRoute>
+      <MainLayout title='Beach Resort ― My Profile'>
+        <div className='profile-container'>
+          <Tabs
+            tabPosition='left'
+            activeKey={activeTab}
+            onTabClick={(key) => setActiveTab(key)}
+            size='large'
+            type='line'
+            items={[
+              {
+                key: 1,
+                label: (
+                  <span>
+                    <UserOutlined />
+                    {' '}
+                    My Profile
+                  </span>
+                ),
+                children: <MyProfile />
+              },
+              {
+                key: 2,
+                label: (
+                  <span>
+                    <HistoryOutlined />
+                    {' '}
+                    Booking History
+                  </span>
+                )
+              }
+            ]}
+          />
+        </div>
+      </MainLayout>
+    </PrivateRoute>
+  );
+}
+
+export default Profile;

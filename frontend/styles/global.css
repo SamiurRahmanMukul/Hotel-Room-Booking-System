@@ -601,3 +601,13 @@ h6 {
 }
 
 /* end of auth style */
+
+/* start of profile style */
+
+.profile-container {
+  width: 100%;
+  height: calc(100vh - 205px);
+  padding-top: 20px;
+}
+
+/* end of profile style */

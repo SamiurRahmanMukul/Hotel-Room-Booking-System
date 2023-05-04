@@ -5,7 +5,7 @@ function Loading() {
     <div className='loading'>
       <h4>Data loading...</h4>
       <img
-        src='/img/gif/loading-arrow.gif'
+        src='/images/gif/loading-arrow.gif'
         alt='loading gif'
       />
     </div>
