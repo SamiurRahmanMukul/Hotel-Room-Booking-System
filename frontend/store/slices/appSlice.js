@@ -5,6 +5,7 @@ export const appSlice = createSlice({
   initialState: {
     timeZone: '',
     isLoading: false,
+    reFetch: false,
     theme: {
       colorPrimary: '#af9a7d',
       colorLink: '#ececec'
@@ -13,11 +14,14 @@ export const appSlice = createSlice({
   reducers: {
     setLoading: (state, action) => {
       state.isLoading = action.payload;
+    },
+    reFetchData: (state) => {
+      state.reFetch = !state.reFetch;
     }
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { setLoading } = appSlice.actions;
+export const { setLoading, reFetchData } = appSlice.actions;
 
 export default appSlice.reducer;
