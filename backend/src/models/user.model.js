@@ -7,7 +7,9 @@ const jwt = require('jsonwebtoken');
 const usersSchema = new mongoose.Schema({
   userName: {
     type: String,
+    trim: true,
     unique: true,
+    lowercase: true,
     required: [true, 'User name filed is required']
   },
   fullName: {
@@ -74,6 +76,14 @@ const usersSchema = new mongoose.Schema({
   }
 });
 
+// Replace spaces with dashes in userName before saving
+usersSchema.pre('save', function (next) {
+  if (this.userName) {
+    this.userName = this.userName.replace(/\s/g, '-');
+  }
+  next();
+});
+
 // after save, hash password
 usersSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
@@ -114,7 +124,6 @@ usersSchema.methods.getResetPasswordToken = function () {
     .digest('hex');
 
   this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
-
   return resetToken;
 };
 
@@ -130,7 +139,6 @@ usersSchema.methods.getEmailVerificationToken = function () {
     .digest('hex');
 
   this.emailVerificationExpire = Date.now() + 15 * 60 * 1000;
-
   return verificationToken;
 };
 
