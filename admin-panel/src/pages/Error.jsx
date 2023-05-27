@@ -2,7 +2,7 @@ import { Button, Result } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Error() {
+function NotFound() {
   window.document.title = 'Beach Resort — Error';
 
   return (
@@ -28,4 +28,4 @@ function Error() {
   );
 }
 
-export default Error;
+export default NotFound;

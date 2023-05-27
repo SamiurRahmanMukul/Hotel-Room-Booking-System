@@ -1,3 +1,12 @@
+/**
+ * @name Hotel Room Booking System
+ * @author Md. Samiur Rahman (Mukul)
+ * @description Hotel Room Booking and Management System Software ~ Developed By Md. Samiur Rahman (Mukul)
+ * @copyright ©2023 ― Md. Samiur Rahman (Mukul). All rights reserved.
+ * @version v0.0.1
+ *
+ */
+
 const fs = require('fs');
 const path = require('path');
 const appRoot = require('app-root-path');
@@ -7,6 +16,12 @@ const morgan = require('morgan');
 function morganLogger() {
   const LOGS_FOLDER = `${appRoot}/logs/access`;
 
+  // if not exist logs folder to create
+  if (!fs.existsSync(`${appRoot}/logs`)) {
+    fs.mkdirSync(`${appRoot}/logs`);
+  }
+
+  // if not exist access folder to create
   if (!fs.existsSync(LOGS_FOLDER)) {
     fs.mkdirSync(LOGS_FOLDER);
   }

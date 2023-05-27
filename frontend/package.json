@@ -1,6 +1,6 @@
 {
   "name": "hotel-room-booking-system-frontend",
-  "version": "0.0.1",
+  "version": "v0.0.1",
   "private": true,
   "scripts": {
     "dev": "next",

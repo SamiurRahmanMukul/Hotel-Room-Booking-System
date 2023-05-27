@@ -1,6 +1,6 @@
 {
   "name": "hotel-room-booking-system-admin-panel",
-  "version": "1.0.0",
+  "version": "v0.0.1",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.0.1",

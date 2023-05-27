@@ -1,6 +1,6 @@
 {
   "name": "hotel-room-booking-system-backed",
-  "version": "1.0.0",
+  "version": "v0.0.1",
   "description": "Build an Hotel Room Booking System for node.js, express.js application from the scratch by Mukul",
   "main": "server.js",
   "scripts": {
