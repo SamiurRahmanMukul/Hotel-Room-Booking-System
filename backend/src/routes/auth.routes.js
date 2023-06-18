@@ -9,7 +9,7 @@
 
 const router = require('express').Router();
 const avatarUpload = require('../middleware/user.avatar.upload');
-const logLimiter = require('../middleware/log.limiter');
+const { apiLimiter } = require('../middleware/access.limiter');
 const { isAuthenticatedUser, isRefreshTokenValid, isBlocked } = require('../middleware/app.authentication');
 const {
   register, loginUser, logoutUser, forgotPassword, resetPassword, changePassword, sendEmailVerificationLink, emailVerification, refreshToken
@@ -17,7 +17,7 @@ const {
 
 // routes for register, login and logout user
 router.route('/auth/registration').post(avatarUpload.single('avatar'), register);
-router.route('/auth/login').post(logLimiter, avatarUpload.none(), loginUser);
+router.route('/auth/login').post(apiLimiter, avatarUpload.none(), loginUser);
 router.route('/auth/logout').post(isAuthenticatedUser, isBlocked, logoutUser);
 
 // routes for forgot & change password

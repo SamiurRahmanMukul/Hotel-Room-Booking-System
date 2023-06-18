@@ -26,10 +26,10 @@ const connectDatabase = async () => {
         logger.info('Connection establish to MongoDB database successful!');
       })
       .catch((error) => {
-        logger.error('Error connecting to MongoDB: ', error.message);
+        logger.error('Error connecting to MongoDB: ', error);
       });
   } catch (error) {
-    logger.error('Database connection error: ', error.message);
+    logger.error('Database connection error: ', error);
   }
 };
 

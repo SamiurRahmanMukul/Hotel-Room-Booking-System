@@ -12,7 +12,7 @@
  * Description: Build an Hotel Room Booking System using node.js, express.js application from the scratch
  * Author: Md. Samiur Rahman (Mukul)
  * Last Modified: 26/02/2023
- * Version: 1.0.0
+ * Version: v0.0.1
  *
  */
 

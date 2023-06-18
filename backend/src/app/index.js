@@ -18,13 +18,14 @@ const helmet = require('helmet');
 const env = require('dotenv');
 
 // imports application routes & middleware
-const morganLogger = require('./middleware/morgan.logger');
-const defaultController = require('./controllers/default.controller');
-const { notFoundRoute, errorHandler } = require('./middleware/error.handler');
-const corsOptions = require('./configs/cors.config');
-const authRoute = require('./routes/auth.routes');
-const userRoute = require('./routes/user.routes');
-const appsRoute = require('./routes/apps.routes');
+const morganLogger = require('../middleware/morgan.logger');
+const defaultController = require('../controllers/default.controller');
+const { notFoundRoute, errorHandler } = require('../middleware/error.handler');
+const { limiter } = require('../middleware/access.limiter');
+const corsOptions = require('../configs/cors.config');
+const authRoute = require('../routes/auth.routes');
+const userRoute = require('../routes/user.routes');
+const appsRoute = require('../routes/apps.routes');
 
 // load environment variables from .env file
 env.config();
@@ -32,8 +33,11 @@ env.config();
 // initialize express app
 const app = express();
 
+// limiting middleware to all requests
+app.use(limiter);
+
 // application database connection establishment
-const connectDatabase = require('./database/connect.mongo.db');
+const connectDatabase = require('../database/connect.mongo.db');
 
 connectDatabase();
 

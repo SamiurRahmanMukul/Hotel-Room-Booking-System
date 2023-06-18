@@ -375,29 +375,29 @@ exports.getUsersList = async (req, res) => {
     const userQuery = new MyQueryHelper(User.find(), req.query).search('fullName').sort().paginate();
     const findUsers = await userQuery.query;
 
+    const mappedUsers = findUsers?.map((data) => ({
+      id: data._id,
+      userName: data.userName,
+      fullName: data.fullName,
+      email: data.email,
+      phone: data.phone,
+      avatar: process.env.APP_BASE_URL + data.avatar,
+      gender: data.gender,
+      dob: data.dob,
+      address: data.address,
+      role: data.role,
+      verified: data.verified,
+      status: data.status,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt
+    }));
+
     res.status(200).json(successResponse(
       0,
       'SUCCESS',
       'Users list data found successful',
       {
-        rows: [
-          ...findUsers?.map((findUser) => ({
-            id: findUser._id,
-            userName: findUser.userName,
-            fullName: findUser.fullName,
-            email: findUser.email,
-            phone: findUser.phone,
-            avatar: process.env.APP_BASE_URL + findUser.avatar,
-            gender: findUser.gender,
-            dob: findUser.dob,
-            address: findUser.address,
-            role: findUser.role,
-            verified: findUser.verified,
-            status: findUser.status,
-            createdAt: findUser.createdAt,
-            updatedAt: findUser.updatedAt
-          }))
-        ],
+        rows: mappedUsers,
         total_rows: users.length,
         response_rows: findUsers.length,
         total_page: req?.query?.keyword ? Math.ceil(findUsers.length / req.query.limit) : Math.ceil(users.length / req.query.limit),
