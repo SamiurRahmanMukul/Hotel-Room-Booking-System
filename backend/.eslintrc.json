@@ -25,9 +25,11 @@
     "comma-dangle": ["error", "never"],
     "node/prefer-promises/fs": "off",
     "no-underscore-dangle": "off",
+    "no-restricted-syntax": "off",
     "node/exports-style": "off",
     "consistent-return": "off",
     "linebreak-style": "off",
-    "func-names": "off"
+    "func-names": "off",
+    "camelcase": "off"
   }
 }

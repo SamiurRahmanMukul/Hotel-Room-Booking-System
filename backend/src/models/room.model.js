@@ -64,10 +64,6 @@ const roomsSchema = new mongoose.Schema({
       }
     }
   ],
-  room_rating: {
-    type: Number,
-    default: 0
-  },
   room_reviews: [
     {
       user_id: {

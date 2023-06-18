@@ -12,14 +12,14 @@ const path = require('path');
 const fs = require('fs');
 
 const uploadPath = () => {
-  const UPLOADS_FOLDER = './public/uploads/users';
+  const UPLOADS_FOLDER = './public/uploads/rooms';
 
   // if not exists to `upload` folder to create
   if (!fs.existsSync('./public/uploads')) {
     fs.mkdirSync('./public/uploads', { recursive: true });
   }
 
-  // if not exists to `users` folder to create
+  // if not exists to `rooms` folder to create
   if (!fs.existsSync(UPLOADS_FOLDER)) {
     fs.mkdirSync(UPLOADS_FOLDER, { recursive: true });
   }
@@ -32,7 +32,7 @@ const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
     cb(null, uploadPath());
   },
-  filename: (_req, file, cb) => {
+  filename: (req, file, cb) => {
     const fileExt = path.extname(file.originalname);
     const fileName = `${file.originalname.replace(fileExt, '').toLowerCase().split(' ').join('-')}-${Date.now()}`;
 
@@ -41,14 +41,14 @@ const storage = multer.diskStorage({
 });
 
 // prepare the final multer upload object
-const avatarUpload = multer({
+const roomImageUpload = multer({
   storage,
   limits: {
     fileSize: 1000000 // 1MB
   },
-  fileFilter: (_req, file, cb) => {
-    if (file.fieldname === 'avatar') {
-      if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
+  fileFilter: (_req, files, cb) => {
+    if (files.fieldname === 'room_images') {
+      if (files.mimetype === 'image/png' || files.mimetype === 'image/jpg' || files.mimetype === 'image/jpeg') {
         cb(null, true);
       } else {
         cb(new Error('Only .jpg, .png or .jpeg format allowed!'));
@@ -59,4 +59,4 @@ const avatarUpload = multer({
   }
 });
 
-module.exports = avatarUpload;
+module.exports = roomImageUpload;
