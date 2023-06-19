@@ -12,8 +12,9 @@ const appRoot = require('app-root-path');
 const Room = require('../models/room.model');
 const logger = require('../middleware/winston.logger');
 const { errorResponse, successResponse } = require('../configs/app.response');
+const MyQueryHelper = require('../configs/api.feature');
 
-// TODO: Controller for registration new user
+// TODO: Controller for create new room
 exports.createRoom = async (req, res) => {
   try {
     const {
@@ -209,6 +210,114 @@ exports.createRoom = async (req, res) => {
       });
     }
 
+    res.status(500).json(errorResponse(
+      2,
+      'SERVER SIDE ERROR',
+      error
+    ));
+  }
+};
+
+// TODO: Controller for get all rooms list
+exports.getRoomsList = async (req, res) => {
+  try {
+    // finding all room data from database
+    const rooms = await Room.find();
+
+    // filtering rooms based on different types query
+    const roomQuery = new MyQueryHelper(Room.find(), req.query).search('room_name').sort().paginate();
+    const findRooms = await roomQuery.query;
+
+    const mappedUsers = findRooms?.map((data) => ({
+      id: data._id,
+      room_name: data.room_name,
+      room_slug: data.room_slug,
+      room_type: data.room_type,
+      room_price: data.room_price,
+      room_size: data.room_size,
+      room_capacity: data.room_capacity,
+      allow_pets: data.allow_pets,
+      provide_breakfast: data.provide_breakfast,
+      featured_room: data.featured_room,
+      room_description: data.room_description,
+      room_status: data.room_status,
+      extra_facilities: data.extra_facilities,
+      room_images: data?.room_images?.map((img) => ({ url: process.env.APP_BASE_URL + img.url })),
+      room_reviews: data?.room_reviews?.map((review) => ({ user_id: review.user_id, rating: review.rating, comment: review.comment })),
+      created_by: data.created_by,
+      created_at: data.created_at,
+      updated_at: data.updated_at
+    }));
+
+    res.status(200).json(successResponse(
+      0,
+      'SUCCESS',
+      'Rooms list data found successful',
+      {
+        rows: mappedUsers,
+        total_rows: rooms.length,
+        response_rows: findRooms.length,
+        total_page: req?.query?.keyword ? Math.ceil(findRooms.length / req.query.limit) : Math.ceil(rooms.length / req.query.limit),
+        current_page: req?.query?.page ? parseInt(req.query.page, 10) : 1
+      }
+    ));
+  } catch (error) {
+    res.status(500).json(errorResponse(
+      2,
+      'SERVER SIDE ERROR',
+      error
+    ));
+  }
+};
+
+// TODO: Controller for find a room by id or room slug_name
+exports.getRoomByIdOrSlugName = async (req, res) => {
+  try {
+    let room;
+    const idPattern = /^[0-9a-fA-F]{24}$/;
+
+    if (idPattern.test(req.params.id)) {
+      room = await Room.findById(req.params.id);
+    } else {
+      room = await Room.findOne({ room_slug: req.params.id });
+    }
+
+    if (!room) {
+      return res.status(404).json(errorResponse(
+        4,
+        'UNKNOWN ACCESS',
+        'Room does not exist'
+      ));
+    }
+
+    const organizedRoom = {
+      id: room?._id,
+      room_name: room?.room_name,
+      room_slug: room?.room_slug,
+      room_type: room?.room_type,
+      room_price: room?.room_price,
+      room_size: room?.room_size,
+      room_capacity: room?.room_capacity,
+      allow_pets: room?.allow_pets,
+      provide_breakfast: room?.provide_breakfast,
+      featured_room: room?.featured_room,
+      room_description: room?.room_description,
+      room_status: room?.room_status,
+      extra_facilities: room?.extra_facilities,
+      room_images: room?.room_images?.map((img) => ({ url: process.env.APP_BASE_URL + img.url })),
+      room_reviews: room?.room_reviews?.map((review) => ({ user_id: review.user_id, rating: review.rating, comment: review.comment })),
+      created_by: room?.created_by,
+      created_at: room?.created_at,
+      updated_at: room?.updated_at
+    };
+
+    res.status(200).json(successResponse(
+      0,
+      'SUCCESS',
+      'User information get successful',
+      organizedRoom
+    ));
+  } catch (error) {
     res.status(500).json(errorResponse(
       2,
       'SERVER SIDE ERROR',

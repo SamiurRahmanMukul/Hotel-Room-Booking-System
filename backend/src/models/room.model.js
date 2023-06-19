@@ -81,6 +81,12 @@ const roomsSchema = new mongoose.Schema({
       }
     }
   ],
+  room_status: {
+    type: String,
+    enum: ['available', 'unavailable', 'booked'],
+    required: [true, 'Room status filed is required'],
+    default: 'available'
+  },
   created_by: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users',
