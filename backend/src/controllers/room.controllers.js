@@ -273,13 +273,18 @@ exports.getRoomsList = async (req, res) => {
 // TODO: Controller for find a room by id or room slug_name
 exports.getRoomByIdOrSlugName = async (req, res) => {
   try {
-    let room;
-    const idPattern = /^[0-9a-fA-F]{24}$/;
+    let room = {};
 
-    if (idPattern.test(req.params.id)) {
-      room = await Room.findById(req.params.id);
+    if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {
+      room = await Room.findById(req.params.id).populate({
+        path: 'room_reviews',
+        populate: { path: 'user_id', model: 'Users' }
+      }).populate('created_by');
     } else {
-      room = await Room.findOne({ room_slug: req.params.id });
+      room = await Room.findOne({ room_slug: req.params.id }).populate({
+        path: 'room_reviews',
+        populate: { path: 'user_id', model: 'Users' }
+      }).populate('created_by');
     }
 
     if (!room) {
@@ -305,7 +310,26 @@ exports.getRoomByIdOrSlugName = async (req, res) => {
       room_status: room?.room_status,
       extra_facilities: room?.extra_facilities,
       room_images: room?.room_images?.map((img) => ({ url: process.env.APP_BASE_URL + img.url })),
-      room_reviews: room?.room_reviews?.map((review) => ({ user_id: review.user_id, rating: review.rating, comment: review.comment })),
+      room_reviews: room?.room_reviews?.map((review) => ({
+        user_info: {
+          id: review.user_id._id,
+          userName: review.user_id.userName,
+          fullName: review.user_id.fullName,
+          email: review.user_id.email,
+          phone: review.user_id.phone,
+          avatar: process.env.APP_BASE_URL + review.user_id.avatar,
+          gender: review.user_id.gender,
+          dob: review.user_id.dob,
+          address: review.user_id.address,
+          role: review.user_id.role,
+          verified: review.user_id.verified,
+          status: review.user_id.status,
+          createdAt: review.user_id.createdAt,
+          updatedAt: review.user_id.updatedAt
+        },
+        rating: review.rating,
+        comment: review.comment
+      })),
       created_by: room?.created_by,
       created_at: room?.created_at,
       updated_at: room?.updated_at
@@ -316,6 +340,65 @@ exports.getRoomByIdOrSlugName = async (req, res) => {
       'SUCCESS',
       'User information get successful',
       organizedRoom
+    ));
+  } catch (error) {
+    res.status(500).json(errorResponse(
+      2,
+      'SERVER SIDE ERROR',
+      error
+    ));
+  }
+};
+
+// TODO: Controller for room add review
+exports.roomAddReview = async (req, res) => {
+  try {
+    const { user } = req;
+    const { comment, rating } = req.body;
+
+    // check `comment` value is exist
+    if (!comment) {
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        'User `comment` field is required'
+      ));
+    }
+
+    // check `rating` value is exist
+    if (!rating) {
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        'User `rating` field is required'
+      ));
+    }
+
+    // find the room by ID and populate the 'created_by' field
+    const room = await Room.findById(req.params.id).populate('created_by');
+
+    if (!room) {
+      return res.status(404).json(errorResponse(
+        4,
+        'UNKNOWN ACCESS',
+        'Room does not exist'
+      ));
+    }
+
+    // create a new room review object
+    const review = { user_id: user._id, rating, comment };
+
+    // add the review to the 'room_reviews' array
+    room.room_reviews.push(review);
+
+    // save the updated room
+    await room.save();
+
+    res.status(200).json(successResponse(
+      0,
+      'SUCCESS',
+      'Room review adding successful',
+      room
     ));
   } catch (error) {
     res.status(500).json(errorResponse(

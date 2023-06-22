@@ -10,7 +10,10 @@
 const router = require('express').Router();
 const roomImageUpload = require('../middleware/room.image.upload');
 const { isAuthenticatedUser, isAdmin } = require('../middleware/app.authentication');
-const { createRoom, getRoomsList, getRoomByIdOrSlugName } = require('../controllers/room.controllers');
+
+const {
+  createRoom, getRoomsList, getRoomByIdOrSlugName, roomAddReview
+} = require('../controllers/room.controllers');
 
 // route for create new room
 router.route('/create-room').post(isAuthenticatedUser, isAdmin, roomImageUpload.array('room_images', 5), createRoom);
@@ -20,5 +23,8 @@ router.route('/all-rooms-list').get(getRoomsList);
 
 // route for get single room
 router.route('/get-room-by-id-or-slug-name/:id').get(getRoomByIdOrSlugName);
+
+// routes for a room add, edit or delete a review
+router.route('/room-review-add/:id').post(isAuthenticatedUser, roomAddReview);
 
 module.exports = router;
