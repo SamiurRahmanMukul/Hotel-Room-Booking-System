@@ -12,7 +12,7 @@ const roomImageUpload = require('../middleware/room.image.upload');
 const { isAuthenticatedUser, isAdmin } = require('../middleware/app.authentication');
 
 const {
-  createRoom, getRoomsList, getRoomByIdOrSlugName, roomAddReview
+  createRoom, getRoomsList, getRoomByIdOrSlugName, roomAddReview, roomEditReview, roomDeleteReview
 } = require('../controllers/room.controllers');
 
 // route for create new room
@@ -26,5 +26,7 @@ router.route('/get-room-by-id-or-slug-name/:id').get(getRoomByIdOrSlugName);
 
 // routes for a room add, edit or delete a review
 router.route('/room-review-add/:id').post(isAuthenticatedUser, roomAddReview);
+router.route('/room-review-edit/:id').put(isAuthenticatedUser, roomEditReview);
+router.route('/room-review-delete/:id').delete(isAuthenticatedUser, roomDeleteReview);
 
 module.exports = router;

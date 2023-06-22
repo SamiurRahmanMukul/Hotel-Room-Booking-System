@@ -9,6 +9,7 @@
 
 const fs = require('fs');
 const appRoot = require('app-root-path');
+const mongoose = require('mongoose');
 const Room = require('../models/room.model');
 const logger = require('../middleware/winston.logger');
 const { errorResponse, successResponse } = require('../configs/app.response');
@@ -309,7 +310,9 @@ exports.getRoomByIdOrSlugName = async (req, res) => {
       room_description: room?.room_description,
       room_status: room?.room_status,
       extra_facilities: room?.extra_facilities,
-      room_images: room?.room_images?.map((img) => ({ url: process.env.APP_BASE_URL + img.url })),
+      room_images: room?.room_images?.map((img) => (
+        { url: process.env.APP_BASE_URL + img.url }
+      )),
       room_reviews: room?.room_reviews?.map((review) => ({
         user_info: {
           id: review.user_id._id,
@@ -327,10 +330,26 @@ exports.getRoomByIdOrSlugName = async (req, res) => {
           createdAt: review.user_id.createdAt,
           updatedAt: review.user_id.updatedAt
         },
+        id: review._id,
         rating: review.rating,
         comment: review.comment
       })),
-      created_by: room?.created_by,
+      created_by: {
+        id: room?.created_by._id,
+        userName: room?.created_by.userName,
+        fullName: room?.created_by.fullName,
+        email: room?.created_by.email,
+        phone: room?.created_by.phone,
+        avatar: process.env.APP_BASE_URL + room?.created_by.avatar,
+        gender: room?.created_by.gender,
+        dob: room?.created_by.dob,
+        address: room?.created_by.address,
+        role: room?.created_by.role,
+        verified: room?.created_by.verified,
+        status: room?.created_by.status,
+        createdAt: room?.created_by.createdAt,
+        updatedAt: room?.created_by.updatedAt
+      },
       created_at: room?.created_at,
       updated_at: room?.updated_at
     };
@@ -350,7 +369,7 @@ exports.getRoomByIdOrSlugName = async (req, res) => {
   }
 };
 
-// TODO: Controller for room add review
+// TODO: Controller for add room review
 exports.roomAddReview = async (req, res) => {
   try {
     const { user } = req;
@@ -374,32 +393,177 @@ exports.roomAddReview = async (req, res) => {
       ));
     }
 
-    // find the room by ID and populate the 'created_by' field
-    const room = await Room.findById(req.params.id).populate('created_by');
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+      // find the room by ID and populate the 'created_by' field
+      const room = await Room.findById(req.params.id).populate('created_by');
 
-    if (!room) {
-      return res.status(404).json(errorResponse(
-        4,
-        'UNKNOWN ACCESS',
-        'Room does not exist'
+      if (!room) {
+        return res.status(404).json(errorResponse(
+          4,
+          'UNKNOWN ACCESS',
+          'Room does not exist'
+        ));
+      }
+
+      // create a new room review object
+      const review = { user_id: user._id, rating, comment };
+
+      // add the review to the 'room_reviews' array
+      room.room_reviews.push(review);
+
+      // save the updated room
+      await room.save();
+
+      res.status(200).json(successResponse(
+        0,
+        'SUCCESS',
+        'Room review adding successful',
+        room
+      ));
+    } else {
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        'Your provided params `room_id` is invalid'
+      ));
+    }
+  } catch (error) {
+    res.status(500).json(errorResponse(
+      2,
+      'SERVER SIDE ERROR',
+      error
+    ));
+  }
+};
+
+// TODO: Controller for edit room review
+exports.roomEditReview = async (req, res) => {
+  try {
+    const { comment, rating } = req.body;
+
+    // check `comment` value is exist
+    if (!comment) {
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        'User `comment` field is required'
       ));
     }
 
-    // create a new room review object
-    const review = { user_id: user._id, rating, comment };
+    // check `rating` value is exist
+    if (!rating) {
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        'User `rating` field is required'
+      ));
+    }
 
-    // add the review to the 'room_reviews' array
-    room.room_reviews.push(review);
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+      // find the room by ID and populate the 'created_by' field
+      const room = await Room.findOne(
+        { 'room_reviews._id': req.params.id }
+      ).populate('created_by');
 
-    // save the updated room
-    await room.save();
+      if (!room) {
+        return res.status(404).json(errorResponse(
+          4,
+          'UNKNOWN ACCESS',
+          'Room or Room reviews does not exist'
+        ));
+      }
 
-    res.status(200).json(successResponse(
-      0,
-      'SUCCESS',
-      'Room review adding successful',
-      room
+      // find the index of the review in the room_reviews array
+      const reviewIndex = room.room_reviews.findIndex(
+        (review) => review._id.toString() === req.params.id
+      );
+
+      if (reviewIndex === -1) {
+        return res.status(404).json(errorResponse(
+          4,
+          'UNKNOWN ACCESS',
+          'Room review does not exist'
+        ));
+      }
+
+      // update the review with the new comment and rating
+      room.room_reviews[reviewIndex].comment = comment;
+      room.room_reviews[reviewIndex].rating = rating;
+
+      // save the updated room
+      await room.save();
+
+      res.status(200).json(successResponse(
+        0,
+        'SUCCESS',
+        'Room review edit successful',
+        room
+      ));
+    } else {
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        'Your provided params `reviews_id` is invalid'
+      ));
+    }
+  } catch (error) {
+    res.status(500).json(errorResponse(
+      2,
+      'SERVER SIDE ERROR',
+      error
     ));
+  }
+};
+
+// TODO: Controller for delete room review
+exports.roomDeleteReview = async (req, res) => {
+  try {
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+      // find the room by ID and populate the 'created_by' field
+      const room = await Room.findOne(
+        { 'room_reviews._id': req.params.id }
+      ).populate('created_by');
+
+      if (!room) {
+        return res.status(404).json(errorResponse(
+          4,
+          'UNKNOWN ACCESS',
+          'Room or Room reviews does not exist'
+        ));
+      }
+
+      // find the index of the review in the room_reviews array
+      const reviewIndex = room.room_reviews.findIndex(
+        (review) => review._id.toString() === req.params.id
+      );
+
+      if (reviewIndex === -1) {
+        return res.status(404).json(errorResponse(
+          4,
+          'UNKNOWN ACCESS',
+          'Room review does not exist'
+        ));
+      }
+
+      // remove the review from the room_reviews array
+      room.room_reviews.splice(reviewIndex, 1);
+
+      // save the updated room
+      await room.save();
+
+      res.status(200).json(successResponse(
+        0,
+        'SUCCESS',
+        'Room review delete successful',
+        room
+      ));
+    } else {
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        'Your provided params `reviews_id` is invalid'
+      ));
+    }
   } catch (error) {
     res.status(500).json(errorResponse(
       2,
