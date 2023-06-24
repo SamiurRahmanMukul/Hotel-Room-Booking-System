@@ -37,3 +37,28 @@ export const userStatusAsResponse = (status) => {
     level: 'UNKNOWN'
   };
 };
+
+export const roomStatusAsResponse = (status) => {
+  if (status === 'available') {
+    return {
+      color: '#87d068',
+      level: 'AVAILABLE'
+    };
+  }
+  if (status === 'unavailable') {
+    return {
+      color: '#f55000',
+      level: 'UNAVAILABLE'
+    };
+  }
+  if (status === 'booked') {
+    return {
+      color: '#2db7f5',
+      level: 'BOOKED'
+    };
+  }
+  return {
+    color: 'default',
+    level: 'UNKNOWN'
+  };
+};

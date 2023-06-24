@@ -19,6 +19,7 @@ import Logo from '../assets/images/logo.svg';
 import UserBox from '../components/shared/UserBox';
 import Dashboard from '../components/tabs/Dashboard';
 import MyProfile from '../components/tabs/MyProfile';
+import Rooms from '../components/tabs/Rooms';
 import Users from '../components/tabs/Users';
 import useFullScreen from '../hooks/useFullScreen';
 import ApiService from '../utils/apiService';
@@ -225,6 +226,7 @@ function Main() {
         <Content className='bg-bg-white overflow-y-scroll m-2 p-2'>
           {selectedKeys === '1' && (<Dashboard />)}
           {selectedKeys === '2' && (<Users />)}
+          {selectedKeys === '3' && (<Rooms />)}
           {selectedKeys === '5' && (<MyProfile />)}
         </Content>
 
