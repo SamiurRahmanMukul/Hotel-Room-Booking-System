@@ -57,7 +57,7 @@ function RoomsList({ add }) {
                     <thead className='data-table-head'>
                       <tr className='data-table-head-tr'>
                         <th className='data-table-head-tr-th' scope='col'>
-                          Image
+                          Images
                         </th>
                         <th className='data-table-head-tr-th' scope='col'>
                           Room Name
@@ -154,4 +154,4 @@ function RoomsList({ add }) {
   );
 }
 
-export default RoomsList;
+export default React.memo(RoomsList);

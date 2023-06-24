@@ -11,8 +11,12 @@ import React from 'react';
 
 function RoomEdit() {
   return (
-    <div>RoomEdit</div>
+    <div>
+      <h2 className='text-center pt-5'>
+        Room Edit
+      </h2>
+    </div>
   );
 }
 
-export default RoomEdit;
+export default React.memo(RoomEdit);

@@ -27,6 +27,7 @@ function UsersCard({ loading, data }) {
     >
       <Card.Grid style={gridStyle}>
         <Statistic
+          className='whitespace-nowrap'
           title='Total Users'
           formatter={formatter}
           value={data?.total_users || 0}
@@ -34,14 +35,16 @@ function UsersCard({ loading, data }) {
       </Card.Grid>
       <Card.Grid style={gridStyle}>
         <Statistic
-          title='Admin Users'
+          className='whitespace-nowrap'
+          title='Admin Role Users'
           formatter={formatter}
           value={data?.admin_role_user || 0}
         />
       </Card.Grid>
       <Card.Grid style={gridStyle}>
         <Statistic
-          title='User Users'
+          className='whitespace-nowrap'
+          title='User Role Users'
           formatter={formatter}
           value={data?.user_role_user || 0}
         />
@@ -49,6 +52,7 @@ function UsersCard({ loading, data }) {
 
       <Card.Grid style={gridStyle}>
         <Statistic
+          className='whitespace-nowrap'
           title='Register Users'
           formatter={formatter}
           value={data?.register_status_user || 0}
@@ -56,6 +60,7 @@ function UsersCard({ loading, data }) {
       </Card.Grid>
       <Card.Grid style={gridStyle}>
         <Statistic
+          className='whitespace-nowrap'
           title='Login Users'
           formatter={formatter}
           value={data?.login_status_user || 0}
@@ -63,6 +68,7 @@ function UsersCard({ loading, data }) {
       </Card.Grid>
       <Card.Grid style={gridStyle}>
         <Statistic
+          className='whitespace-nowrap'
           title='Logout Users'
           formatter={formatter}
           value={data?.logout_status_user || 0}
@@ -70,6 +76,7 @@ function UsersCard({ loading, data }) {
       </Card.Grid>
       <Card.Grid style={gridStyle}>
         <Statistic
+          className='whitespace-nowrap'
           title='Blocked Users'
           formatter={formatter}
           value={data?.blocked_status_user || 0}
@@ -78,6 +85,7 @@ function UsersCard({ loading, data }) {
 
       <Card.Grid style={gridStyle}>
         <Statistic
+          className='whitespace-nowrap'
           title='Verified Users'
           formatter={formatter}
           value={data?.verified_user || 0}

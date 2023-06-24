@@ -11,8 +11,12 @@ import React from 'react';
 
 function CreateRoom() {
   return (
-    <div>CreateRoom</div>
+    <div>
+      <h2 className='text-center pt-5'>
+        Create Room
+      </h2>
+    </div>
   );
 }
 
-export default CreateRoom;
+export default React.memo(CreateRoom);
