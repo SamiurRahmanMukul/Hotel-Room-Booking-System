@@ -229,7 +229,7 @@ exports.getRoomsList = async (req, res) => {
     const roomQuery = new MyQueryHelper(Room.find(), req.query).search('room_name').sort().paginate();
     const findRooms = await roomQuery.query;
 
-    const mappedUsers = findRooms?.map((data) => ({
+    const mappedRooms = findRooms?.map((data) => ({
       id: data._id,
       room_name: data.room_name,
       room_slug: data.room_slug,
@@ -246,8 +246,8 @@ exports.getRoomsList = async (req, res) => {
       room_images: data?.room_images?.map((img) => ({ url: process.env.APP_BASE_URL + img.url })),
       room_reviews: data?.room_reviews?.map((review) => ({ user_id: review.user_id, rating: review.rating, comment: review.comment })),
       created_by: data.created_by,
-      created_at: data.created_at,
-      updated_at: data.updated_at
+      created_at: data.createdAt,
+      updated_at: data.updatedAt
     }));
 
     res.status(200).json(successResponse(
@@ -255,7 +255,7 @@ exports.getRoomsList = async (req, res) => {
       'SUCCESS',
       'Rooms list data found successful',
       {
-        rows: mappedUsers,
+        rows: mappedRooms,
         total_rows: rooms.length,
         response_rows: findRooms.length,
         total_page: req?.query?.keyword ? Math.ceil(findRooms.length / req.query.limit) : Math.ceil(rooms.length / req.query.limit),
@@ -350,8 +350,8 @@ exports.getRoomByIdOrSlugName = async (req, res) => {
         createdAt: room?.created_by.createdAt,
         updatedAt: room?.created_by.updatedAt
       },
-      created_at: room?.created_at,
-      updated_at: room?.updated_at
+      created_at: room?.createdAt,
+      updated_at: room?.updatedAt
     };
 
     res.status(200).json(successResponse(
@@ -410,6 +410,9 @@ exports.roomAddReview = async (req, res) => {
 
       // add the review to the 'room_reviews' array
       room.room_reviews.push(review);
+
+      // update the 'updatedAt' field
+      room.updatedAt = Date.now();
 
       // save the updated room
       await room.save();
@@ -490,6 +493,9 @@ exports.roomEditReview = async (req, res) => {
       room.room_reviews[reviewIndex].comment = comment;
       room.room_reviews[reviewIndex].rating = rating;
 
+      // update the 'updatedAt' field
+      room.updatedAt = Date.now();
+
       // save the updated room
       await room.save();
 
@@ -547,6 +553,9 @@ exports.roomDeleteReview = async (req, res) => {
 
       // remove the review from the room_reviews array
       room.room_reviews.splice(reviewIndex, 1);
+
+      // update the 'updatedAt' field
+      room.updatedAt = Date.now();
 
       // save the updated room
       await room.save();

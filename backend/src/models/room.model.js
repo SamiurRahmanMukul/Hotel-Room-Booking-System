@@ -92,11 +92,11 @@ const roomsSchema = new mongoose.Schema({
     ref: 'Users',
     required: [true, 'Room created by is required field']
   },
-  created_at: {
+  createdAt: {
     type: Date,
     default: Date.now
   },
-  updated_at: {
+  updatedAt: {
     type: Date,
     default: Date.now
   }
