@@ -64,23 +64,6 @@ const roomsSchema = new mongoose.Schema({
       }
     }
   ],
-  room_reviews: [
-    {
-      user_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users',
-        required: [true, 'Room created by is required field']
-      },
-      rating: {
-        type: Number,
-        required: true
-      },
-      comment: {
-        type: String,
-        required: true
-      }
-    }
-  ],
   room_status: {
     type: String,
     enum: ['available', 'unavailable', 'booked'],
