@@ -31,6 +31,335 @@ exports.createRoom = async (req, res) => {
       return res.status(400).json(errorResponse(
         1,
         'FAILED',
+        '`room_name` filed is required'
+      ));
+    }
+
+    // check `room_slug` filed exits
+    if (!room_slug) {
+      for (const element of req.files) {
+        fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
+          if (err) { logger.error(err); }
+        });
+      }
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        '`room_slug` filed is required'
+      ));
+    }
+
+    // check `room_type` filed exits
+    if (!room_type) {
+      for (const element of req.files) {
+        fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
+          if (err) { logger.error(err); }
+        });
+      }
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        '`room_type` filed is required'
+      ));
+    }
+
+    // check `room_price` filed exits
+    if (!room_price) {
+      for (const element of req.files) {
+        fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
+          if (err) { logger.error(err); }
+        });
+      }
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        '`room_price` filed is required'
+      ));
+    }
+
+    // check `room_size` filed exits
+    if (!room_size) {
+      for (const element of req.files) {
+        fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
+          if (err) { logger.error(err); }
+        });
+      }
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        '`room_size` filed is required'
+      ));
+    }
+
+    // check `room_capacity` filed exits
+    if (!room_capacity) {
+      for (const element of req.files) {
+        fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
+          if (err) { logger.error(err); }
+        });
+      }
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        '`room_capacity` filed is required'
+      ));
+    }
+
+    // check `room_description` filed exits
+    if (!room_description) {
+      for (const element of req.files) {
+        fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
+          if (err) { logger.error(err); }
+        });
+      }
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        '`room_description` filed is required'
+      ));
+    }
+
+    // check `extra_facilities[0]` filed exits
+    if (!extra_facilities[0]) {
+      for (const element of req.files) {
+        fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
+          if (err) { logger.error(err); }
+        });
+      }
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        'Minimum 1 `extra_facilities` filed is required'
+      ));
+    }
+
+    // check `req.files[0]` filed exits
+    if (!req.files[0]) {
+      for (const element of req.files) {
+        fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
+          if (err) { logger.error(err); }
+        });
+      }
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        'Minimum 1 `room_images` filed is required '
+      ));
+    }
+
+    // check `room_name` already exist in database
+    const roomName = await Room.findOne({ room_name });
+    if (roomName) {
+      for (const element of req.files) {
+        fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
+          if (err) { logger.error(err); }
+        });
+      }
+      return res.status(409).json(errorResponse(
+        9,
+        'ALREADY EXIST',
+        'Sorry, `room_name` already exists'
+      ));
+    }
+
+    // check `room_slug` already exist in database
+    const roomSlug = await Room.findOne({ room_slug });
+    if (roomSlug) {
+      for (const element of req.files) {
+        fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
+          if (err) { logger.error(err); }
+        });
+      }
+      return res.status(409).json(errorResponse(
+        9,
+        'ALREADY EXIST',
+        'Sorry, `room_slug` already exists'
+      ));
+    }
+
+    // prepared user input room data to store database
+    const data = {
+      room_name,
+      room_slug,
+      room_type,
+      room_price,
+      room_size,
+      room_capacity,
+      allow_pets,
+      provide_breakfast,
+      featured_room,
+      room_description,
+      extra_facilities,
+      room_images: req?.files?.map((file) => ({ url: `/uploads/rooms/${file.filename}` })),
+      created_by: req.user.id
+    };
+
+    // save room data in database
+    const room = await Room.create(data);
+
+    // success response with register new user
+    res.status(201).json(successResponse(
+      0,
+      'SUCCESS',
+      'New room create successful',
+      room
+    ));
+  } catch (error) {
+    for (const element of req.files) {
+      fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
+        if (err) { logger.error(err); }
+      });
+    }
+
+    res.status(500).json(errorResponse(
+      2,
+      'SERVER SIDE ERROR',
+      error
+    ));
+  }
+};
+
+// TODO: Controller for get all rooms list
+exports.getRoomsList = async (req, res) => {
+  try {
+    // finding all room data from database
+    const rooms = await Room.find();
+
+    // filtering rooms based on different types query
+    const roomQuery = new MyQueryHelper(Room.find(), req.query).search('room_name').sort().paginate();
+    const findRooms = await roomQuery.query;
+
+    const mappedRooms = findRooms?.map((data) => ({
+      id: data._id,
+      room_name: data.room_name,
+      room_slug: data.room_slug,
+      room_type: data.room_type,
+      room_price: data.room_price,
+      room_size: data.room_size,
+      room_capacity: data.room_capacity,
+      allow_pets: data.allow_pets,
+      provide_breakfast: data.provide_breakfast,
+      featured_room: data.featured_room,
+      room_description: data.room_description,
+      room_status: data.room_status,
+      extra_facilities: data.extra_facilities,
+      room_images: data?.room_images?.map(
+        (img) => ({ url: process.env.APP_BASE_URL + img.url })
+      ),
+      created_by: data.created_by,
+      created_at: data.createdAt,
+      updated_at: data.updatedAt
+    }));
+
+    res.status(200).json(successResponse(
+      0,
+      'SUCCESS',
+      'Rooms list data found successful',
+      {
+        rows: mappedRooms,
+        total_rows: rooms.length,
+        response_rows: findRooms.length,
+        total_page: req?.query?.keyword ? Math.ceil(findRooms.length / req.query.limit) : Math.ceil(rooms.length / req.query.limit),
+        current_page: req?.query?.page ? parseInt(req.query.page, 10) : 1
+      }
+    ));
+  } catch (error) {
+    res.status(500).json(errorResponse(
+      2,
+      'SERVER SIDE ERROR',
+      error
+    ));
+  }
+};
+
+// TODO: Controller for find a room by id or room slug_name
+exports.getRoomByIdOrSlugName = async (req, res) => {
+  try {
+    let room = null;
+
+    if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {
+      room = await Room.findById(req.params.id).populate('created_by');
+    } else {
+      room = await Room.findOne({ room_slug: req.params.id }).populate('created_by');
+    }
+
+    if (!room) {
+      return res.status(404).json(errorResponse(
+        4,
+        'UNKNOWN ACCESS',
+        'Room does not exist'
+      ));
+    }
+
+    const organizedRoom = {
+      id: room?._id,
+      room_name: room?.room_name,
+      room_slug: room?.room_slug,
+      room_type: room?.room_type,
+      room_price: room?.room_price,
+      room_size: room?.room_size,
+      room_capacity: room?.room_capacity,
+      allow_pets: room?.allow_pets,
+      provide_breakfast: room?.provide_breakfast,
+      featured_room: room?.featured_room,
+      room_description: room?.room_description,
+      room_status: room?.room_status,
+      extra_facilities: room?.extra_facilities,
+      room_images: room?.room_images?.map(
+        (img) => ({ url: process.env.APP_BASE_URL + img.url })
+      ),
+      created_by: {
+        id: room?.created_by._id,
+        userName: room?.created_by.userName,
+        fullName: room?.created_by.fullName,
+        email: room?.created_by.email,
+        phone: room?.created_by.phone,
+        avatar: process.env.APP_BASE_URL + room?.created_by.avatar,
+        gender: room?.created_by.gender,
+        dob: room?.created_by.dob,
+        address: room?.created_by.address,
+        role: room?.created_by.role,
+        verified: room?.created_by.verified,
+        status: room?.created_by.status,
+        createdAt: room?.created_by.createdAt,
+        updatedAt: room?.created_by.updatedAt
+      },
+      created_at: room?.createdAt,
+      updated_at: room?.updatedAt
+    };
+
+    res.status(200).json(successResponse(
+      0,
+      'SUCCESS',
+      'User information get successful',
+      organizedRoom
+    ));
+  } catch (error) {
+    res.status(500).json(errorResponse(
+      2,
+      'SERVER SIDE ERROR',
+      error
+    ));
+  }
+};
+
+// TODO: Controller for edit room
+exports.editRoomByAdmin = async (req, res) => {
+  try {
+    const {
+      room_name, room_slug, room_type, room_price, room_size, room_capacity, allow_pets, provide_breakfast, featured_room, room_description, extra_facilities
+    } = req.body;
+
+    // check `room_name` filed exits
+    if (!room_name) {
+      for (const element of req.files) {
+        fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
+          if (err) { logger.error(err); }
+        });
+      }
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
         '`room_name` filed is required '
       ));
     }
@@ -147,61 +476,59 @@ exports.createRoom = async (req, res) => {
       ));
     }
 
-    // check `room_name` already exist in database
-    const roomName = await Room.findOne({ room_name });
-    if (roomName) {
-      for (const element of req.files) {
-        fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
-          if (err) { logger.error(err); }
-        });
-      }
-      return res.status(409).json(errorResponse(
-        9,
-        'ALREADY EXIST',
-        'Sorry, `room_name` already exists'
-      ));
+    // finding by room by room id
+    let room = null;
+
+    if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {
+      room = await Room.findById(req.params.id);
     }
-    // check `room_slug` already exist in database
-    const roomSlug = await Room.findOne({ room_slug });
-    if (roomSlug) {
-      for (const element of req.files) {
-        fs.unlink(`${appRoot}/public/uploads/rooms/${element.filename}`, (err) => {
-          if (err) { logger.error(err); }
-        });
-      }
-      return res.status(409).json(errorResponse(
-        9,
-        'ALREADY EXIST',
-        'Sorry, `room_slug` already exists'
+
+    if (!room) {
+      return res.status(404).json(errorResponse(
+        4,
+        'UNKNOWN ACCESS',
+        'Room does not exist'
       ));
     }
 
-    // prepared user input room data to store database
-    const data = {
-      room_name,
-      room_slug,
-      room_type,
-      room_price,
-      room_size,
-      room_capacity,
-      allow_pets,
-      provide_breakfast,
-      featured_room,
-      room_description,
-      extra_facilities,
-      room_images: req?.files?.map((file) => ({ url: `/uploads/rooms/${file.filename}` })),
-      created_by: req.user.id
-    };
+    // delete room old images
+    (() => {
+      for (const element of room.room_images) {
+        fs.unlink(`${appRoot}/public/${element.url}`, (err) => {
+          if (err) { logger.error(err); }
+        });
+      }
+    })();
 
-    // save room data in database
-    const room = await Room.create(data);
+    // update room info & save database
+    const updatedRoom = await Room.findByIdAndUpdate(
+      req.params.id,
+      {
+        room_name,
+        room_slug,
+        room_type,
+        room_price,
+        room_size,
+        room_capacity,
+        allow_pets,
+        provide_breakfast,
+        featured_room,
+        room_description,
+        extra_facilities,
+        room_images: req?.files?.map(
+          (file) => ({ url: `/uploads/rooms/${file.filename}` })
+        ),
+        updatedAt: Date.now()
+      },
+      { runValidators: true, new: true }
+    );
 
     // success response with register new user
     res.status(201).json(successResponse(
       0,
       'SUCCESS',
-      'New room create successful',
-      room
+      'New room updated successful',
+      updatedRoom
     ));
   } catch (error) {
     for (const element of req.files) {
@@ -218,74 +545,11 @@ exports.createRoom = async (req, res) => {
   }
 };
 
-// TODO: Controller for get all rooms list
-exports.getRoomsList = async (req, res) => {
+// TODO: Controller for delete room using ID by admin
+exports.deleteRoomById = async (req, res) => {
   try {
-    // finding all room data from database
-    const rooms = await Room.find();
-
-    // filtering rooms based on different types query
-    const roomQuery = new MyQueryHelper(Room.find(), req.query).search('room_name').sort().paginate();
-    const findRooms = await roomQuery.query;
-
-    const mappedRooms = findRooms?.map((data) => ({
-      id: data._id,
-      room_name: data.room_name,
-      room_slug: data.room_slug,
-      room_type: data.room_type,
-      room_price: data.room_price,
-      room_size: data.room_size,
-      room_capacity: data.room_capacity,
-      allow_pets: data.allow_pets,
-      provide_breakfast: data.provide_breakfast,
-      featured_room: data.featured_room,
-      room_description: data.room_description,
-      room_status: data.room_status,
-      extra_facilities: data.extra_facilities,
-      room_images: data?.room_images?.map((img) => ({ url: process.env.APP_BASE_URL + img.url })),
-      room_reviews: data?.room_reviews?.map((review) => ({ user_id: review.user_id, rating: review.rating, comment: review.comment })),
-      created_by: data.created_by,
-      created_at: data.createdAt,
-      updated_at: data.updatedAt
-    }));
-
-    res.status(200).json(successResponse(
-      0,
-      'SUCCESS',
-      'Rooms list data found successful',
-      {
-        rows: mappedRooms,
-        total_rows: rooms.length,
-        response_rows: findRooms.length,
-        total_page: req?.query?.keyword ? Math.ceil(findRooms.length / req.query.limit) : Math.ceil(rooms.length / req.query.limit),
-        current_page: req?.query?.page ? parseInt(req.query.page, 10) : 1
-      }
-    ));
-  } catch (error) {
-    res.status(500).json(errorResponse(
-      2,
-      'SERVER SIDE ERROR',
-      error
-    ));
-  }
-};
-
-// TODO: Controller for find a room by id or room slug_name
-exports.getRoomByIdOrSlugName = async (req, res) => {
-  try {
-    let room = {};
-
-    if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {
-      room = await Room.findById(req.params.id).populate({
-        path: 'room_reviews',
-        populate: { path: 'user_id', model: 'Users' }
-      }).populate('created_by');
-    } else {
-      room = await Room.findOne({ room_slug: req.params.id }).populate({
-        path: 'room_reviews',
-        populate: { path: 'user_id', model: 'Users' }
-      }).populate('created_by');
-    }
+    // check if room exists
+    const room = await Room.findById(req.params.id);
 
     if (!room) {
       return res.status(404).json(errorResponse(
@@ -295,69 +559,22 @@ exports.getRoomByIdOrSlugName = async (req, res) => {
       ));
     }
 
-    const organizedRoom = {
-      id: room?._id,
-      room_name: room?.room_name,
-      room_slug: room?.room_slug,
-      room_type: room?.room_type,
-      room_price: room?.room_price,
-      room_size: room?.room_size,
-      room_capacity: room?.room_capacity,
-      allow_pets: room?.allow_pets,
-      provide_breakfast: room?.provide_breakfast,
-      featured_room: room?.featured_room,
-      room_description: room?.room_description,
-      room_status: room?.room_status,
-      extra_facilities: room?.extra_facilities,
-      room_images: room?.room_images?.map((img) => (
-        { url: process.env.APP_BASE_URL + img.url }
-      )),
-      room_reviews: room?.room_reviews?.map((review) => ({
-        user_info: {
-          id: review.user_id._id,
-          userName: review.user_id.userName,
-          fullName: review.user_id.fullName,
-          email: review.user_id.email,
-          phone: review.user_id.phone,
-          avatar: process.env.APP_BASE_URL + review.user_id.avatar,
-          gender: review.user_id.gender,
-          dob: review.user_id.dob,
-          address: review.user_id.address,
-          role: review.user_id.role,
-          verified: review.user_id.verified,
-          status: review.user_id.status,
-          createdAt: review.user_id.createdAt,
-          updatedAt: review.user_id.updatedAt
-        },
-        id: review._id,
-        rating: review.rating,
-        comment: review.comment
-      })),
-      created_by: {
-        id: room?.created_by._id,
-        userName: room?.created_by.userName,
-        fullName: room?.created_by.fullName,
-        email: room?.created_by.email,
-        phone: room?.created_by.phone,
-        avatar: process.env.APP_BASE_URL + room?.created_by.avatar,
-        gender: room?.created_by.gender,
-        dob: room?.created_by.dob,
-        address: room?.created_by.address,
-        role: room?.created_by.role,
-        verified: room?.created_by.verified,
-        status: room?.created_by.status,
-        createdAt: room?.created_by.createdAt,
-        updatedAt: room?.created_by.updatedAt
-      },
-      created_at: room?.createdAt,
-      updated_at: room?.updatedAt
-    };
+    // delete room form database
+    await Room.findByIdAndDelete(room.id);
+
+    // delete old images
+    (() => {
+      for (const element of room.room_images) {
+        fs.unlink(`${appRoot}/public/${element.url}`, (err) => {
+          if (err) { logger.error(err); }
+        });
+      }
+    })();
 
     res.status(200).json(successResponse(
       0,
       'SUCCESS',
-      'User information get successful',
-      organizedRoom
+      'Room delete form database successful'
     ));
   } catch (error) {
     res.status(500).json(errorResponse(
