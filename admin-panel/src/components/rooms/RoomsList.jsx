@@ -7,27 +7,65 @@
  *
  */
 
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import {
-  Avatar, Button, Empty, Pagination, Result, Skeleton, Tag
+  Avatar, Button, Empty, Modal, Pagination, Result, Skeleton, Tag
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { v4 as uniqueId } from 'uuid';
 import useFetchData from '../../hooks/useFetchData';
+import ApiService from '../../utils/apiService';
+import notificationWithIcon from '../../utils/notification';
 import { roomStatusAsResponse } from '../../utils/responseAsStatus';
 import QueryOptions from '../shared/QueryOptions';
+import RoomEdit from './RoomEdit';
+
+const { confirm } = Modal;
 
 function RoomsList({ add }) {
   const [query, setQuery] = useState({
     search: '', sort: 'asce', page: '1', rows: '10'
   });
+  const [roomEditModal, setRoomEditModal] = useState(
+    { open: false, roomId: null }
+  );
+  const [fetchAgain, setFetchAgain] = useState(false);
 
   // fetch room-list API data
-  const [loading, error, response] = useFetchData(`/api/v1/all-rooms-list?keyword=${query.search}&limit=${query.rows}&page=${query.page}&sort=${query.sort}`);
+  const [loading, error, response] = useFetchData(`/api/v1/all-rooms-list?keyword=${query.search}&limit=${query.rows}&page=${query.page}&sort=${query.sort}`, fetchAgain);
 
   // reset query options
   useEffect(() => {
     setQuery((prevState) => ({ ...prevState, page: '1' }));
   }, [query.rows, query.search]);
+
+  // function to handle delete
+  const handleDeleteRoom = (id) => {
+    confirm({
+      title: 'DELETE ROOM',
+      icon: <ExclamationCircleFilled />,
+      content: 'Are you sure delete this Room permanently?',
+      onOk() {
+        return new Promise((resolve, reject) => {
+          ApiService.delete(`/api/v1/delete-room/${id}`)
+            .then((res) => {
+              if (res?.result_code === 0) {
+                notificationWithIcon('success', 'SUCCESS', res?.result?.message || 'Room delete successful');
+                setFetchAgain(!fetchAgain);
+                resolve();
+              } else {
+                notificationWithIcon('error', 'ERROR', 'Sorry! Something went wrong. App server error');
+                reject();
+              }
+            })
+            .catch((err) => {
+              notificationWithIcon('error', 'ERROR', err?.response?.data?.result?.error?.message || err?.response?.data?.result?.error || 'Sorry! Something went wrong. App server error');
+              reject();
+            });
+        }).catch(() => notificationWithIcon('error', 'ERROR', 'Oops errors!'));
+      }
+    });
+  };
 
   return (
     <div>
@@ -75,7 +113,7 @@ function RoomsList({ add }) {
                           Room Status
                         </th>
                         <th className='data-table-head-tr-th text-center' scope='col'>
-                          Action
+                          Room Actions
                         </th>
                       </tr>
                     </thead>
@@ -127,7 +165,23 @@ function RoomsList({ add }) {
                               onClick={() => add(data?.id)}
                               type='link'
                             >
-                              VIEW DETAILS
+                              View
+                            </Button>
+                            <Button
+                              className='inline-flex items-center !px-2'
+                              onClick={() => setRoomEditModal(
+                                (prevState) => ({ ...prevState, open: true, roomId: data?.id })
+                              )}
+                              type='link'
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              className='inline-flex items-center !px-2'
+                              onClick={() => handleDeleteRoom(data?.id)}
+                              type='link'
+                            >
+                              Delete
                             </Button>
                           </td>
                         </tr>
@@ -148,6 +202,14 @@ function RoomsList({ add }) {
           onChange={(e) => setQuery((prevState) => ({ ...prevState, page: e }))}
           total={response?.data?.total_page * 10}
           current={response?.data?.current_page}
+        />
+      )}
+
+      {/* room edit modal component */}
+      {roomEditModal.open && (
+        <RoomEdit
+          roomEditModal={roomEditModal}
+          setRoomEditModal={setRoomEditModal}
         />
       )}
     </div>
