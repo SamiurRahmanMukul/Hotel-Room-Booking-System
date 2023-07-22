@@ -180,7 +180,8 @@ function RoomEdit({ roomEditModal, setRoomEditModal }) {
                 optionFilterProp='children'
                 options={[
                   { value: 'single', label: 'Single' },
-                  { value: 'couple', label: 'Couple' }
+                  { value: 'couple', label: 'Couple' },
+                  { value: 'presidential', label: 'Presidential' }
                 ]}
                 size='large'
                 allowClear

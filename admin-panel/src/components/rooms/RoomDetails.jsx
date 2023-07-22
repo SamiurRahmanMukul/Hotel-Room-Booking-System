@@ -13,7 +13,7 @@ import {
 import React from 'react';
 import { v4 as uniqueId } from 'uuid';
 import useFetchData from '../../hooks/useFetchData';
-import { roomStatusAsResponse } from '../../utils/responseAsStatus';
+import { roomStatusAsResponse, roomTypeAsColor } from '../../utils/responseAsStatus';
 
 function RoomDetails({ id }) {
   // fetch room-details API data
@@ -64,8 +64,8 @@ function RoomDetails({ id }) {
             label={<span className='whitespace-nowrap'>Room Descriptions</span>}
           >
             <Tag
-              className='w-[60px] text-center uppercase'
-              color={response?.data?.room_type === 'couple' ? 'magenta' : 'purple'}
+              className='text-center uppercase'
+              color={roomTypeAsColor(response?.data?.room_type)}
             >
               {response?.data?.room_type}
             </Tag>

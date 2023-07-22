@@ -132,7 +132,9 @@ function CreateRoom() {
             optionFilterProp='children'
             options={[
               { value: 'single', label: 'Single' },
-              { value: 'couple', label: 'Couple' }
+              { value: 'couple', label: 'Couple' },
+              { value: 'family', label: 'Family' },
+              { value: 'presidential', label: 'Presidential' }
             ]}
             size='large'
             allowClear

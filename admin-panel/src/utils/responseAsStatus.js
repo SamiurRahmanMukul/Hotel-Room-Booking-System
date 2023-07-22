@@ -62,3 +62,19 @@ export const roomStatusAsResponse = (status) => {
     level: 'UNKNOWN'
   };
 };
+
+export const roomTypeAsColor = (type) => {
+  if (type === 'single') {
+    return 'purple';
+  }
+  if (type === 'couple') {
+    return 'magenta';
+  }
+  if (type === 'family') {
+    return 'volcano';
+  }
+  if (type === 'presidential') {
+    return 'geekblue';
+  }
+  return 'default';
+};

@@ -16,7 +16,7 @@ import { v4 as uniqueId } from 'uuid';
 import useFetchData from '../../hooks/useFetchData';
 import ApiService from '../../utils/apiService';
 import notificationWithIcon from '../../utils/notification';
-import { roomStatusAsResponse } from '../../utils/responseAsStatus';
+import { roomStatusAsResponse, roomTypeAsColor } from '../../utils/responseAsStatus';
 import QueryOptions from '../shared/QueryOptions';
 import RoomEdit from './RoomEdit';
 
@@ -139,8 +139,8 @@ function RoomsList({ add }) {
                           </td>
                           <td className='data-table-body-tr-td text-center'>
                             <Tag
-                              className='w-[60px] text-center uppercase'
-                              color={data?.room_type === 'couple' ? 'magenta' : 'purple'}
+                              className='text-center uppercase'
+                              color={roomTypeAsColor(data?.room_type)}
                             >
                               {data?.room_type}
                             </Tag>
