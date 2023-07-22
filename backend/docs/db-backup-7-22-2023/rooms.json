@@ -1,0 +1,833 @@
+[{
+  "_id": {
+    "$oid": "64bb9fe871d7beb50e2d844d"
+  },
+  "room_name": "Single Economy",
+  "room_slug": "single-economy",
+  "room_type": "single",
+  "room_price": 100,
+  "room_size": 199,
+  "room_capacity": 1,
+  "allow_pets": false,
+  "provide_breakfast": false,
+  "featured_room": false,
+  "room_description": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+  "extra_facilities": [
+    "Plush pillows and breathable bed linens",
+    "Soft, oversized bath towels",
+    "Full-sized, pH-balanced toiletries",
+    "Complimentary refreshments",
+    "Adequate safety/security",
+    "Internet",
+    "Comfortable beds"
+  ],
+  "room_images": [
+    {
+      "url": "/uploads/rooms/details-4-1690017768067.jpeg",
+      "_id": {
+        "$oid": "64bb9fe871d7beb50e2d844e"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-2-1690017768068.jpeg",
+      "_id": {
+        "$oid": "64bb9fe871d7beb50e2d844f"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-3-1690017768082.jpeg",
+      "_id": {
+        "$oid": "64bb9fe871d7beb50e2d8450"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-1-1690017768084.jpeg",
+      "_id": {
+        "$oid": "64bb9fe871d7beb50e2d8451"
+      }
+    }
+  ],
+  "room_status": "available",
+  "created_by": {
+    "$oid": "64b8734343f461a0427720ce"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1690017768101"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1690017768101"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64bba03f71d7beb50e2d8460"
+  },
+  "room_name": "Single Basic",
+  "room_slug": "single-basic",
+  "room_type": "single",
+  "room_price": 150,
+  "room_size": 250,
+  "room_capacity": 1,
+  "allow_pets": false,
+  "provide_breakfast": false,
+  "featured_room": false,
+  "room_description": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+  "extra_facilities": [
+    "Plush pillows and breathable bed linens",
+    "Soft, oversized bath towels",
+    "Full-sized, pH-balanced toiletries",
+    "Complimentary refreshments",
+    "Adequate safety/security",
+    "Internet",
+    "Comfortable beds"
+  ],
+  "room_images": [
+    {
+      "url": "/uploads/rooms/room-2-1690017855919.jpeg",
+      "_id": {
+        "$oid": "64bba03f71d7beb50e2d8461"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-2-1690017855920.jpeg",
+      "_id": {
+        "$oid": "64bba03f71d7beb50e2d8462"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-3-1690017855923.jpeg",
+      "_id": {
+        "$oid": "64bba03f71d7beb50e2d8463"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-4-1690017855925.jpeg",
+      "_id": {
+        "$oid": "64bba03f71d7beb50e2d8464"
+      }
+    }
+  ],
+  "room_status": "available",
+  "created_by": {
+    "$oid": "64b8734343f461a0427720ce"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1690017855935"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1690017855935"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64bba09a71d7beb50e2d847b"
+  },
+  "room_name": "Single Standard",
+  "room_slug": "single-standard",
+  "room_type": "single",
+  "room_price": 250,
+  "room_size": 299,
+  "room_capacity": 1,
+  "allow_pets": true,
+  "provide_breakfast": false,
+  "featured_room": false,
+  "room_description": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+  "extra_facilities": [
+    "Plush pillows and breathable bed linens",
+    "Soft, oversized bath towels",
+    "Full-sized, pH-balanced toiletries",
+    "Complimentary refreshments",
+    "Adequate safety/security",
+    "Internet",
+    "Comfortable beds"
+  ],
+  "room_images": [
+    {
+      "url": "/uploads/rooms/details-3-1690017946657.jpeg",
+      "_id": {
+        "$oid": "64bba09a71d7beb50e2d847c"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-2-1690017946659.jpeg",
+      "_id": {
+        "$oid": "64bba09a71d7beb50e2d847d"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-3-1690017946661.jpeg",
+      "_id": {
+        "$oid": "64bba09a71d7beb50e2d847e"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-4-1690017946664.jpeg",
+      "_id": {
+        "$oid": "64bba09a71d7beb50e2d847f"
+      }
+    }
+  ],
+  "room_status": "available",
+  "created_by": {
+    "$oid": "64b8734343f461a0427720ce"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1690017946676"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1690017946676"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64bba0fb71d7beb50e2d849e"
+  },
+  "room_name": "Single Deluxe",
+  "room_slug": "single-deluxe",
+  "room_type": "single",
+  "room_price": 299,
+  "room_size": 400,
+  "room_capacity": 1,
+  "allow_pets": true,
+  "provide_breakfast": true,
+  "featured_room": false,
+  "room_description": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+  "extra_facilities": [
+    "Plush pillows and breathable bed linens",
+    "Soft, oversized bath towels",
+    "Full-sized, pH-balanced toiletries",
+    "Complimentary refreshments",
+    "Adequate safety/security",
+    "Internet",
+    "Comfortable beds"
+  ],
+  "room_images": [
+    {
+      "url": "/uploads/rooms/room-4-1690018043436.jpeg",
+      "_id": {
+        "$oid": "64bba0fb71d7beb50e2d849f"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-2-1690018043437.jpeg",
+      "_id": {
+        "$oid": "64bba0fb71d7beb50e2d84a0"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-3-1690018043472.jpeg",
+      "_id": {
+        "$oid": "64bba0fb71d7beb50e2d84a1"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-4-1690018043474.jpeg",
+      "_id": {
+        "$oid": "64bba0fb71d7beb50e2d84a2"
+      }
+    }
+  ],
+  "room_status": "available",
+  "created_by": {
+    "$oid": "64b8734343f461a0427720ce"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1690018043478"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1690018043478"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64bba16471d7beb50e2d84c9"
+  },
+  "room_name": "Double Economy",
+  "room_slug": "double-economy",
+  "room_type": "couple",
+  "room_price": 200,
+  "room_size": 299,
+  "room_capacity": 2,
+  "allow_pets": false,
+  "provide_breakfast": false,
+  "featured_room": false,
+  "room_description": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+  "extra_facilities": [
+    "Plush pillows and breathable bed linens",
+    "Soft, oversized bath towels",
+    "Full-sized, pH-balanced toiletries",
+    "Complimentary refreshments",
+    "Adequate safety/security",
+    "Internet",
+    "Comfortable beds"
+  ],
+  "room_images": [
+    {
+      "url": "/uploads/rooms/room-5-1690018148636.jpeg",
+      "_id": {
+        "$oid": "64bba16471d7beb50e2d84ca"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-2-1690018148637.jpeg",
+      "_id": {
+        "$oid": "64bba16471d7beb50e2d84cb"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-3-1690018148640.jpeg",
+      "_id": {
+        "$oid": "64bba16471d7beb50e2d84cc"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-4-1690018148641.jpeg",
+      "_id": {
+        "$oid": "64bba16471d7beb50e2d84cd"
+      }
+    }
+  ],
+  "room_status": "available",
+  "created_by": {
+    "$oid": "64b8734343f461a0427720ce"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1690018148648"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1690018148648"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64bba1d071d7beb50e2d84fc"
+  },
+  "room_name": "Double Basic",
+  "room_slug": "double-basic",
+  "room_type": "couple",
+  "room_price": 250,
+  "room_size": 350,
+  "room_capacity": 2,
+  "allow_pets": false,
+  "provide_breakfast": false,
+  "featured_room": false,
+  "room_description": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+  "extra_facilities": [
+    "Plush pillows and breathable bed linens",
+    "Soft, oversized bath towels",
+    "Full-sized, pH-balanced toiletries",
+    "Complimentary refreshments",
+    "Adequate safety/security",
+    "Internet",
+    "Comfortable beds"
+  ],
+  "room_images": [
+    {
+      "url": "/uploads/rooms/room-6-1690018256843.jpeg",
+      "_id": {
+        "$oid": "64bba1d071d7beb50e2d84fd"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-2-1690018256843.jpeg",
+      "_id": {
+        "$oid": "64bba1d071d7beb50e2d84fe"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-3-1690018256846.jpeg",
+      "_id": {
+        "$oid": "64bba1d071d7beb50e2d84ff"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-4-1690018256847.jpeg",
+      "_id": {
+        "$oid": "64bba1d071d7beb50e2d8500"
+      }
+    }
+  ],
+  "room_status": "available",
+  "created_by": {
+    "$oid": "64b8734343f461a0427720ce"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1690018256854"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1690018256854"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64bba24371d7beb50e2d8543"
+  },
+  "room_name": "Double Standard",
+  "room_slug": "double-standard",
+  "room_type": "couple",
+  "room_price": 300,
+  "room_size": 400,
+  "room_capacity": 2,
+  "allow_pets": true,
+  "provide_breakfast": false,
+  "featured_room": false,
+  "room_description": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+  "extra_facilities": [
+    "Plush pillows and breathable bed linens",
+    "Soft, oversized bath towels",
+    "Full-sized, pH-balanced toiletries",
+    "Complimentary refreshments",
+    "Adequate safety/security",
+    "Internet",
+    "Comfortable beds"
+  ],
+  "room_images": [
+    {
+      "url": "/uploads/rooms/room-7-1690018371646.jpeg",
+      "_id": {
+        "$oid": "64bba24371d7beb50e2d8544"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-2-1690018371676.jpeg",
+      "_id": {
+        "$oid": "64bba24371d7beb50e2d8545"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-3-1690018371678.jpeg",
+      "_id": {
+        "$oid": "64bba24371d7beb50e2d8546"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-4-1690018371680.jpeg",
+      "_id": {
+        "$oid": "64bba24371d7beb50e2d8547"
+      }
+    }
+  ],
+  "room_status": "available",
+  "created_by": {
+    "$oid": "64b8734343f461a0427720ce"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1690018371689"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1690018371689"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64bba28a71d7beb50e2d8586"
+  },
+  "room_name": "Double Deluxe",
+  "room_slug": "double-deluxe",
+  "room_type": "couple",
+  "room_price": 400,
+  "room_size": 500,
+  "room_capacity": 2,
+  "allow_pets": true,
+  "provide_breakfast": true,
+  "featured_room": true,
+  "room_description": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+  "extra_facilities": [
+    "Plush pillows and breathable bed linens",
+    "Soft, oversized bath towels",
+    "Full-sized, pH-balanced toiletries",
+    "Complimentary refreshments",
+    "Adequate safety/security",
+    "Internet",
+    "Comfortable beds"
+  ],
+  "room_images": [
+    {
+      "url": "/uploads/rooms/room-8-1690018442519.jpeg",
+      "_id": {
+        "$oid": "64bba28a71d7beb50e2d8587"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-2-1690018442521.jpeg",
+      "_id": {
+        "$oid": "64bba28a71d7beb50e2d8588"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-3-1690018442523.jpeg",
+      "_id": {
+        "$oid": "64bba28a71d7beb50e2d8589"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-4-1690018442526.jpeg",
+      "_id": {
+        "$oid": "64bba28a71d7beb50e2d858a"
+      }
+    }
+  ],
+  "room_status": "available",
+  "created_by": {
+    "$oid": "64b8734343f461a0427720ce"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1690018442535"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1690018442535"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64bba5dc6bc305b4a7dfd4b7"
+  },
+  "room_name": "Family Economy",
+  "room_slug": "family-economy",
+  "room_type": "family",
+  "room_price": 300,
+  "room_size": 500,
+  "room_capacity": 3,
+  "allow_pets": false,
+  "provide_breakfast": false,
+  "featured_room": false,
+  "room_description": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+  "extra_facilities": [
+    "Plush pillows and breathable bed linens",
+    "Soft, oversized bath towels",
+    "Full-sized, pH-balanced toiletries",
+    "Complimentary refreshments",
+    "Adequate safety/security",
+    "Internet",
+    "Comfortable beds"
+  ],
+  "room_images": [
+    {
+      "url": "/uploads/rooms/room-9-1690019292113.jpeg",
+      "_id": {
+        "$oid": "64bba5dc6bc305b4a7dfd4b8"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-2-1690019292116.jpeg",
+      "_id": {
+        "$oid": "64bba5dc6bc305b4a7dfd4b9"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-3-1690019292119.jpeg",
+      "_id": {
+        "$oid": "64bba5dc6bc305b4a7dfd4ba"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-4-1690019292122.jpeg",
+      "_id": {
+        "$oid": "64bba5dc6bc305b4a7dfd4bb"
+      }
+    }
+  ],
+  "room_status": "available",
+  "created_by": {
+    "$oid": "64b8734343f461a0427720ce"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1690019292151"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1690019292151"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64bba6306bc305b4a7dfd516"
+  },
+  "room_name": "Family Basic",
+  "room_slug": "family-basic",
+  "room_type": "family",
+  "room_price": 350,
+  "room_size": 550,
+  "room_capacity": 4,
+  "allow_pets": false,
+  "provide_breakfast": false,
+  "featured_room": false,
+  "room_description": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+  "extra_facilities": [
+    "Plush pillows and breathable bed linens",
+    "Soft, oversized bath towels",
+    "Full-sized, pH-balanced toiletries",
+    "Complimentary refreshments",
+    "Adequate safety/security",
+    "Internet",
+    "Comfortable beds"
+  ],
+  "room_images": [
+    {
+      "url": "/uploads/rooms/room-10-1690019376942.jpeg",
+      "_id": {
+        "$oid": "64bba6306bc305b4a7dfd517"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-2-1690019376945.jpeg",
+      "_id": {
+        "$oid": "64bba6306bc305b4a7dfd518"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-3-1690019376948.jpeg",
+      "_id": {
+        "$oid": "64bba6306bc305b4a7dfd519"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-4-1690019376949.jpeg",
+      "_id": {
+        "$oid": "64bba6306bc305b4a7dfd51a"
+      }
+    }
+  ],
+  "room_status": "available",
+  "created_by": {
+    "$oid": "64b8734343f461a0427720ce"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1690019376964"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1690019376964"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64bba6856bc305b4a7dfd571"
+  },
+  "room_name": "Family Standard",
+  "room_slug": "family-standard",
+  "room_type": "family",
+  "room_price": 399,
+  "room_size": 600,
+  "room_capacity": 5,
+  "allow_pets": true,
+  "provide_breakfast": false,
+  "featured_room": false,
+  "room_description": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+  "extra_facilities": [
+    "Plush pillows and breathable bed linens",
+    "Soft, oversized bath towels",
+    "Full-sized, pH-balanced toiletries",
+    "Complimentary refreshments",
+    "Adequate safety/security",
+    "Internet",
+    "Comfortable beds"
+  ],
+  "room_images": [
+    {
+      "url": "/uploads/rooms/room-11-1690019461644.jpeg",
+      "_id": {
+        "$oid": "64bba6856bc305b4a7dfd572"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-2-1690019461645.jpeg",
+      "_id": {
+        "$oid": "64bba6856bc305b4a7dfd573"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-3-1690019461647.jpeg",
+      "_id": {
+        "$oid": "64bba6856bc305b4a7dfd574"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-4-1690019461680.jpeg",
+      "_id": {
+        "$oid": "64bba6856bc305b4a7dfd575"
+      }
+    }
+  ],
+  "room_status": "available",
+  "created_by": {
+    "$oid": "64b8734343f461a0427720ce"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1690019461691"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1690019461691"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64bba6dd6bc305b4a7dfd5d0"
+  },
+  "room_name": "Family Deluxe",
+  "room_slug": "family-deluxe",
+  "room_type": "family",
+  "room_price": 500,
+  "room_size": 700,
+  "room_capacity": 6,
+  "allow_pets": true,
+  "provide_breakfast": true,
+  "featured_room": true,
+  "room_description": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+  "extra_facilities": [
+    "Plush pillows and breathable bed linens",
+    "Soft, oversized bath towels",
+    "Full-sized, pH-balanced toiletries",
+    "Complimentary refreshments",
+    "Adequate safety/security",
+    "Internet",
+    "Comfortable beds"
+  ],
+  "room_images": [
+    {
+      "url": "/uploads/rooms/room-12-1690019549656.jpeg",
+      "_id": {
+        "$oid": "64bba6dd6bc305b4a7dfd5d1"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-2-1690019549657.jpeg",
+      "_id": {
+        "$oid": "64bba6dd6bc305b4a7dfd5d2"
+      }
+    },
+    {
+      "url": "/uploads/rooms/room-3-1690019549660.jpeg",
+      "_id": {
+        "$oid": "64bba6dd6bc305b4a7dfd5d3"
+      }
+    },
+    {
+      "url": "/uploads/rooms/details-4-1690019549662.jpeg",
+      "_id": {
+        "$oid": "64bba6dd6bc305b4a7dfd5d4"
+      }
+    }
+  ],
+  "room_status": "available",
+  "created_by": {
+    "$oid": "64b8734343f461a0427720ce"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1690019549709"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1690019549709"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64bba8da5d5fa39582eeb10f"
+  },
+  "room_name": "Presidential Deluxe",
+  "room_slug": "presidential-deluxe",
+  "room_type": "presidential",
+  "room_price": 600,
+  "room_size": 1000,
+  "room_capacity": 10,
+  "allow_pets": true,
+  "provide_breakfast": true,
+  "featured_room": true,
+  "room_description": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+  "extra_facilities": [
+    "Plush pillows and breathable bed linens",
+    "Soft, oversized bath towels",
+    "Full-sized, pH-balanced toiletries",
+    "Complimentary refreshments",
+    "Adequate safety/security",
+    "Internet",
+    "Comfortable beds"
+  ],
+  "room_images": [
+    {
+      "url": "/uploads/rooms/details-1-1690020058131.jpeg",
+      "_id": {
+        "$oid": "64bba8da5d5fa39582eeb110"
+      }
+    },
+    {
+      "url": "/uploads/rooms/room-1-1690020058134.jpeg",
+      "_id": {
+        "$oid": "64bba8da5d5fa39582eeb111"
+      }
+    },
+    {
+      "url": "/uploads/rooms/room-5-1690020058135.jpeg",
+      "_id": {
+        "$oid": "64bba8da5d5fa39582eeb112"
+      }
+    },
+    {
+      "url": "/uploads/rooms/room-9-1690020058138.jpeg",
+      "_id": {
+        "$oid": "64bba8da5d5fa39582eeb113"
+      }
+    }
+  ],
+  "room_status": "available",
+  "created_by": {
+    "$oid": "64b8734343f461a0427720ce"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1690020058151"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1690020058151"
+    }
+  },
+  "__v": 0
+}]
