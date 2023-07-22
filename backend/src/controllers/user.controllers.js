@@ -317,6 +317,14 @@ exports.deleteUserById = async (req, res) => {
       ));
     }
 
+    if (req?.user?.id?.toString() === req.params.id) {
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        'Sorry! You can\'t delete yourself'
+      ));
+    }
+
     // delete user form database
     await User.findByIdAndDelete(user.id);
 

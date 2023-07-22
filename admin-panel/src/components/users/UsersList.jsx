@@ -7,27 +7,63 @@
  *
  */
 
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import {
-  Avatar, Button, Empty, Pagination, Result, Skeleton, Tag
+  Avatar, Button, Empty, Modal, Pagination, Result, Skeleton, Tag
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { v4 as uniqueId } from 'uuid';
 import useFetchData from '../../hooks/useFetchData';
+import ApiService from '../../utils/apiService';
+import { getSessionUser } from '../../utils/authentication';
+import notificationWithIcon from '../../utils/notification';
 import { userStatusAsResponse } from '../../utils/responseAsStatus';
 import QueryOptions from '../shared/QueryOptions';
 
+const { confirm } = Modal;
+
 function UsersList({ add }) {
+  const user = getSessionUser();
+  const [fetchAgain, setFetchAgain] = useState(false);
   const [query, setQuery] = useState({
     search: '', sort: 'asce', page: '1', rows: '10'
   });
 
   // fetch user-list API data
-  const [loading, error, response] = useFetchData(`/api/v1/all-users-list?keyword=${query.search}&limit=${query.rows}&page=${query.page}&sort=${query.sort}`);
+  const [loading, error, response] = useFetchData(`/api/v1/all-users-list?keyword=${query.search}&limit=${query.rows}&page=${query.page}&sort=${query.sort}`, fetchAgain);
 
   // reset query options
   useEffect(() => {
     setQuery((prevState) => ({ ...prevState, page: '1' }));
   }, [query.rows, query.search]);
+
+  // function to handle delete user
+  const handleDeleteUser = (id) => {
+    confirm({
+      title: 'DELETE USER',
+      icon: <ExclamationCircleFilled />,
+      content: 'Are you sure delete this User permanently?',
+      onOk() {
+        return new Promise((resolve, reject) => {
+          ApiService.delete(`/api/v1/delete-user/${id}`)
+            .then((res) => {
+              if (res?.result_code === 0) {
+                notificationWithIcon('success', 'SUCCESS', res?.result?.message || 'Room delete successful');
+                setFetchAgain(!fetchAgain);
+                resolve();
+              } else {
+                notificationWithIcon('error', 'ERROR', 'Sorry! Something went wrong. App server error');
+                reject();
+              }
+            })
+            .catch((err) => {
+              notificationWithIcon('error', 'ERROR', err?.response?.data?.result?.error?.message || err?.response?.data?.result?.error || 'Sorry! Something went wrong. App server error');
+              reject();
+            });
+        }).catch(() => notificationWithIcon('error', 'ERROR', 'Oops errors!'));
+      }
+    });
+  };
 
   return (
     <div>
@@ -81,7 +117,7 @@ function UsersList({ add }) {
                           Verified
                         </th>
                         <th className='data-table-head-tr-th text-center' scope='col'>
-                          Action
+                          User Actions
                         </th>
                       </tr>
                     </thead>
@@ -135,8 +171,18 @@ function UsersList({ add }) {
                               onClick={() => add(data?.id)}
                               type='link'
                             >
-                              VIEW DETAILS
+                              View
                             </Button>
+
+                            {user?.id !== data?.id && (
+                              <Button
+                                className='inline-flex items-center !px-2'
+                                onClick={() => handleDeleteUser(data?.id)}
+                                type='link'
+                              >
+                                Delete
+                              </Button>
+                            )}
                           </td>
                         </tr>
                       ))}
