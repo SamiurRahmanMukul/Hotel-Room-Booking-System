@@ -584,3 +584,56 @@ exports.deleteRoomById = async (req, res) => {
     ));
   }
 };
+
+// TODO: Controller for get featured rooms list
+exports.getFeaturedRoomsList = async (req, res) => {
+  try {
+    // finding featured room data from database
+    const rooms = await Room.find({ featured_room: true });
+
+    // filtering rooms based on different types query
+    const roomQuery = new MyQueryHelper(Room.find(), req.query).search('room_name').sort().paginate();
+    const findRooms = await roomQuery.query;
+
+    const mappedRooms = findRooms?.map((data) => ({
+      id: data._id,
+      room_name: data.room_name,
+      room_slug: data.room_slug,
+      room_type: data.room_type,
+      room_price: data.room_price,
+      room_size: data.room_size,
+      room_capacity: data.room_capacity,
+      allow_pets: data.allow_pets,
+      provide_breakfast: data.provide_breakfast,
+      featured_room: data.featured_room,
+      room_description: data.room_description,
+      room_status: data.room_status,
+      extra_facilities: data.extra_facilities,
+      room_images: data?.room_images?.map(
+        (img) => ({ url: process.env.APP_BASE_URL + img.url })
+      ),
+      created_by: data.created_by,
+      created_at: data.createdAt,
+      updated_at: data.updatedAt
+    }));
+
+    res.status(200).json(successResponse(
+      0,
+      'SUCCESS',
+      'Featured rooms list data found successful',
+      {
+        rows: mappedRooms,
+        total_rows: rooms.length,
+        response_rows: findRooms.length,
+        total_page: req?.query?.keyword ? Math.ceil(findRooms.length / req.query.limit) : Math.ceil(rooms.length / req.query.limit),
+        current_page: req?.query?.page ? parseInt(req.query.page, 10) : 1
+      }
+    ));
+  } catch (error) {
+    res.status(500).json(errorResponse(
+      2,
+      'SERVER SIDE ERROR',
+      error
+    ));
+  }
+};

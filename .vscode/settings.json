@@ -5,12 +5,15 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
+  "files.associations": {
+    "html": "html",
+    "*.css": "tailwindcss"
+  },
 
   // ESLINT CONFIGURATION
   "eslint.validate": ["javascript", "javascriptreact"],
 
   // LANGUAGE CONFIGURATION
-  "css.validate": false,
   "[javascript]": {
     "editor.formatOnSave": false
   },
