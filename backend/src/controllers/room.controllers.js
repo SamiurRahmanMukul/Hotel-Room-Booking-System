@@ -592,7 +592,9 @@ exports.getFeaturedRoomsList = async (req, res) => {
     const rooms = await Room.find({ featured_room: true });
 
     // filtering rooms based on different types query
-    const roomQuery = new MyQueryHelper(Room.find(), req.query).search('room_name').sort().paginate();
+    const roomQuery = new MyQueryHelper(Room.find(
+      { featured_room: true }
+    ), req.query).search('room_name').sort().paginate();
     const findRooms = await roomQuery.query;
 
     const mappedRooms = findRooms?.map((data) => ({
