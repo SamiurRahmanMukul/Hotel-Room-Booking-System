@@ -24,7 +24,7 @@ export default function RoomList({ rooms }) {
     <section className='rooms-list'>
       <div className='rooms-list-center'>
         {rooms.map((room) => (
-          <Room key={uniqueId()} room={room.fields} />
+          <Room key={uniqueId()} room={room} />
         ))}
       </div>
     </section>

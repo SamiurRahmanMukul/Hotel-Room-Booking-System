@@ -45,7 +45,7 @@ function Home(props) {
         ) : props?.error ? (
           <Result
             title='Failed to fetch'
-            subTitle={props?.error}
+            subTitle={props?.error?.message || 'Sorry! Something went wrong. App server error'}
             status='error'
           />
         ) : (
