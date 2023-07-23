@@ -15,29 +15,25 @@ function Room({ room }) {
     <article className='room'>
       <div className='img-container'>
         <img
-          src={room?.images[0].fields.file.url || '/img/jpeg/room-1.jpeg'}
+          src={room?.room_images[0]?.url || '/img/jpeg/room-1.jpeg'}
           alt='single room'
         />
 
         <div className='price-top'>
-          <h6>
-            $
-            {' '}
-            {room.price}
-          </h6>
+          <h6>{`$ ${room?.room_price}`}</h6>
           <p>per night</p>
         </div>
 
         <Link
           className='btn-primary room-link'
-          href={`/rooms/${room.slug}`}
+          href={`/rooms/${room?.room_slug}`}
         >
           Feature
         </Link>
       </div>
 
       <p className='room-info'>
-        {room.name}
+        {room?.room_name}
       </p>
     </article>
   );

@@ -9,20 +9,17 @@
 
 import React from 'react';
 import { v4 as uniqueId } from 'uuid';
-import rooms from '../../data/rooms';
 import Room from '../shared/Room';
 import Title from './Title';
 
-function FeaturedRooms() {
-  const featuredRoom = rooms.filter((data) => data.fields.featured === true);
-
+function FeaturedRooms({ featuredRoom }) {
   return (
     <section className='featured-rooms'>
       <Title title='featured rooms' />
 
       <div className='featured-rooms-center'>
         {featuredRoom?.map((room) => (
-          <Room key={uniqueId()} room={room.fields} />
+          <Room key={uniqueId()} room={room} />
         ))}
       </div>
     </section>
