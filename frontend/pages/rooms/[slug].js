@@ -7,24 +7,26 @@
  *
  */
 
+import axios from 'axios';
+import getConfig from 'next/config';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uniqueId } from 'uuid';
 import Banner from '../../components/home/Banner';
 import MainLayout from '../../components/layout';
 import StyledHero from '../../components/rooms/StyledHero';
-import rooms from '../../data/rooms';
+import Loading from '../../components/shared/Loading';
 
-function RoomPreview() {
-  const router = useRouter();
-  const [fields] = rooms.filter((data) => data.fields.slug === router.query.slug);
+const { publicRuntimeConfig } = getConfig();
 
+function RoomPreview(props) {
   return (
     <MainLayout title='Beach Resort ― Rooms Preview'>
-      {!fields ? (
+      {!props?.room && !props?.error ? (
+        <Loading />
+      ) : props?.error ? (
         <div className='error'>
-          <h3>No such room could be found!</h3>
+          <h3>{props?.error?.message || 'No such room could be found!'}</h3>
           <Link className='btn-primary' href='/rooms'>
             Back to rooms
           </Link>
@@ -32,7 +34,7 @@ function RoomPreview() {
       ) : (
         <>
           <StyledHero>
-            <Banner title={`${fields?.fields?.name} room`}>
+            <Banner title={`${props?.room?.data?.room_name} room`}>
               <Link className='btn-primary' href='/rooms'>
                 Back to rooms
               </Link>
@@ -41,11 +43,11 @@ function RoomPreview() {
 
           <section className='single-room'>
             <div className='single-room-images'>
-              {fields.fields.images.map((item) => (
+              {props?.room?.data?.room_images?.map((item) => (
                 <img
                   key={uniqueId()}
-                  src={item?.fields?.file?.url}
-                  alt={item?.fields?.file?.url}
+                  src={item?.url}
+                  alt={item?.url || 'room-details-img'}
                 />
               ))}
             </div>
@@ -53,31 +55,26 @@ function RoomPreview() {
             <div className='single-room-info'>
               <article className='desc'>
                 <h3>Details:</h3>
-                <p>{fields?.fields?.description}</p>
+                <p>{props?.room?.data?.room_description}</p>
               </article>
 
               <article className='info'>
                 <h3>Information:</h3>
                 <h6>
-                  Price : $
-                  {fields?.fields?.price}
+                  {`Price : $ ${props?.room?.data?.room_price}`}
                 </h6>
                 <h6>
-                  Size :
-                  {' '}
-                  {fields?.fields?.size}
-                  {' '}
-                  SQFT
+                  {`Size : ${props?.room?.data?.room_size} SQFT`}
                 </h6>
                 <h6>
                   Max capacity :
                   {' '}
-                  {fields?.fields?.capacity > 1
-                    ? `${fields?.fields?.capacity} people`
-                    : `${fields?.fields?.capacity} person`}
+                  {props?.room?.data?.room_capacity > 1
+                    ? `${props?.room?.data?.room_capacity} people`
+                    : `${props?.room?.data?.room_capacity} person`}
                 </h6>
-                <h6>{fields?.fields?.pets ? 'pets allowed' : 'no pets allowed'}</h6>
-                <h6>{fields?.fields?.breakfast && 'free breakfast included'}</h6>
+                <h6>{props?.room?.data?.allow_pets ? 'pets allowed' : 'no pets allowed'}</h6>
+                <h6>{props?.room?.data?.provide_breakfast && 'free breakfast included'}</h6>
               </article>
             </div>
           </section>
@@ -85,6 +82,30 @@ function RoomPreview() {
       )}
     </MainLayout>
   );
+}
+
+export async function getServerSideProps(ctx) {
+  try {
+    // Fetch data from the server-side API
+    const response = await axios.get(
+      `${publicRuntimeConfig.API_BASE_URL}/api/v1/get-room-by-id-or-slug-name/${ctx.query.slug}`
+    );
+    const room = response?.data?.result;
+
+    return {
+      props: {
+        room,
+        error: null
+      }
+    };
+  } catch (err) {
+    return {
+      props: {
+        room: null,
+        error: err?.data
+      }
+    };
+  }
 }
 
 export default RoomPreview;
