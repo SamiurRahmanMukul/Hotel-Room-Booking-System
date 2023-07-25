@@ -8,6 +8,7 @@
  */
 
 const mongoose = require('mongoose');
+const validateBookingDates = require('../lib/booking.dates.validator');
 
 const bookingSchema = new mongoose.Schema({
   room_id: {
@@ -15,16 +16,25 @@ const bookingSchema = new mongoose.Schema({
     ref: 'Rooms',
     required: [true, 'Room id is required field']
   },
-  booking_by: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: [true, 'User id is required field']
+  booking_dates: {
+    type: [Date],
+    required: [true, 'Booking `booking_dates` is required field'],
+    validate: [validateBookingDates, 'Please provide valid future dates for `booking_dates`']
   },
   booking_status: {
     type: String,
     default: 'pending',
-    enum: ['pending', 'approved', 'rejected', 'running', 'competed'],
-    required: [true, 'Category name is required field.']
+    enum: ['pending', 'cancel', 'approved', 'rejected', 'in-reviews', 'competed'],
+    required: [true, 'Room status is required field.']
+  },
+  booking_by: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users',
+    required: [true, 'User id is required field']
+  },
+  reviews: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Reviews'
   },
   createdAt: {
     type: Date,
@@ -36,4 +46,4 @@ const bookingSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Booking', bookingSchema);
+module.exports = mongoose.model('Bookings', bookingSchema);

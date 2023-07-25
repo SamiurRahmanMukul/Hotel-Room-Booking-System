@@ -27,6 +27,7 @@ const authRoute = require('../routes/auth.routes');
 const userRoute = require('../routes/user.routes');
 const appsRoute = require('../routes/apps.routes');
 const roomRoute = require('../routes/room.routes');
+const bookingRoute = require('../routes/booking.route');
 
 // load environment variables from .env file
 env.config();
@@ -78,6 +79,7 @@ app.use('/api/v1', authRoute); // auth routes
 app.use('/api/v1', userRoute); // user routes
 app.use('/api/v1', appsRoute); // apps routes
 app.use('/api/v1', roomRoute); // room routes
+app.use('/api/v1', bookingRoute); // booking routes
 
 // 404 ~ not found error handler
 app.use(notFoundRoute);
