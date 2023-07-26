@@ -10,6 +10,7 @@
 const Room = require('../models/room.model');
 const Booking = require('../models/booking.model');
 const { errorResponse, successResponse } = require('../configs/app.response');
+const MyQueryHelper = require('../configs/api.feature');
 
 // TODO: controller for placed booking order
 exports.placedBookingOrder = async (req, res) => {
@@ -69,6 +70,149 @@ exports.placedBookingOrder = async (req, res) => {
       0,
       'SUCCESS',
       'Your room booking order placed successful',
+      booking
+    ));
+  } catch (error) {
+    res.status(500).json(errorResponse(
+      2,
+      'SERVER SIDE ERROR',
+      error
+    ));
+  }
+};
+
+// TODO: controller for get all specific user booking order
+exports.getBookingOrderByUserId = async (req, res) => {
+  try {
+    const myBooking = await Booking.find({ booking_by: req.user.id })
+      .populate('room_id')
+      .populate('booking_by', req.user.mail);
+
+    // if no bookings found for the user id, return an error response
+    if (!myBooking || myBooking.length === 0) {
+      return res.status(404).json(errorResponse(
+        4,
+        'UNKNOWN ACCESS',
+        'No bookings found for the specified user'
+      ));
+    }
+
+    // filtering booking orders based on different types query
+    const bookingQuery = new MyQueryHelper(Booking.find({ booking_by: req.user.id })
+      .populate('room_id')
+      .populate('booking_by', req.user.mail), req.query)
+      .sort()
+      .paginate();
+    const findBooking = await bookingQuery.query;
+
+    const mapperBooking = findBooking?.map((data) => ({
+      id: data?.id,
+      booking_dates: data?.booking_dates,
+      booking_status: data?.booking_status,
+      booking_by: {
+        id: data?.booking_by?._id,
+        userName: data?.booking_by?.userName,
+        fullName: data?.booking_by?.fullName,
+        email: data?.booking_by?.email,
+        phone: data?.booking_by?.phone,
+        avatar: process.env.APP_BASE_URL + data?.booking_by?.avatar,
+        gender: data?.booking_by?.gender,
+        dob: data?.booking_by?.dob,
+        address: data?.booking_by?.address,
+        role: data?.booking_by?.role,
+        verified: data?.booking_by?.verified,
+        status: data?.booking_by?.status,
+        createdAt: data?.booking_by?.createdAt,
+        updatedAt: data?.booking_by?.updatedAt
+      },
+      room: {
+        id: data?.room_id?._id,
+        room_name: data?.room_id?.room_name,
+        room_slug: data?.room_id?.room_slug,
+        room_type: data?.room_id?.room_type,
+        room_price: data?.room_id?.room_price,
+        room_size: data?.room_id?.room_size,
+        room_capacity: data?.room_id?.room_capacity,
+        allow_pets: data?.room_id?.allow_pets,
+        provide_breakfast: data?.room_id?.provide_breakfast,
+        featured_room: data?.room_id?.featured_room,
+        room_description: data?.room_id?.room_description,
+        room_status: data?.room_id?.room_status,
+        extra_facilities: data?.room_id?.extra_facilities,
+        room_images: data?.room_id?.room_images?.map(
+          (img) => ({ url: process.env.APP_BASE_URL + img.url })
+        )
+      },
+      created_at: data?.createdAt,
+      updated_at: data?.updatedAt
+    }));
+
+    // Success response with the booking list
+    res.status(200).json(successResponse(
+      0,
+      'SUCCESS',
+      'Booking list retrieved successful',
+      {
+        rows: mapperBooking,
+        total_rows: myBooking.length,
+        response_rows: findBooking.length,
+        total_page: req?.query?.keyword ? Math.ceil(findBooking.length / req.query.limit) : Math.ceil(myBooking.length / req.query.limit),
+        current_page: req?.query?.page ? parseInt(req.query.page, 10) : 1
+      }
+    ));
+  } catch (error) {
+    res.status(500).json(errorResponse(
+      2,
+      'SERVER SIDE ERROR',
+      error
+    ));
+  }
+};
+
+// TODO: controller for cancel SelfBookingOrder
+exports.cancelSelfBookingOrder = async (req, res) => {
+  try {
+    // finding by room by room id
+    let booking = null;
+
+    if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {
+      // find the booking by id and check if the booking_by user id matches the authenticated user id
+      booking = await Booking.findOne({ _id: req.params.id, booking_by: req.user.id });
+    } else {
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        'Something went wrong. Probably booking id missing/incorrect'
+      ));
+    }
+
+    // if booking not found or user is not authorized to cancel this booking, return an error response
+    if (!booking) {
+      return res.status(404).json(errorResponse(
+        4,
+        'UNKNOWN ACCESS',
+        'Booking not found or you are not authorized to cancel this booking'
+      ));
+    }
+
+    // if booking status is not 'pending', return an error response
+    if (booking.booking_status !== 'pending') {
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        'This booking cannot be canceled as it is no longer in the pending status'
+      ));
+    }
+
+    // Update the booking status to 'cancel'
+    booking.booking_status = 'cancel';
+    await booking.save();
+
+    // Success response after canceling the booking
+    res.status(200).json(successResponse(
+      0,
+      'SUCCESS',
+      'Booking order has been canceled successful',
       booking
     ));
   } catch (error) {

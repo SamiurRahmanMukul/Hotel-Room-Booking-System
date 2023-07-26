@@ -46,4 +46,10 @@ const bookingSchema = new mongoose.Schema({
   }
 });
 
+// updatedAt' field before saving or updating a document
+bookingSchema.pre('save', function (next) {
+  this.updatedAt = new Date();
+  next();
+});
+
 module.exports = mongoose.model('Bookings', bookingSchema);
