@@ -347,6 +347,28 @@ exports.updatedBookingOrderByAdmin = async (req, res) => {
       ));
     }
 
+    // finding by room by room id
+    let myRoom = null;
+
+    if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {
+      myRoom = await Room.findById(booking.room_id);
+    } else {
+      return res.status(400).json(errorResponse(
+        1,
+        'FAILED',
+        'Something went wrong. Probably room id missing/incorrect'
+      ));
+    }
+
+    // check room available
+    if (!myRoom) {
+      return res.status(404).json(errorResponse(
+        4,
+        'UNKNOWN ACCESS',
+        'Room does not exist'
+      ));
+    }
+
     // handle update booking status
     switch (req.body.booking_status) {
       case 'approved':
@@ -354,6 +376,10 @@ exports.updatedBookingOrderByAdmin = async (req, res) => {
           // update the booking status to `approved`
           booking.booking_status = 'approved';
           await booking.save();
+
+          // update the room status to 'booked'
+          myRoom.room_status = 'booked';
+          await myRoom.save();
         } else {
           return res.status(400).json(errorResponse(
             1,
@@ -380,6 +406,10 @@ exports.updatedBookingOrderByAdmin = async (req, res) => {
           // update the booking status to `in-reviews`
           booking.booking_status = 'in-reviews';
           await booking.save();
+
+          // update the room status to 'available'
+          myRoom.room_status = 'available';
+          await myRoom.save();
         } else {
           return res.status(400).json(errorResponse(
             1,
