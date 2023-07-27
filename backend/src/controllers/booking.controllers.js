@@ -86,7 +86,11 @@ exports.getBookingOrderByUserId = async (req, res) => {
   try {
     const myBooking = await Booking.find({ booking_by: req.user.id })
       .populate('room_id')
-      .populate('booking_by');
+      .populate('booking_by')
+      .populate({
+        path: 'reviews',
+        populate: { path: 'user_id', model: 'Users' }
+      });
 
     // if no bookings found for the user id, return an error response
     if (!myBooking || myBooking.length === 0) {
@@ -100,7 +104,10 @@ exports.getBookingOrderByUserId = async (req, res) => {
     // filtering booking orders based on different types query
     const bookingQuery = new MyQueryHelper(Booking.find({ booking_by: req.user.id })
       .populate('room_id')
-      .populate('booking_by'), req.query)
+      .populate('booking_by')
+      .populate(
+        { path: 'reviews', populate: { path: 'user_id', model: 'Users' } }
+      ), req.query)
       .sort()
       .paginate();
     const findBooking = await bookingQuery.query;
@@ -109,6 +116,31 @@ exports.getBookingOrderByUserId = async (req, res) => {
       id: data?.id,
       booking_dates: data?.booking_dates,
       booking_status: data?.booking_status,
+      reviews: !data?.reviews ? null : {
+        id: data?.reviews.id,
+        room_id: data?.reviews.room_id,
+        booking_id: data?.reviews.booking_id,
+        rating: data?.reviews.rating,
+        message: data?.reviews.message,
+        reviews_by: {
+          id: data?.reviews?.user_id?._id,
+          userName: data?.reviews?.user_id?.userName,
+          fullName: data?.reviews?.user_id?.fullName,
+          email: data?.reviews?.user_id?.email,
+          phone: data?.reviews?.user_id?.phone,
+          avatar: process.env.APP_BASE_URL + data?.reviews?.user_id?.avatar,
+          gender: data?.reviews?.user_id?.gender,
+          dob: data?.reviews?.user_id?.dob,
+          address: data?.reviews?.user_id?.address,
+          role: data?.reviews?.user_id?.role,
+          verified: data?.reviews?.user_id?.verified,
+          status: data?.reviews?.user_id?.status,
+          createdAt: data?.reviews?.user_id?.createdAt,
+          updatedAt: data?.reviews?.user_id?.updatedAt
+        },
+        created_at: data?.reviews?.createdAt,
+        updated_at: data?.reviews?.updatedAt
+      },
       booking_by: {
         id: data?.booking_by?._id,
         userName: data?.booking_by?.userName,
@@ -229,7 +261,11 @@ exports.getBookingOrderForAdmin = async (req, res) => {
   try {
     const myBooking = await Booking.find()
       .populate('room_id')
-      .populate('booking_by');
+      .populate('booking_by')
+      .populate({
+        path: 'reviews',
+        populate: { path: 'user_id', model: 'Users' }
+      });
 
     // if no bookings found for the user id, return an error response
     if (!myBooking || myBooking.length === 0) {
@@ -243,7 +279,10 @@ exports.getBookingOrderForAdmin = async (req, res) => {
     // filtering booking orders based on different types query
     const bookingQuery = new MyQueryHelper(Booking.find()
       .populate('room_id')
-      .populate('booking_by'), req.query)
+      .populate('booking_by')
+      .populate(
+        { path: 'reviews', populate: { path: 'user_id', model: 'Users' } }
+      ), req.query)
       .sort()
       .paginate();
     const findBooking = await bookingQuery.query;
@@ -252,6 +291,31 @@ exports.getBookingOrderForAdmin = async (req, res) => {
       id: data?.id,
       booking_dates: data?.booking_dates,
       booking_status: data?.booking_status,
+      reviews: !data?.reviews ? null : {
+        id: data?.reviews.id,
+        room_id: data?.reviews.room_id,
+        booking_id: data?.reviews.booking_id,
+        rating: data?.reviews.rating,
+        message: data?.reviews.message,
+        reviews_by: {
+          id: data?.reviews?.user_id?._id,
+          userName: data?.reviews?.user_id?.userName,
+          fullName: data?.reviews?.user_id?.fullName,
+          email: data?.reviews?.user_id?.email,
+          phone: data?.reviews?.user_id?.phone,
+          avatar: process.env.APP_BASE_URL + data?.reviews?.user_id?.avatar,
+          gender: data?.reviews?.user_id?.gender,
+          dob: data?.reviews?.user_id?.dob,
+          address: data?.reviews?.user_id?.address,
+          role: data?.reviews?.user_id?.role,
+          verified: data?.reviews?.user_id?.verified,
+          status: data?.reviews?.user_id?.status,
+          createdAt: data?.reviews?.user_id?.createdAt,
+          updatedAt: data?.reviews?.user_id?.updatedAt
+        },
+        created_at: data?.reviews?.createdAt,
+        updated_at: data?.reviews?.updatedAt
+      },
       booking_by: {
         id: data?.booking_by?._id,
         userName: data?.booking_by?.userName,

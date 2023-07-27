@@ -24,7 +24,7 @@ const bookingSchema = new mongoose.Schema({
   booking_status: {
     type: String,
     default: 'pending',
-    enum: ['pending', 'cancel', 'approved', 'rejected', 'in-reviews', 'competed'],
+    enum: ['pending', 'cancel', 'approved', 'rejected', 'in-reviews', 'completed'],
     required: [true, 'Room status is required field.']
   },
   booking_by: {
