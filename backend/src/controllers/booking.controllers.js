@@ -15,7 +15,7 @@ const MyQueryHelper = require('../configs/api.feature');
 // TODO: controller for placed booking order
 exports.placedBookingOrder = async (req, res) => {
   try {
-    // finding by room by room id
+    // finding by room id
     let myRoom = null;
 
     if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {
@@ -69,7 +69,7 @@ exports.placedBookingOrder = async (req, res) => {
     res.status(201).json(successResponse(
       0,
       'SUCCESS',
-      'Your room booking order placed successful',
+      'Your room booking order placed successful. Please wait for confirmation',
       booking
     ));
   } catch (error) {
@@ -204,7 +204,7 @@ exports.getBookingOrderByUserId = async (req, res) => {
 // TODO: controller for cancel self booking order
 exports.cancelSelfBookingOrder = async (req, res) => {
   try {
-    // finding by room by room id
+    // finding by room id
     let booking = null;
 
     if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {

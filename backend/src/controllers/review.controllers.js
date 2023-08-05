@@ -115,7 +115,7 @@ exports.getRoomReviewsList = async (req, res) => {
     let myReviews = null;
 
     if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {
-      myReviews = await await Review.find({ room_id: req.params.id })
+      myReviews = await Review.find({ room_id: req.params.id })
         .populate('user_id');
     } else {
       return res.status(400).json(errorResponse(
