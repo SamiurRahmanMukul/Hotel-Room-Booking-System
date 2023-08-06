@@ -78,3 +78,46 @@ export const roomTypeAsColor = (type) => {
   }
   return 'default';
 };
+
+export const bookingStatusAsResponse = (status) => {
+  if (status === 'pending') {
+    return {
+      color: 'blue',
+      level: 'PENDING'
+    };
+  }
+  if (status === 'cancel') {
+    return {
+      color: 'volcano',
+      level: 'CANCEL'
+    };
+  }
+  if (status === 'approved') {
+    return {
+      color: 'lime',
+      level: 'APPROVED'
+    };
+  }
+  if (status === 'rejected') {
+    return {
+      color: 'red',
+      level: 'REJECTED'
+    };
+  }
+  if (status === 'in-reviews') {
+    return {
+      color: 'purple',
+      level: 'IN REVIEWS'
+    };
+  }
+  if (status === 'completed') {
+    return {
+      color: 'green',
+      level: 'COMPLETED'
+    };
+  }
+  return {
+    color: 'default',
+    level: 'UNKNOWN'
+  };
+};

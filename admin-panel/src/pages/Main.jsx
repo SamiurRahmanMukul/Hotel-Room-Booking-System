@@ -19,6 +19,7 @@ import Logo from '../assets/images/logo.svg';
 import UserBox from '../components/shared/UserBox';
 import Dashboard from '../components/tabs/Dashboard';
 import MyProfile from '../components/tabs/MyProfile';
+import Orders from '../components/tabs/Orders';
 import Rooms from '../components/tabs/Rooms';
 import Users from '../components/tabs/Users';
 import useFullScreen from '../hooks/useFullScreen';
@@ -68,7 +69,7 @@ function Main() {
         break;
       }
       case '4': {
-        navigate('/main/booking-rooms');
+        navigate('/main/booking-orders');
         break;
       }
       case '5': {
@@ -100,7 +101,7 @@ function Main() {
           setSelectedKeys('3');
           break;
         }
-        case 'booking-rooms': {
+        case 'booking-orders': {
           setSelectedKeys('4');
           break;
         }
@@ -134,7 +135,7 @@ function Main() {
         break;
       }
       case '4': {
-        window.document.title = 'Beach Resort — Booking Rooms';
+        window.document.title = 'Beach Resort — Booking Orders';
         break;
       }
       case '5': {
@@ -182,7 +183,7 @@ function Main() {
             {
               key: '4',
               icon: <FileProtectOutlined />,
-              label: 'Booking Rooms'
+              label: 'Booking Orders'
             },
             {
               key: '5',
@@ -227,6 +228,7 @@ function Main() {
           {selectedKeys === '1' && (<Dashboard />)}
           {selectedKeys === '2' && (<Users />)}
           {selectedKeys === '3' && (<Rooms />)}
+          {selectedKeys === '4' && (<Orders />)}
           {selectedKeys === '5' && (<MyProfile />)}
         </Content>
 

@@ -69,7 +69,7 @@ exports.placedBookingOrder = async (req, res) => {
     res.status(201).json(successResponse(
       0,
       'SUCCESS',
-      'Your room booking order placed successful. Please wait for confirmation',
+      'Your room booking order placed successful. Please wait for confirmation.',
       booking
     ));
   } catch (error) {

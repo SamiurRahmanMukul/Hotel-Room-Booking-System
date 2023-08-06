@@ -11,7 +11,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Input, Select } from 'antd';
 import React from 'react';
 
-function QueryOptions({ query, setQuery }) {
+function QueryOptions({ query, setQuery, disabledSearch }) {
   return (
     <div className='flex flex-col items-center justify-between space-x-0 space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0'>
       <Input
@@ -19,6 +19,7 @@ function QueryOptions({ query, setQuery }) {
         onChange={(e) => setQuery((prevState) => ({ ...prevState, search: e.target.value }))}
         placeholder='Start type here to Search...'
         prefix={<SearchOutlined />}
+        disabled={disabledSearch}
         value={query.search}
         size='large'
         allowClear
