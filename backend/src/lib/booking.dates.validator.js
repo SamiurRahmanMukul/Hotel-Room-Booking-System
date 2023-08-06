@@ -9,10 +9,11 @@
 
 /**
  * Custom validator function to check if the array is non-empty, contains valid future dates, and has no duplicates.
+ *
  * @param {Array} array - The array of dates to be validated.
  * @returns {boolean} - Returns true if the array contains valid future dates without duplicates, otherwise false.
  */
-const validateBookingDates = (array) => {
+exports.validateBookingDates = (array) => {
   if (array.length === 0) return false; // Array should not be empty
 
   const currentDate = new Date();
@@ -32,4 +33,40 @@ const validateBookingDates = (array) => {
   return true;
 };
 
-module.exports = validateBookingDates;
+/**
+ * Checks various date-related conditions for a given array of date strings.
+ *
+ * @param {string[]} dateArray - An array of date strings in the format 'YYYY-MM-DD'.
+ * @returns {Object} An object containing various date-related conditions:
+ *   - isAnyDateInPast: A boolean indicating if any date is in the past.
+ *   - earliestDate: The earliest date in the array.
+ *   - latestDate: The latest date in the array.
+ *   - isEarliestDateOverCurrentDate: A boolean indicating if the earliest date is after the current date.
+ *   - isLatestDateOverCurrentDate: A boolean indicating if the latest date is after the current date.
+ */
+exports.bookingDatesBeforeCurrentDate = (dateArray) => {
+  // Convert dates to Date objects
+  const currentDate = new Date();
+
+  // Check if any date is in the past
+  const isAnyDateInPast = dateArray.some((dateString) => new Date(dateString) < currentDate);
+
+  // Convert dates to Date objects and find the earliest and latest dates
+  const dateObjects = dateArray.map((dateString) => new Date(dateString));
+  const earliestDate = new Date(Math.min(...dateObjects));
+  const latestDate = new Date(Math.max(...dateObjects));
+
+  // Check if the earliest date is over the current date
+  const isEarliestDateOverCurrentDate = earliestDate < currentDate;
+
+  // Check if the latest date is over the current date
+  const isLatestDateOverCurrentDate = latestDate < currentDate;
+
+  return {
+    isAnyDateInPast,
+    earliestDate,
+    latestDate,
+    isEarliestDateOverCurrentDate,
+    isLatestDateOverCurrentDate
+  };
+};

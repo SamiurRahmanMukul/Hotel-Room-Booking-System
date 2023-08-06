@@ -35,7 +35,9 @@ function OrderPlaceModal({ bookingModal, setBookingModal }) {
   // function to handle placed room booking order
   const handlePlacedOrder = () => {
     if (selectedDates.length === 0) {
-      notificationWithIcon('error', 'ERROR', 'Minimum 1 date selection is required to placed room booking order.');
+      notificationWithIcon('error', 'ERROR', 'Minimum 1 date selection is required to placed an room booking order.');
+    } else if (selectedDates.length > 5) {
+      notificationWithIcon('error', 'ERROR', 'Maximum 5 days selection possible to placed an room booking order.');
     } else {
       confirm({
         title: 'Are your selected dates booked this Room?',

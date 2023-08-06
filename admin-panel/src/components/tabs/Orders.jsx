@@ -1,5 +1,5 @@
 import {
-  Button, Empty, Pagination, Result, Skeleton, Tag
+  Button, Empty, Pagination, Rate, Result, Skeleton, Tag, Tooltip
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { v4 as uniqueId } from 'uuid';
@@ -62,6 +62,9 @@ function Orders() {
                           Booked Room
                         </th>
                         <th className='data-table-head-tr-th text-center' scope='col'>
+                          Review & Ratting
+                        </th>
+                        <th className='data-table-head-tr-th text-center' scope='col'>
                           Booking Actions
                         </th>
                       </tr>
@@ -90,13 +93,29 @@ function Orders() {
                           <td className='data-table-body-tr-td'>
                             {data?.room?.room_name}
                           </td>
+                          <td className='data-table-body-tr-td text-center'>
+                            {data?.reviews ? (
+                              <Tooltip
+                                title={data?.reviews?.message}
+                                placement='top'
+                                trigger='hover'
+                              >
+                                <Rate value={data?.reviews?.rating} disabled />
+                              </Tooltip>
+                            ) : 'N/A'}
+                          </td>
                           <td className='data-table-body-tr-td !px-0 text-center'>
-                            <Button
-                              className='inline-flex items-center !px-2'
-                              type='link'
-                            >
-                              Update Status
-                            </Button>
+                            {data?.booking_status !== 'cancel' &&
+                            data?.booking_status !== 'rejected' &&
+                            data?.booking_status !== 'in-reviews' &&
+                            data?.booking_status !== 'completed' ? (
+                              <Button
+                                className='inline-flex items-center !px-2'
+                                type='primary'
+                              >
+                                Update Status
+                              </Button>
+                              ) : 'Action Not Possible!'}
                           </td>
                         </tr>
                       ))}

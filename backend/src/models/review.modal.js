@@ -27,7 +27,9 @@ const bookingSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    required: [true, 'Review `rating` filed is required']
+    required: [true, 'Review `rating` filed is required'],
+    min: 1,
+    max: 5
   },
   message: {
     type: String,

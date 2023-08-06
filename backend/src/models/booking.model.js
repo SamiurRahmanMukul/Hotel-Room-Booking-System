@@ -8,7 +8,7 @@
  */
 
 const mongoose = require('mongoose');
-const validateBookingDates = require('../lib/booking.dates.validator');
+const { validateBookingDates } = require('../lib/booking.dates.validator');
 
 const bookingSchema = new mongoose.Schema({
   room_id: {

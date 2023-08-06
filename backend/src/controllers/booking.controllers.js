@@ -11,6 +11,7 @@ const Room = require('../models/room.model');
 const Booking = require('../models/booking.model');
 const { errorResponse, successResponse } = require('../configs/app.response');
 const MyQueryHelper = require('../configs/api.feature');
+const { bookingDatesBeforeCurrentDate } = require('../lib/booking.dates.validator');
 
 // TODO: controller for placed booking order
 exports.placedBookingOrder = async (req, res) => {
@@ -384,7 +385,7 @@ exports.updatedBookingOrderByAdmin = async (req, res) => {
 
     if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {
       // find the booking by id and check if the booking_by user id matches the authenticated user id
-      booking = await Booking.findOne({ _id: req.params.id, booking_by: req.user.id });
+      booking = await Booking.findOne({ _id: req.params.id });
     } else {
       return res.status(400).json(errorResponse(
         1,
@@ -437,13 +438,21 @@ exports.updatedBookingOrderByAdmin = async (req, res) => {
     switch (req.body.booking_status) {
       case 'approved':
         if (booking.booking_status === 'pending') {
-          // update the booking status to `approved`
-          booking.booking_status = 'approved';
-          await booking.save();
+          if (!bookingDatesBeforeCurrentDate(booking?.booking_dates).isAnyDateInPast) {
+            // update the booking status to `approved`
+            booking.booking_status = 'approved';
+            await booking.save();
 
-          // update the room status to 'booked'
-          myRoom.room_status = 'booked';
-          await myRoom.save();
+            // update the room status to 'booked'
+            myRoom.room_status = 'booked';
+            await myRoom.save();
+          } else {
+            return res.status(400).json(errorResponse(
+              1,
+              'FAILED',
+              'Sorry! This booking cannot be `approved` because of booking data is past'
+            ));
+          }
         } else {
           return res.status(400).json(errorResponse(
             1,
@@ -467,13 +476,21 @@ exports.updatedBookingOrderByAdmin = async (req, res) => {
         break;
       case 'in-reviews':
         if (booking.booking_status === 'approved') {
-          // update the booking status to `in-reviews`
-          booking.booking_status = 'in-reviews';
-          await booking.save();
+          if (bookingDatesBeforeCurrentDate(booking?.booking_dates).isAnyDateInPast) {
+            // update the booking status to `in-reviews`
+            booking.booking_status = 'in-reviews';
+            await booking.save();
 
-          // update the room status to 'available'
-          myRoom.room_status = 'available';
-          await myRoom.save();
+            // update the room status to 'available'
+            myRoom.room_status = 'available';
+            await myRoom.save();
+          } else {
+            return res.status(400).json(errorResponse(
+              1,
+              'FAILED',
+              'Sorry! This booking cannot be `in-reviews` because of booking data is not feature'
+            ));
+          }
         } else {
           return res.status(400).json(errorResponse(
             1,
