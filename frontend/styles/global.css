@@ -121,6 +121,7 @@ h6 {
 .nav-header {
   display: flex;
   justify-content: space-between;
+  margin-top: 8px;
 }
 .nav-btn {
   background: transparent;
@@ -137,6 +138,7 @@ h6 {
   overflow: hidden;
   transition: var(--mainTransition);
   list-style-type: none;
+  padding-top: 5px;
 }
 .nav-links a {
   display: block;

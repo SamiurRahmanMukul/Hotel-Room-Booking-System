@@ -12,6 +12,7 @@ import { Tabs } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import MainLayout from '../../components/layout';
+import BookingHistory from '../../components/profile/BookingHistory';
 import MyProfile from '../../components/profile/MyProfile';
 import PrivateRoute from '../../components/routes/PrivateRoute';
 
@@ -69,7 +70,8 @@ function Profile() {
                     {' '}
                     Booking History
                   </span>
-                )
+                ),
+                children: <BookingHistory />
               }
             ]}
           />
