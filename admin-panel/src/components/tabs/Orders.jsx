@@ -7,12 +7,16 @@ import useFetchData from '../../hooks/useFetchData';
 import arrayToCommaSeparatedText from '../../utils/arrayToCommaSeparatedText';
 import { bookingStatusAsResponse } from '../../utils/responseAsStatus';
 import QueryOptions from '../shared/QueryOptions';
+import RoomStatusUpdateModal from '../shared/RoomStatusUpdateModal';
 
 function Orders() {
-  const [fetchAgain] = useState(false);
+  const [fetchAgain, setFetchAgain] = useState(false);
   const [query, setQuery] = useState({
     search: '', sort: 'desc', page: '1', rows: '10'
   });
+  const [statusUpdateModal, setStatusUpdateModal] = useState(
+    { open: false, roomId: null, status: null }
+  );
 
   // fetch booking-list API data
   const [loading, error, response] = useFetchData(`/api/v1/get-all-booking-orders?keyword=${query.search}&limit=${query.rows}&page=${query.page}&sort=${query.sort}`, fetchAgain);
@@ -93,17 +97,17 @@ function Orders() {
                           <td className='data-table-body-tr-td'>
                             {data?.room?.room_name}
                           </td>
-                          <td className='data-table-body-tr-td text-center'>
-                            {data?.reviews ? (
-                              <Tooltip
-                                title={data?.reviews?.message}
-                                placement='top'
-                                trigger='hover'
-                              >
+                          <Tooltip
+                            title={data?.reviews?.message}
+                            placement='top'
+                            trigger='hover'
+                          >
+                            <td className='data-table-body-tr-td text-center'>
+                              {data?.reviews ? (
                                 <Rate value={data?.reviews?.rating} disabled />
-                              </Tooltip>
-                            ) : 'N/A'}
-                          </td>
+                              ) : 'N/A'}
+                            </td>
+                          </Tooltip>
                           <td className='data-table-body-tr-td !px-0 text-center'>
                             {data?.booking_status !== 'cancel' &&
                             data?.booking_status !== 'rejected' &&
@@ -112,6 +116,9 @@ function Orders() {
                               <Button
                                 className='inline-flex items-center !px-2'
                                 type='primary'
+                                onClick={() => setStatusUpdateModal((prevState) => ({
+                                  ...prevState, open: true, roomId: data?.id, status: data?.booking_status
+                                }))}
                               >
                                 Update Status
                               </Button>
@@ -135,6 +142,15 @@ function Orders() {
           onChange={(e) => setQuery((prevState) => ({ ...prevState, page: e }))}
           total={response?.data?.total_page * 10}
           current={response?.data?.current_page}
+        />
+      )}
+
+      {/* room status update modal component */}
+      {statusUpdateModal?.open && (
+        <RoomStatusUpdateModal
+          statusUpdateModal={statusUpdateModal}
+          setStatusUpdateModal={setStatusUpdateModal}
+          setFetchAgain={setFetchAgain}
         />
       )}
     </div>
