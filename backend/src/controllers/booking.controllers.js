@@ -239,7 +239,7 @@ exports.cancelSelfBookingOrder = async (req, res) => {
 
     // update the booking status to 'cancel'
     booking.booking_status = 'cancel';
-    await booking.save();
+    await booking.save({ validateBeforeSave: false });
 
     // success response after canceling the booking
     res.status(200).json(successResponse(
@@ -465,7 +465,7 @@ exports.updatedBookingOrderByAdmin = async (req, res) => {
         if (booking.booking_status === 'pending') {
           // update the booking status to `rejected`
           booking.booking_status = 'rejected';
-          await booking.save();
+          await booking.save({ validateBeforeSave: false });
         } else {
           return res.status(400).json(errorResponse(
             1,

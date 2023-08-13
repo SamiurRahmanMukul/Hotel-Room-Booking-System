@@ -7,27 +7,63 @@
  *
  */
 
-import { SortAscendingOutlined, SortDescendingOutlined } from '@ant-design/icons';
+import { ExclamationCircleFilled, SortAscendingOutlined, SortDescendingOutlined } from '@ant-design/icons';
 import {
-  Button, Rate, Result, Space, Table, Tag, Tooltip
+  Button, Modal, Rate, Result, Space, Table, Tag, Tooltip
 } from 'antd';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import useFetchData from '../../hooks/useFetchData';
+import ApiService from '../../utils/apiService';
 import arrayToCommaSeparatedText from '../../utils/arrayToCommaSeparatedText';
+import notificationWithIcon from '../../utils/notification';
 import { bookingStatusAsResponse } from '../../utils/responseAsStatus';
+import ReviewAddModal from '../utilities/ReviewAddModal';
+
+const { confirm } = Modal;
 
 function BookingHistory() {
   const [fetchAgain, setFetchAgain] = useState(false);
   const [filter, setFilter] = useState({
     page: 1, limit: 10, sort: 'desc'
   });
+  const [addReviewModal, setAddReviewModal] = useState({
+    open: false, bookingId: null
+  });
 
   // fetch user booking history API data
   const [loading, error, response] = useFetchData(`/api/v1/get-user-booking-orders?limit=${filter.limit}&page=${filter.page}&sort=${filter.sort}`, fetchAgain);
 
+  // function handle cancel room booking order
+  const handleCancelBookingOrder = (id) => {
+    confirm({
+      // title: 'SEND EMAIL VERIFICATION LINK',
+      icon: <ExclamationCircleFilled />,
+      content: 'Are you sure cancel your room booking order?',
+      onOk() {
+        return new Promise((resolve, reject) => {
+          ApiService.put(`/api/v1/cancel-booking-order/${id}`)
+            .then((res) => {
+              if (res?.result_code === 0) {
+                notificationWithIcon('success', 'SUCCESS', res?.result?.message || 'Booking order cancel successful');
+                setFetchAgain(!fetchAgain);
+                resolve();
+              } else {
+                notificationWithIcon('error', 'ERROR', 'Sorry! Something went wrong. App server error');
+                reject();
+              }
+            })
+            .catch((err) => {
+              notificationWithIcon('error', 'ERROR', err?.response?.data?.result?.error?.message || err?.response?.data?.result?.error || 'Sorry! Something went wrong. App server error');
+              reject();
+            });
+        }).catch(() => notificationWithIcon('error', 'ERROR', 'Oops errors!'));
+      }
+    });
+  };
+
   return (
-    <div>
+    <>
       {error ? (
         <Result
           title='Failed to fetch'
@@ -103,17 +139,17 @@ function BookingHistory() {
               title: 'Review & Ratting',
               dataIndex: 'reviews',
               render: (data) => (
-                <span>
-                  {data ? (
-                    <Tooltip
-                      title={data?.message}
-                      placement='top'
-                      trigger='hover'
-                    >
+                <Tooltip
+                  title={data?.message}
+                  placement='top'
+                  trigger='hover'
+                >
+                  <span>
+                    {data ? (
                       <Rate value={data?.rating} disabled />
-                    </Tooltip>
-                  ) : 'N/A'}
-                </span>
+                    ) : 'N/A'}
+                  </span>
+                </Tooltip>
               ),
               align: 'center'
             },
@@ -129,6 +165,7 @@ function BookingHistory() {
                       type='default'
                       size='middle'
                       danger
+                      onClick={() => handleCancelBookingOrder(record?.id)}
                     >
                       Cancel Booking
                     </Button>
@@ -137,17 +174,17 @@ function BookingHistory() {
                   {record?.booking_status === 'in-reviews' && (
                     <Button
                       className='w-[85px]'
-                      type='default'
+                      type='primary'
                       size='middle'
-                      // onClick={() => setAddReviewModal(
-                      //   (prevState) => ({ ...prevState, open: true, data: record })
-                      // )}
+                      onClick={() => setAddReviewModal(
+                        (prevState) => ({ ...prevState, open: true, bookingId: record?.id })
+                      )}
                     >
-                      Add Reviews
+                      To Reviews
                     </Button>
                   )}
 
-                  {(record?.booking_status === 'rejected' || record?.booking_status === 'approved' || record?.booking_status === 'completed') && 'Action Not Possible!'}
+                  {(record?.booking_status === 'cancel' || record?.booking_status === 'rejected' || record?.booking_status === 'approved' || record?.booking_status === 'completed') && 'Action Not Possible!'}
                 </Space>
               ),
               align: 'center'
@@ -180,7 +217,16 @@ function BookingHistory() {
           bordered
         />
       )}
-    </div>
+
+      {/* to review add modal component */}
+      {addReviewModal?.open && (
+        <ReviewAddModal
+          addReviewModal={addReviewModal}
+          setAddReviewModal={setAddReviewModal}
+          setFetchAgain={setFetchAgain}
+        />
+      )}
+    </>
   );
 }
 
