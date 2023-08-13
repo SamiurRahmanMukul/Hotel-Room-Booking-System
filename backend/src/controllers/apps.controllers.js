@@ -9,6 +9,8 @@
 
 const { errorResponse, successResponse } = require('../configs/app.response');
 const User = require('../models/user.model');
+const Room = require('../models/room.model');
+const Booking = require('../models/booking.model');
 
 // TODO: Controller for get users list for admin
 exports.getDashboardData = async (req, res) => {
@@ -43,6 +45,21 @@ exports.getDashboardData = async (req, res) => {
     const blockedStatusUsers = await User.find({ status: 'blocked' });
     const verifiedUsers = await User.find({ verified: true });
 
+    // finding all room data from database specific criteria
+    const totalRooms = await Room.find();
+    const availableRooms = await Room.find({ room_status: 'available' });
+    const unavailableRooms = await Room.find({ room_status: 'unavailable' });
+    const bookedRooms = await Room.find({ room_status: 'booked' });
+
+    // finding all booking data from database specific criteria
+    const totalBookings = await Booking.find();
+    const pendingBookings = await Booking.find({ booking_status: 'pending' });
+    const cancelBookings = await Booking.find({ booking_status: 'cancel' });
+    const approvedBookings = await Booking.find({ booking_status: 'approved' });
+    const rejectedBookings = await Booking.find({ booking_status: 'rejected' });
+    const inReviewsBookings = await Booking.find({ booking_status: 'in-reviews' });
+    const completedBookings = await Booking.find({ booking_status: 'completed' });
+
     res.status(200).json(successResponse(
       0,
       'SUCCESS',
@@ -57,6 +74,21 @@ exports.getDashboardData = async (req, res) => {
           logout_status_user: logoutStatusUsers?.length || 0,
           blocked_status_user: blockedStatusUsers?.length || 0,
           verified_user: verifiedUsers?.length || 0
+        },
+        rooms_info: {
+          total_rooms: totalRooms?.length || 0,
+          available_rooms: availableRooms?.length || 0,
+          unavailable_rooms: unavailableRooms?.length || 0,
+          booked_rooms: bookedRooms?.length || 0
+        },
+        booking_info: {
+          total_bookings: totalBookings?.length || 0,
+          pending_bookings: pendingBookings?.length || 0,
+          cancel_bookings: cancelBookings?.length || 0,
+          approved_bookings: approvedBookings?.length || 0,
+          rejected_bookings: rejectedBookings?.length || 0,
+          in_reviews_bookings: inReviewsBookings?.length || 0,
+          completed_bookings: completedBookings?.length || 0
         }
       }
     ));
