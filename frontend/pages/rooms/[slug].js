@@ -19,6 +19,7 @@ import MainLayout from '../../components/layout';
 import StyledHero from '../../components/rooms/StyledHero';
 import Loading from '../../components/shared/Loading';
 import OrderPlaceModal from '../../components/utilities/OrderPlaceModal';
+import RoomReviewList from '../../components/utilities/RoomReviewList';
 import { getSessionToken, getSessionUser } from '../../utils/authentication';
 import notificationWithIcon from '../../utils/notification';
 
@@ -119,6 +120,13 @@ function RoomPreview(props) {
                     </Button>
                   )}
                 </article>
+              </div>
+
+              {/* room reviews list */}
+              <div className='single-room-images'>
+                {props?.room?.data?.id && (
+                  <RoomReviewList roomId={props?.room?.data?.id} />
+                )}
               </div>
             </section>
           </>

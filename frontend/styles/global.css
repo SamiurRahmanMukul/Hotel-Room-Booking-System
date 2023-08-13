@@ -489,6 +489,10 @@ h6 {
     max-width: 1170px;
   }
 }
+
+.demo-load-more-list {
+  min-height: 350px;
+}
 /* end of rooms-list */
 
 /* start of rooms filter */

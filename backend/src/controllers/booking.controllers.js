@@ -441,11 +441,11 @@ exports.updatedBookingOrderByAdmin = async (req, res) => {
           if (!bookingDatesBeforeCurrentDate(booking?.booking_dates).isAnyDateInPast) {
             // update the booking status to `approved`
             booking.booking_status = 'approved';
-            await booking.save();
+            await booking.save({ validateBeforeSave: false });
 
             // update the room status to 'booked'
             myRoom.room_status = 'booked';
-            await myRoom.save();
+            await myRoom.save({ validateBeforeSave: false });
           } else {
             return res.status(400).json(errorResponse(
               1,
@@ -479,11 +479,11 @@ exports.updatedBookingOrderByAdmin = async (req, res) => {
           if (bookingDatesBeforeCurrentDate(booking?.booking_dates).isAnyDateInPast) {
             // update the booking status to `in-reviews`
             booking.booking_status = 'in-reviews';
-            await booking.save();
+            await booking.save({ validateBeforeSave: false });
 
             // update the room status to 'available'
             myRoom.room_status = 'available';
-            await myRoom.save();
+            await myRoom.save({ validateBeforeSave: false });
           } else {
             return res.status(400).json(errorResponse(
               1,

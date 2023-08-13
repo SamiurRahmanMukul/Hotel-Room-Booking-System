@@ -90,7 +90,7 @@ exports.roomReviewAdd = async (req, res) => {
     // update the booking with the review ID
     myBooking.reviews = savedReview._id;
     myBooking.booking_status = 'completed';
-    await myBooking.save();
+    await myBooking.save({ validateBeforeSave: false });
 
     // success response with register new user
     res.status(201).json(successResponse(
