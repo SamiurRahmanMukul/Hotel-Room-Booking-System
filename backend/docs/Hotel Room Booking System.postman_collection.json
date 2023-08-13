@@ -1,0 +1,1454 @@
+{
+	"info": {
+		"_postman_id": "0843717b-77c6-4fe8-9acb-69777593e043",
+		"name": "Hotel Room Booking System",
+		"description": "# **Beach Resort - Hotel Room Booking System**",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19093157"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Verification",
+					"item": [
+						{
+							"name": "Send Email Verification LInk - ALL",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjA3YjI1NjhhZmUzNzQ1MTZmZTRlNyIsImlhdCI6MTY3NjcwNDcwMSwiZXhwIjoxNjc2NzkxMTAxfQ.-t5HHLpvjejKyKLCtlBgRedSA1h7gWT96M_bfyte2-o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{APP_URL}}/api/v1/auth/send-email-verification-link",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"send-email-verification-link"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Email Verify - ALL",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjA3YjI1NjhhZmUzNzQ1MTZmZTRlNyIsImlhdCI6MTY3NjcwNDcwMSwiZXhwIjoxNjc2NzkxMTAxfQ.-t5HHLpvjejKyKLCtlBgRedSA1h7gWT96M_bfyte2-o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{APP_URL}}/api/v1/auth/verify-email/9d8dd8ae04e5122c33ca039ce8086ea577216c1a",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"verify-email",
+										"9d8dd8ae04e5122c33ca039ce8086ea577216c1a"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Password",
+					"item": [
+						{
+							"name": "Forgot Password - ALL",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"cedobox471@keshitv.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{APP_URL}}/api/v1/auth/forgot-password",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"forgot-password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset Password - ALL",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\": 12345678,\r\n    \"confirmPassword\": 12345678\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{APP_URL}}/api/v1/auth/reset-password/3b0a6b4d09086605ece4b2e379b877d285259532",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"reset-password",
+										"3b0a6b4d09086605ece4b2e379b877d285259532"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Change Password - ALL",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjNjMDliYjRlNjlhNzkzNWI4MjNkYyIsImlhdCI6MTY3Mjk4MTE3NSwiZXhwIjoxNjczMDY3NTc1fQ.1iVl9y8e7Txc4rpOTQwj7qZkLyimEIS5Sy2G5YfR9FY",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"oldPassword\": 12345678,\r\n    \"newPassword\": 12345678\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{APP_URL}}/api/v1/auth/change-password",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"change-password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Registration - ALL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "userName",
+									"value": "Testing-02",
+									"description": "required && unique",
+									"type": "text"
+								},
+								{
+									"key": "fullName",
+									"value": "Md. Samiur Rahman Mukul",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test_02@mail.com",
+									"description": "required && unique",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "01611111112",
+									"description": "optional but unique",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "10-30-2010",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "male",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Modho Barear (Nijam Nagor), Mymensingh",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"description": "optional",
+									"type": "file",
+									"src": "/C:/Users/srmuk/Downloads/images/8b167af653c2399dd93b952a48740620.jpg"
+								},
+								{
+									"key": "role",
+									"value": "user",
+									"description": "required but optional (user/admin)",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/auth/registration",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - ALL",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X_Ecommymmart",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJodHRwOi8vbG9jYWxob3N0OjUwMDUvYXBpL3YxL2F1dGgvbG9naW4_bG9naW5UeXBlPWFkbWluIiwiaWF0IjoxNjYxNjU0MjQxfQ.A1nM17GI3de8m1k0W-Q2XbTWYZyofc4E6dd3CREAUqg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "test_01@gmail.com",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"description": "required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/auth/login?loginType=admin",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "loginType",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout - ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmMwMDU0MDgzZTIxYTA4MjIzZjQ5NSIsImlhdCI6MTY4OTgxNjA1MSwiZXhwIjoxNjg5OTAyNDUxfQ._-xbIBgQ31Wvpp81pSFpP3Q2GrW7kYgg4oNAfsagfgg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/auth/logout",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token API - ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjNjMDliYjRlNjlhNzkzNWI4MjNkYyIsImlhdCI6MTY2ODc1NzY4OSwiZXhwIjoxNjY5NjIxNjg5fQ.bvUZvIRmqNlJEq2_-neN6CyG7fOLTWb1m1MuFkLOsl8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/auth/refresh-token",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get User Info - ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZWM3ZDIzOTJlYzZhZGIyNDQ3MDRmNyIsImlhdCI6MTY3NjYxNDM1NSwiZXhwIjoxNjc2NzAwNzU1fQ.U1siFBYw3XF1hNJ0Qdg1YnTobxlkP6COtqbbN6dS7ps",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/get-user",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"get-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User - ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjE4YTVhMGM5OTUzNjhkMjgzM2U5OSIsImlhdCI6MTY3Njc3NDA3NSwiZXhwIjoxNjc2ODYwNDc1fQ.nFlztVS_2qteG_O2RqzdAkOdpkZuuQmZ9-QOGZ4a6mk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "fullName",
+									"value": "Md. Samiur Rahman Mukul",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "01600000001",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "male",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "2022-10-31",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Modho Barear (Nijam Nagor), Mymensingh",
+									"description": "required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/update-user",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"update-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User - ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmJhNGEwNTZjNzkyYmI2Njc1NWIxZCIsImlhdCI6MTY3NDI5ODg4OCwiZXhwIjoxNjc0Mzg1Mjg4fQ.ESCRlhZCUUmfGJmf-2W-73JW_RofKzDgBIViE17u5y8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/delete-user",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"delete-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Avatar Update - ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZDEwOWExZGFmODhiZmFlNmI1NDZkZSIsImlhdCI6MTY3NzM4NTcxMCwiZXhwIjoxNjc3NDcyMTEwfQ.Q_bL8K62ndo0vgdgkuhRBMgbKOteOKpiehvcG7M8bbo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/srmuk/Downloads/images/8b167af653c2399dd93b952a48740620.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/avatar-update",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"avatar-update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZDEwOWExZGFmODhiZmFlNmI1NDZkZSIsImlhdCI6MTY3NzEzMjM0OCwiZXhwIjoxNjc3MjE4NzQ4fQ.SknmqFdzDjT3N7fQmBNbTFNtq3rXW4xdG2WOYAPhmNA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/all-users-list?keyword=mukul&limit=5&page=1&sort=aesc",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"all-users-list"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "mukul"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "aesc",
+									"description": "asce / desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Blocked User - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzY2JjNmI4MDE5ZTFhMTUzNmFiNzk3YSIsImlhdCI6MTY3NDQ1NjU4MywiZXhwIjoxNjc0NTQyOTgzfQ.qkymzS7xHBxuUAhdNLZrjgpy8aqcwhqtuEQpr7DO-n0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/blocked-user/6363c09bb4e69a7935b823dc",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"blocked-user",
+								"6363c09bb4e69a7935b823dc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unblocked User - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzY2JjNmI4MDE5ZTFhMTUzNmFiNzk3YSIsImlhdCI6MTY3NDQ1ODIwMiwiZXhwIjoxNjc0NTQ0NjAyfQ.7irSx0pW1Dk1NVnjq6ZC1NY1wJ658eP9WKkdR7tYun0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/unblocked-user/6363c09bb4e69a7935b823dc",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"unblocked-user",
+								"6363c09bb4e69a7935b823dc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Id - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZWM3ZDIzOTJlYzZhZGIyNDQ3MDRmNyIsImlhdCI6MTY3NjYxNDM1NSwiZXhwIjoxNjc2NzAwNzU1fQ.U1siFBYw3XF1hNJ0Qdg1YnTobxlkP6COtqbbN6dS7ps",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/get-user/6363c09bb4e69a7935b823dc",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"get-user",
+								"6363c09bb4e69a7935b823dc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User By Id - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZWM3ZDIzOTJlYzZhZGIyNDQ3MDRmNyIsImlhdCI6MTY3NjYxNDM1NSwiZXhwIjoxNjc2NzAwNzU1fQ.U1siFBYw3XF1hNJ0Qdg1YnTobxlkP6COtqbbN6dS7ps",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/delete-user/6363c09bb4e69a7935b823dc",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"delete-user",
+								"6363c09bb4e69a7935b823dc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Apps",
+			"item": [
+				{
+					"name": "Dashboard - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmMwMDU0MDgzZTIxYTA4MjIzZjQ5NSIsImlhdCI6MTY5MTkwMTI3OSwiZXhwIjoxNjkxOTg3Njc5fQ.UeCyo7KC2a3LI9gH70tkR66Z2JXbMxs0grhvcuE3_dg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/dashboard",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"dashboard"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Get All Booking List - ALL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/get-room-reviews-list/64bba1d071d7beb50e2d84fc?limit=5&page=1&sort=desc",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"get-room-reviews-list",
+								"64bba1d071d7beb50e2d84fc"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "desc",
+									"description": "asce / desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Room Review Add - ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmMwMDU0MDgzZTIxYTA4MjIzZjQ5NSIsImlhdCI6MTY5MTg5OTgyMywiZXhwIjoxNjkxOTg2MjIzfQ.P6_IASP10pehCSikoFFmQlYsI9T69H1lY41_zqK7n6o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "rating",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "message",
+									"value": "Good to us",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/room-review-add/64c1b61fdde1d7a8ccfde166",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"room-review-add",
+								"64c1b61fdde1d7a8ccfde166"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sleft Review Edit - ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDc2ZDU3ZTE4YTg1ZTJlM2UyYzhjOCIsImlhdCI6MTY5MTg0MDAyNSwiZXhwIjoxNjkxOTI2NDI1fQ.1vmeejML0qHq0uyROSyjU-ozzmdxzhxau4v1eDCLCU0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "rating",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "message",
+									"value": "Good to us - Updated",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/edit-room-review/64d84a7726d6e38d59e350ae",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"edit-room-review",
+								"64d84a7726d6e38d59e350ae"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rooms",
+			"item": [
+				{
+					"name": "Get All Rooms - ALL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/all-rooms-list?keyword=Economy&limit=5&page=1&sort=desc",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"all-rooms-list"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "Economy",
+									"description": "room_name"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "desc",
+									"description": "asce / desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Featured Rooms - ALL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/featured-rooms-list?limit=5&page=1&sort=desc",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"featured-rooms-list"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "Economy",
+									"description": "room_name",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "desc",
+									"description": "asce / desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Room - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmMwMDU0MDgzZTIxYTA4MjIzZjQ5NSIsImlhdCI6MTY4NzU3MTg0MSwiZXhwIjoxNjg3NjU4MjQxfQ.bJ81SsIIGJ7-JfTrF9y9ZbDqObMIjkrAvIG4hD7t7tw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "room_name",
+									"value": "Couple Economy",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "room_slug",
+									"value": "couple-economy",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "room_type",
+									"value": "couple",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "room_price",
+									"value": "100",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "room_size",
+									"value": "200",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "room_capacity",
+									"value": "1",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "allow_pets",
+									"value": "false",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "provide_breakfast",
+									"value": "true",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "featured_room",
+									"value": "true",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "room_description",
+									"value": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "extra_facilities[0]",
+									"value": "Plush pillows and breathable bed linens",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "extra_facilities[1]",
+									"value": "Soft, oversized bath towels",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "room_images",
+									"description": "required",
+									"type": "file",
+									"src": [
+										"/D:/Workplace 2023/Hotel-Room-Booking-System/frontend/public/images/jpeg/room-1.jpeg",
+										"/D:/Workplace 2023/Hotel-Room-Booking-System/frontend/public/images/jpeg/room-2.jpeg",
+										"/D:/Workplace 2023/Hotel-Room-Booking-System/frontend/public/images/jpeg/room-3.jpeg",
+										"/D:/Workplace 2023/Hotel-Room-Booking-System/frontend/public/images/jpeg/room-4.jpeg",
+										"/D:/Workplace 2023/Hotel-Room-Booking-System/frontend/public/images/jpeg/room-5.jpeg"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/create-room",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"create-room"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Room - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmMwMDU0MDgzZTIxYTA4MjIzZjQ5NSIsImlhdCI6MTY4OTczMTA1MSwiZXhwIjoxNjg5ODE3NDUxfQ.UGzIEd1ArE-RXm2L4gpRPkoCKyjQWCNuZyI8Hh6870g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "room_name",
+									"value": "Couple Economy",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "room_slug",
+									"value": "couple-economy",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "room_type",
+									"value": "couple",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "room_price",
+									"value": "100",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "room_size",
+									"value": "200",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "room_capacity",
+									"value": "2",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "allow_pets",
+									"value": "false",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "provide_breakfast",
+									"value": "true",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "featured_room",
+									"value": "true",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "room_description",
+									"value": "Street art edison bulb gluten-free, tofu try-hard lumbersexual brooklyn tattooed pickled chambray. Actually humblebrag next level, deep v art party wolf tofu direct trade readymade sustainable hell of banjo. Organic authentic subway tile cliche palo santo, street art XOXO dreamcatcher retro sriracha portland air plant kitsch stumptown. Austin small batch squid gastropub. Pabst pug tumblr gochujang offal retro cloud bread bushwick semiotics before they sold out sartorial literally mlkshk. Vaporware hashtag vice, sartorial before they sold out pok pok health goth trust fund cray.",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "extra_facilities[0]",
+									"value": "Plush pillows and breathable bed linens",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "room_images",
+									"description": "required",
+									"type": "file",
+									"src": "/C:/Users/srmuk/Downloads/images/marrakesh-meadow-80.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/edit-room/64a943a88952308cfeb6ea27",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"edit-room",
+								"64a943a88952308cfeb6ea27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Room - ALL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/get-room-by-id-or-slug-name/single-economy",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"get-room-by-id-or-slug-name",
+								"single-economy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Room - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmMwMDU0MDgzZTIxYTA4MjIzZjQ5NSIsImlhdCI6MTY4OTgxNTkzMCwiZXhwIjoxNjg5OTAyMzMwfQ.C-P5A1xpt7MltrbIAWXo7vLLzdnmtVzukAQ8CsiRM7o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/delete-room/64b873e943f461a042772154",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"delete-room",
+								"64b873e943f461a042772154"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Place Room Booking Order - ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmMwMDU0MDgzZTIxYTA4MjIzZjQ5NSIsImlhdCI6MTY5MDQxNjAwMSwiZXhwIjoxNjkwNTAyNDAxfQ.VhFgcLELFwMPp-zkc9yX_wcFrH1C9jRXtPJrbRL3myY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"booking_dates\": [\r\n        \"2023-07-28\",\r\n        \"2023-07-29\",\r\n        \"2023-07-31\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/placed-booking-order/64bba5dc6bc305b4a7dfd4b7",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"placed-booking-order",
+								"64bba5dc6bc305b4a7dfd4b7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Booking List - ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmMwMDU0MDgzZTIxYTA4MjIzZjQ5NSIsImlhdCI6MTY5MDQxNjAwMSwiZXhwIjoxNjkwNTAyNDAxfQ.VhFgcLELFwMPp-zkc9yX_wcFrH1C9jRXtPJrbRL3myY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/get-user-booking-orders?limit=5&page=1&sort=desc",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"get-user-booking-orders"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "desc",
+									"description": "asce / desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Booking List - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmMwMDU0MDgzZTIxYTA4MjIzZjQ5NSIsImlhdCI6MTY5MTMxMjg4NCwiZXhwIjoxNjkxMzk5Mjg0fQ.6rf0g-0q7bCFKkcdl2ChW4dX9dfxsvOV3nHy44prP_o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/get-all-booking-orders?limit=5&page=1&sort=desc",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"get-all-booking-orders"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "desc",
+									"description": "asce / desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Booking Cancel - ALL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmMwMDU0MDgzZTIxYTA4MjIzZjQ5NSIsImlhdCI6MTY5MDMzNDQ3OCwiZXhwIjoxNjkwNDIwODc4fQ.vx_duicVoHfxNGLN5Fh54WIuN5TZWaXh-LhwvCQ836Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/cancel-booking-order/64c07263fe1d835aef682b15",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"cancel-booking-order",
+								"64c07263fe1d835aef682b15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Booking Order - Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmMwMDU0MDgzZTIxYTA4MjIzZjQ5NSIsImlhdCI6MTY5MTMxMjg4NCwiZXhwIjoxNjkxMzk5Mjg0fQ.6rf0g-0q7bCFKkcdl2ChW4dX9dfxsvOV3nHy44prP_o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "booking_status",
+									"value": "approved",
+									"description": "approved, rejected, in-reviews",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/api/v1/updated-booking-order/64c1beed86a34dd63cf2ecb8",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"updated-booking-order",
+								"64c1beed86a34dd63cf2ecb8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Home - ALL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{APP_URL}}/",
+					"host": [
+						"{{APP_URL}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
