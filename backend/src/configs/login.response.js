@@ -8,6 +8,7 @@
  */
 
 const currentDateTime = require('../lib/current.date.time');
+const getDateAfterDuration = require('../lib/get.date.after.duration');
 
 /**
  * function to success response login user with JWT access and refresh token
@@ -34,6 +35,8 @@ const loginResponse = (res, user, maintenance) => {
       maintenance_info: maintenance || null,
       access_token: accessToken,
       refresh_token: refreshToken,
+      access_token_expires: getDateAfterDuration(process.env.JWT_ACCESS_TOKEN_EXPIRES),
+      refresh_token_expires: getDateAfterDuration(process.env.JWT_REFRESH_TOKEN_EXPIRES),
       result: {
         title: 'SUCCESS',
         message: 'User login successful',
