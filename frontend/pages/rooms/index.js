@@ -22,11 +22,13 @@ const { publicRuntimeConfig } = getConfig();
 
 function Rooms(props) {
   const [ourRooms, setOurRooms] = useState([]);
+  const [ourFilteredRooms, setOurFilteredRooms] = useState([]);
 
   // if props rooms exists to setOurRooms
   useEffect(() => {
     if (props?.rooms) {
       setOurRooms(props?.rooms?.data?.rows);
+      setOurFilteredRooms(props?.rooms?.data?.rows);
     }
   }, [props]);
 
@@ -57,10 +59,10 @@ function Rooms(props) {
           <>
             <RoomFilter
               ourRooms={ourRooms}
-              setOurRooms={setOurRooms}
+              setOurFilteredRooms={setOurFilteredRooms}
             />
             <RoomList
-              rooms={ourRooms}
+              rooms={ourFilteredRooms}
             />
           </>
         )}

@@ -328,6 +328,7 @@ h6 {
   height: 190px;
   box-shadow: var(--lightShadow);
   transition: var(--mainTransition);
+  margin-bottom: 50px;
 }
 .room:hover {
   box-shadow: var(--darkShadow);
