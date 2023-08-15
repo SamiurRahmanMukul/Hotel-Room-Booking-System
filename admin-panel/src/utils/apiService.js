@@ -8,7 +8,7 @@
  */
 
 import axios from 'axios';
-import { getSessionToken } from './authentication';
+import { getSessionToken, removeSessionAndLogoutUser } from './authentication';
 
 const ApiService = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL
@@ -48,7 +48,23 @@ ApiService.interceptors.response.use(
   /**
   * Add logic for any error from backend
   */
-  (error) => Promise.reject(error)
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error?.response?.data?.result_code === 11) {
+      // if authorized to logout user and redirect login page
+      removeSessionAndLogoutUser();
+    }
+
+    // eslint-disable-next-line no-underscore-dangle
+    if (error.response.status === 401 && !originalRequest._retry) {
+      // if authorized to logout user and redirect login page
+      removeSessionAndLogoutUser();
+    }
+
+    // Handle other error cases
+    return Promise.reject(error);
+  }
 );
 
 export default ApiService;
