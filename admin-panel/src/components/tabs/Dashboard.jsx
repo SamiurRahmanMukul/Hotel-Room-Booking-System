@@ -10,6 +10,8 @@
 import { Result } from 'antd';
 import React from 'react';
 import useFetchData from '../../hooks/useFetchData';
+import BookingCard from '../dashboard/BookingCard';
+import RoomCard from '../dashboard/RoomCard';
 import UsersCard from '../dashboard/UsersCard';
 
 function Dashboard() {
@@ -29,10 +31,22 @@ function Dashboard() {
           status='error'
         />
       ) : (
-        <UsersCard
-          loading={loading}
-          data={response?.data?.users_info}
-        />
+        <div className='flex flex-row flex-wrap items-center justify-between gap-2'>
+          <UsersCard
+            loading={loading}
+            data={response?.data?.users_info}
+          />
+
+          <RoomCard
+            loading={loading}
+            data={response?.data?.rooms_info}
+          />
+
+          <BookingCard
+            loading={loading}
+            data={response?.data?.booking_info}
+          />
+        </div>
       )}
     </div>
   );

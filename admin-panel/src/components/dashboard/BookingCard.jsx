@@ -15,89 +15,89 @@ import { useNavigate } from 'react-router-dom';
 const formatter = (value) => <CountUp end={value} separator=',' />;
 const gridStyle = { width: '25%', textAlign: 'center' };
 
-function UsersCard({ loading, data }) {
+function BookingCard({ loading, data }) {
   const navigate = useNavigate();
 
   return (
     <Card
       className='w-full cursor-pointer md:w-[49.5%]'
-      onClick={() => navigate('/main/users')}
-      title='Users Information:'
+      onClick={() => navigate('/main/booking-orders')}
+      title='Bookings Information:'
       loading={loading}
     >
       <Card.Grid style={gridStyle}>
         <Statistic
           className='whitespace-normal lg:whitespace-nowrap'
-          title='Total Users'
+          title='Total Bookings'
           formatter={formatter}
-          value={data?.total_users || 0}
+          value={data?.total_bookings || 0}
         />
       </Card.Grid>
 
       <Card.Grid style={gridStyle}>
         <Statistic
           className='whitespace-normal lg:whitespace-nowrap'
-          title='Admin Role Users'
+          title='Cancel Bookings'
           formatter={formatter}
-          value={data?.admin_role_user || 0}
+          value={data?.cancel_bookings || 0}
         />
       </Card.Grid>
 
       <Card.Grid style={gridStyle}>
         <Statistic
           className='whitespace-normal lg:whitespace-nowrap'
-          title='User Role Users'
+          title='Pending Bookings'
           formatter={formatter}
-          value={data?.user_role_user || 0}
+          value={data?.pending_bookings || 0}
         />
       </Card.Grid>
 
       <Card.Grid style={gridStyle}>
         <Statistic
           className='whitespace-normal lg:whitespace-nowrap'
-          title='Register Users'
+          title='Approved Bookings'
           formatter={formatter}
-          value={data?.register_status_user || 0}
+          value={data?.approved_bookings || 0}
         />
       </Card.Grid>
 
       <Card.Grid style={gridStyle}>
         <Statistic
           className='whitespace-normal lg:whitespace-nowrap'
-          title='Login Users'
+          title='Rejected Bookings'
           formatter={formatter}
-          value={data?.login_status_user || 0}
+          value={data?.rejected_bookings || 0}
         />
       </Card.Grid>
 
       <Card.Grid style={gridStyle}>
         <Statistic
           className='whitespace-normal lg:whitespace-nowrap'
-          title='Logout Users'
+          title='Approved Bookings'
           formatter={formatter}
-          value={data?.logout_status_user || 0}
+          value={data?.approved_bookings || 0}
         />
       </Card.Grid>
 
       <Card.Grid style={gridStyle}>
         <Statistic
           className='whitespace-normal lg:whitespace-nowrap'
-          title='Blocked Users'
+          title='In-Reviews Bookings'
           formatter={formatter}
-          value={data?.blocked_status_user || 0}
+          value={data?.in_reviews_bookings || 0}
         />
       </Card.Grid>
 
       <Card.Grid style={gridStyle}>
         <Statistic
           className='whitespace-normal lg:whitespace-nowrap'
-          title='Verified Users'
+          title='Completed Bookings'
           formatter={formatter}
-          value={data?.verified_user || 0}
+          value={data?.completed_bookings || 0}
         />
       </Card.Grid>
     </Card>
   );
 }
 
-export default UsersCard;
+export default BookingCard;
