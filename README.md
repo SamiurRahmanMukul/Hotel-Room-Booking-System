@@ -6,7 +6,7 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![Github][github-shield]][github-url]
 
-![Github Banner](https://raw.githubusercontent.com/SamiurRahmanMukul/Hotel-Room-Booking-System/main/screenshot.png)
+![Frontend Screenshot](https://raw.githubusercontent.com/SamiurRahmanMukul/Hotel-Room-Booking-System/main/frontend-screenshot.png)
 
 # ✨ Beach Resort | Hotel Room Booking System
 

@@ -6,11 +6,11 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![Github][github-shield]][github-url]
 
-# Hotel Room Booking System
+# Hotel Room Booking System (Backend)
 
 ## Database Relational Schema
 
-![Github Banner](https://raw.githubusercontent.com/SamiurRahmanMukul/Hotel-Room-Booking-System/main/backend/database-relational-schema.png)
+![Database Relational Schema](https://raw.githubusercontent.com/SamiurRahmanMukul/Hotel-Room-Booking-System/main/database-relational-schema.png)
 
 ## Installing Packages
 
