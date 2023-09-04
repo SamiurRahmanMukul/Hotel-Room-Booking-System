@@ -8,6 +8,10 @@
 
 # Hotel Room Booking System (Backend)
 
+## E-R Diagram
+
+![E-R Diagram](https://raw.githubusercontent.com/SamiurRahmanMukul/Hotel-Room-Booking-System/main/breach-resorts-e-r-diagram.drawio.png)
+
 ## Database Relational Schema
 
 ![Database Relational Schema](https://raw.githubusercontent.com/SamiurRahmanMukul/Hotel-Room-Booking-System/main/database-relational-schema.png)
