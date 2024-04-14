@@ -2,7 +2,7 @@
  * @name Hotel Room Booking System
  * @author Md. Samiur Rahman (Mukul)
  * @description Hotel Room Booking and Management System Software ~ Developed By Md. Samiur Rahman (Mukul)
- * @copyright ©2023 ― Md. Samiur Rahman (Mukul). All rights reserved.
+ * @copyright Â©2023 â€• Md. Samiur Rahman (Mukul). All rights reserved.
  * @version v0.0.1
  *
  */
@@ -45,7 +45,9 @@ const connectDatabase = require('../database/connect.mongo.db');
 connectDatabase();
 
 // HTTP request logger middleware
-app.use(morganLogger());
+if (process.env.APP_NODE_ENV !== 'production') {
+  app.use(morganLogger());
+}
 
 // secure HTTP headers setting middleware
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
@@ -61,7 +63,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // sets favicon in API routes
-app.use(favicon(`${appRoot}/public/favicon.ico`));
+if (process.env.APP_NODE_ENV !== 'production') {
+  app.use(favicon(`${appRoot}/public/favicon.ico`));
+}
 
 // sets static folder
 app.use(express.static('public'));
