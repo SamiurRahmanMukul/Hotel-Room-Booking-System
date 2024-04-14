@@ -11,7 +11,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import {
   Button, Checkbox, Form, Input, InputNumber, Modal, Result, Select, Upload
 } from 'antd';
-import TextArea from 'antd/es/input/TextArea';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import EF from '../../assets/data/extra-facilities.json';
@@ -256,7 +255,7 @@ function RoomEdit({ roomEditModal, setRoomEditModal }) {
               message: 'Please input your Room Description!'
             }]}
           >
-            <TextArea
+            <Input.TextArea
               placeholder='Type here Room Description'
               rows={4}
             />

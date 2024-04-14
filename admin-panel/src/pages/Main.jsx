@@ -237,11 +237,11 @@ function Main() {
           {' '}
           <a
             className='text-color-primary hover:text-color-secondary'
-            href='http://www.samiurrahmanmukul.epizy.com'
+            href='https://srmukul.com'
             target='_blank'
             rel='noreferrer'
           >
-            Samiur Rahman Mukul
+            Md. Samiur Rahman (Mukul)
           </a>
         </Footer>
       </Layout>
