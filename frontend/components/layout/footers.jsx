@@ -17,11 +17,11 @@ function Footers() {
         ©2023 Beach Resort — Developed By
         {' '}
         <a
-          href='http://www.samiurrahmanmukul.epizy.com'
+          href='https://srmukul.com'
           rel='noreferrer'
           target='_blank'
         >
-          Samiur Rahman Mukul
+          Md. Samiur Rahman (Mukul)
         </a>
       </p>
     </footer>
