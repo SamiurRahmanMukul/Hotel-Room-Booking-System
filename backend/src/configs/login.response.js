@@ -16,9 +16,10 @@ const getDateAfterDuration = require('../lib/get.date.after.duration');
  * @param {*} user API response in login user information
  * @param {*} maintenance API provide any kind of maintenance information
  */
-const loginResponse = (res, user, maintenance) => {
-  const accessToken = user.getJWTToken();
-  const refreshToken = user.getJWTRefreshToken();
+const loginResponse = (res, user, maintenance, hotelSlug) => {
+  const extra = hotelSlug ? { hotelSlug } : {};
+  const accessToken = user.getJWTToken(extra);
+  const refreshToken = user.getJWTRefreshToken(extra);
 
   // options for cookie
   const options = {
@@ -53,6 +54,7 @@ const loginResponse = (res, user, maintenance) => {
           role: user.role,
           verified: user.verified,
           status: user.status,
+          mustChangePassword: !!user.mustChangePassword,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt
         }

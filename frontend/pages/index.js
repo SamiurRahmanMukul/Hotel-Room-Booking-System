@@ -9,7 +9,6 @@
 
 import { Empty, Result, Skeleton } from 'antd';
 import axios from 'axios';
-import getConfig from 'next/config';
 import Link from 'next/link';
 import React from 'react';
 import Banner from '../components/home/Banner';
@@ -17,8 +16,7 @@ import FeaturedRooms from '../components/home/FeaturedRooms';
 import Hero from '../components/home/Hero';
 import Services from '../components/home/Services';
 import MainLayout from '../components/layout';
-
-const { publicRuntimeConfig } = getConfig();
+import { getHotelSlugFromCtx } from '../utils/tenant';
 
 function Home(props) {
   return (
@@ -58,10 +56,12 @@ function Home(props) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
   try {
-    // Fetch data from the server-side API
-    const response = await axios.get(`${publicRuntimeConfig.API_BASE_URL}/api/v1/featured-rooms-list`);
+    // Fetch data from the server-side API, scoped to the resolved tenant
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/featured-rooms-list`, {
+      headers: { 'X-Hotel-Slug': getHotelSlugFromCtx(ctx) }
+    });
     const featuredRooms = response?.data?.result;
 
     return {
@@ -74,7 +74,7 @@ export async function getServerSideProps() {
     return {
       props: {
         featuredRooms: null,
-        error: err?.data
+        error: { message: err?.response?.data?.result?.error || err.message || 'Failed to fetch' }
       }
     };
   }

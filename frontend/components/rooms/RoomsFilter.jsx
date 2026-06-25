@@ -30,25 +30,19 @@ export default function RoomFilter({ ourRooms, setOurFilteredRooms }) {
     setOurFilteredRooms(filteredRooms);
   };
 
-  // function to handle `provide_breakfast` filed filtering
+  // function to handle combined breakfast + pets filtering
   useEffect(() => {
-    if (allowBreakfast) {
-      const filteredRooms = ourRooms.filter((room) => room.provide_breakfast === allowBreakfast);
-      setOurFilteredRooms(filteredRooms);
-    } else {
-      setOurFilteredRooms(ourRooms);
-    }
-  }, [allowBreakfast]);
+    let filtered = ourRooms;
 
-  // function to handle `allow_pets` filed filtering
-  useEffect(() => {
-    if (allowPets) {
-      const filteredRooms = ourRooms.filter((room) => room.allow_pets === allowPets);
-      setOurFilteredRooms(filteredRooms);
-    } else {
-      setOurFilteredRooms(ourRooms);
+    if (allowBreakfast) {
+      filtered = filtered.filter((room) => room.provide_breakfast === true);
     }
-  }, [allowPets]);
+    if (allowPets) {
+      filtered = filtered.filter((room) => room.allow_pets === true);
+    }
+
+    setOurFilteredRooms(filtered);
+  }, [allowBreakfast, allowPets, ourRooms]);
 
   return (
     <section className='filter-container'>

@@ -9,7 +9,6 @@
 
 import { Empty, Result, Skeleton } from 'antd';
 import axios from 'axios';
-import getConfig from 'next/config';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Banner from '../../components/home/Banner';
@@ -17,8 +16,7 @@ import Hero from '../../components/home/Hero';
 import MainLayout from '../../components/layout';
 import RoomFilter from '../../components/rooms/RoomsFilter';
 import RoomList from '../../components/rooms/RoomsList';
-
-const { publicRuntimeConfig } = getConfig();
+import { getHotelSlugFromCtx } from '../../utils/tenant';
 
 function Rooms(props) {
   const [ourRooms, setOurRooms] = useState([]);
@@ -71,10 +69,12 @@ function Rooms(props) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
   try {
-    // Fetch data from the server-side API
-    const response = await axios.get(`${publicRuntimeConfig.API_BASE_URL}/api/v1/all-rooms-list`);
+    // Fetch data from the server-side API, scoped to the resolved tenant
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/all-rooms-list`, {
+      headers: { 'X-Hotel-Slug': getHotelSlugFromCtx(ctx) }
+    });
     const rooms = response?.data?.result;
 
     return {

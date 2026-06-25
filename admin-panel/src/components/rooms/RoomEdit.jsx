@@ -180,6 +180,7 @@ function RoomEdit({ roomEditModal, setRoomEditModal }) {
                 options={[
                   { value: 'single', label: 'Single' },
                   { value: 'couple', label: 'Couple' },
+                  { value: 'family', label: 'Family' },
                   { value: 'presidential', label: 'Presidential' }
                 ]}
                 size='large'
@@ -210,8 +211,9 @@ function RoomEdit({ roomEditModal, setRoomEditModal }) {
           <div className='two-grid-column'>
             <Form.Item
               className='w-full md:w-1/2'
-              label='Room Size'
+              label='Room Size (m²)'
               name='room_size'
+              extra='Floor area in square meters'
               rules={[{
                 required: true,
                 message: 'Please input your Room Size!'
@@ -219,11 +221,12 @@ function RoomEdit({ roomEditModal, setRoomEditModal }) {
             >
               <InputNumber
                 className='w-full'
-                placeholder='Room Size'
+                placeholder='e.g. 28'
                 type='number'
                 size='large'
                 min={1}
                 max={1000}
+                addonAfter='m²'
               />
             </Form.Item>
 
@@ -231,6 +234,7 @@ function RoomEdit({ roomEditModal, setRoomEditModal }) {
               className='w-full md:w-1/2'
               label='Room Capacity'
               name='room_capacity'
+              extra='Maximum number of guests this room can host'
               rules={[{
                 required: true,
                 message: 'Please input your Room Capacity!'
@@ -238,11 +242,12 @@ function RoomEdit({ roomEditModal, setRoomEditModal }) {
             >
               <InputNumber
                 className='w-full'
-                placeholder='Room Capacity'
+                placeholder='e.g. 2'
                 type='number'
                 size='large'
                 min={1}
                 max={10}
+                addonAfter='guests'
               />
             </Form.Item>
           </div>
@@ -282,6 +287,7 @@ function RoomEdit({ roomEditModal, setRoomEditModal }) {
           <Form.Item
             name='room_images'
             label='Room Images'
+            extra='Up to 5 images · max 8 MB each · JPG, PNG, WEBP, AVIF, or HEIC · landscape recommended (e.g. 1600×900 px)'
             valuePropName='fileList'
             getValueFromEvent={normFile}
             rules={[{
@@ -292,8 +298,16 @@ function RoomEdit({ roomEditModal, setRoomEditModal }) {
             <Upload
               listType='picture-card'
               onChange={({ fileList: newFileList }) => setFileList(newFileList)}
-              accept='.jpg,.jpeg,.png,.pdf'
-              beforeUpload={() => false}
+              accept='image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif'
+              beforeUpload={(file) => {
+                const max = 8 * 1024 * 1024;
+                if (file.size > max) {
+                  // eslint-disable-next-line no-alert
+                  alert(`"${file.name}" is ${(file.size / 1024 / 1024).toFixed(1)} MB. Max is 8 MB per image. Please compress and try again.`);
+                  return Upload.LIST_IGNORE;
+                }
+                return false;
+              }}
               fileList={fileList}
               name='room_images'
               maxCount={5}

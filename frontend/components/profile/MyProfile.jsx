@@ -12,7 +12,6 @@ import {
   Button, Descriptions, Image, Modal, Result, Skeleton, Tag, Tooltip, Upload
 } from 'antd';
 import ImgCrop from 'antd-img-crop';
-import getConfig from 'next/config';
 import React, { useState } from 'react';
 import useFetchData from '../../hooks/useFetchData';
 import ApiService from '../../utils/apiService';
@@ -21,7 +20,6 @@ import notificationWithIcon from '../../utils/notification';
 import { userStatusAsResponse } from '../../utils/responseAsStatus';
 import ProfileEditModal from './ProfileEditModal';
 
-const { publicRuntimeConfig } = getConfig();
 const { confirm } = Modal;
 
 function MyProfile() {
@@ -36,7 +34,7 @@ function MyProfile() {
   const props = {
     accept: 'image/*',
     name: 'avatar',
-    action: `${publicRuntimeConfig.API_BASE_URL}/api/v1/avatar-update`,
+    action: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/avatar-update`,
     method: 'put',
     headers: { authorization: `Bearer ${token}` },
     onChange(info) {

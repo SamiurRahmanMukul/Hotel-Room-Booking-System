@@ -13,7 +13,6 @@ const favicon = require('serve-favicon');
 const crossOrigin = require('cors');
 const cookieParser = require('cookie-parser');
 const appRoot = require('app-root-path');
-const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const env = require('dotenv');
 
@@ -42,7 +41,9 @@ app.use(limiter);
 // application database connection establishment
 const connectDatabase = require('../database/connect.mongo.db');
 
-connectDatabase();
+(async () => {
+  await connectDatabase();
+})();
 
 // HTTP request logger middleware
 if (process.env.APP_NODE_ENV !== 'production') {
@@ -59,8 +60,8 @@ app.use(crossOrigin(corsOptions));
 app.use(cookieParser());
 
 // parse body of request
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // sets favicon in API routes
 if (process.env.APP_NODE_ENV !== 'production') {
@@ -70,20 +71,28 @@ if (process.env.APP_NODE_ENV !== 'production') {
 // sets static folder
 app.use(express.static('public'));
 
-// parse requests of content-type ~ application/json
-app.use(express.json());
-
-// parse requests of content-type ~ application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
-
 // response default (welcome) route
 app.get('/', defaultController);
 
+// platform-scoped routes (super-admin) — mounted BEFORE tenantResolver so they bypass it
+app.use('/platform-api', require('../routes/superadmin.routes'));
+
+// resolve tenant for every API request: sets req.hotel, req.db, req.M
+const tenantResolver = require('../middleware/tenant.resolver');
+app.use('/api/v1', tenantResolver);
+
 // sets application API's routes
 app.use('/api/v1', authRoute); // auth routes
+app.use('/api/v1', require('../routes/magic.link.routes')); // magic-link verify + set-password
+app.use('/api/v1', require('../routes/onboarding.routes')); // checklist + publish + hotel settings
 app.use('/api/v1', userRoute); // user routes
 app.use('/api/v1', appsRoute); // apps routes
 app.use('/api/v1', roomRoute); // room routes
+app.use('/api/v1', require('../routes/room.type.routes')); // room type routes
+app.use('/api/v1', require('../routes/attribute.routes')); // unit attribute routes
+app.use('/api/v1', require('../routes/price.routes')); // price grid routes
+app.use('/api/v1', require('../routes/service.routes')); // paid services routes
+app.use('/api/v1', require('../routes/policy.routes')); // cancellation / no-show policy routes
 app.use('/api/v1', bookingRoute); // booking routes
 app.use('/api/v1', reviewRoute); // review routes
 

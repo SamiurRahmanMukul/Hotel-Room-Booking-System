@@ -34,7 +34,11 @@ const usersSchema = new mongoose.Schema({
   phone: {
     type: String,
     unique: true,
-    validate: [validator.isMobilePhone, 'Please enter a valid phone number']
+    sparse: true,
+    validate: {
+      validator(v) { return v == null || validator.isMobilePhone(v); },
+      message: 'Please enter a valid phone number'
+    }
   },
   password: {
     type: String,
@@ -66,6 +70,10 @@ const usersSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  mustChangePassword: {
+    type: Boolean,
+    default: false
+  },
   status: {
     type: String,
     enum: ['register', 'login', 'logout', 'blocked'],
@@ -73,6 +81,8 @@ const usersSchema = new mongoose.Schema({
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
+  magicLinkTokenHash: { type: String, select: false },
+  magicLinkExpiresAt: Date,
   emailVerificationToken: String,
   emailVerificationExpire: Date,
   createdAt: {
@@ -102,16 +112,17 @@ usersSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 8);
 });
 
-// JWT Access Token
-usersSchema.methods.getJWTToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
+// JWT Access Token. Pass `extra` (e.g. { hotelSlug }) to embed claims used
+// by the tenant resolver and other middleware.
+usersSchema.methods.getJWTToken = function (extra = {}) {
+  return jwt.sign({ id: this._id, ...extra }, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRES
   });
 };
 
 // JWT Refresh Token
-usersSchema.methods.getJWTRefreshToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_REFRESH_TOKEN_SECRET_KEY, {
+usersSchema.methods.getJWTRefreshToken = function (extra = {}) {
+  return jwt.sign({ id: this._id, ...extra }, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRES
   });
 };
@@ -151,4 +162,10 @@ usersSchema.methods.getEmailVerificationToken = function () {
   return verificationToken;
 };
 
-module.exports = mongoose.model('Users', usersSchema);
+const MODEL_NAME = 'Users';
+const register = (conn) => conn.models[MODEL_NAME] || conn.model(MODEL_NAME, usersSchema);
+
+// Models are schema, not a live connection. They can only exist on a tenant
+// connection (via register). No global mongoose.model() — a cross-tenant query
+// is unrepresentable by construction.
+module.exports = { schema: usersSchema, modelName: MODEL_NAME, register };

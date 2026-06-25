@@ -21,23 +21,29 @@ module.exports = {
     },
     extend: {
       colors: {
-        'color-primary': '#2563eb',
-        'color-secondary': '#1d4ed8',
-        'color-default': '#5189F5',
-        'color-agent': '#613659',
-        'color-success': '#45d175',
-        'color-warning': '#f59e0b',
-        'color-error': '#ff0000',
+        // brand
+        'color-primary': '#853953', // wine — primary CTA, links, active sidebar item
+        'color-secondary': '#612D53', // deep wine — hover, headers, focus
+        'color-default': '#612D53',
+        'color-agent': '#612D53',
+        'color-success': '#3F7D58',
+        'color-warning': '#C8923A',
+        'color-error': '#A4243B',
+        // surface
         'bg-white': '#ffffff',
-        'bg-black': '#1e1e1e',
-        'bg-gray': '#383838',
-        'txt-white': '#f5f5f5',
-        'txt-black': '#000000',
-        'txt-grey': '#374151'
+        'bg-black': '#2C2C2C', // charcoal — sidebar
+        'bg-gray': '#F3F4F4', // page background
+        // text
+        'txt-white': '#ffffff',
+        'txt-black': '#2C2C2C',
+        'txt-grey': '#6B6B6B'
       },
       fontFamily: {
-        'body-font': ['Inter', 'sans-serif'],
-        'text-font': ['Poppins', 'serif']
+        // Inter everywhere — loaded as a webfont (Google Fonts)
+        'body-font': ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'system-ui', 'sans-serif'],
+        'text-font': ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'system-ui', 'sans-serif'],
+        // Inter Tight for tables — denser, designed for compact tabular data
+        'table-font': ['"Inter Tight"', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif']
       },
       fontSize: {
         'h1-font-size': '2rem',

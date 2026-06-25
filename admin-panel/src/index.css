@@ -25,12 +25,63 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Inter everywhere — loaded as a webfont so it renders identically on every device */
 body {
-  @apply !font-body-font;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               system-ui, Roboto, sans-serif;
+  font-size: 14px;
   -ms-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  font-feature-settings: "cv11", "ss01"; /* nicer Inter alternates */
+}
+
+/* Make form controls clearly visible — Vercel-style inputs */
+.ant-select:not(.ant-select-borderless) .ant-select-selector,
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-input-number,
+.ant-picker {
+  border-color: #B5B5B5 !important;
+  background: #ffffff !important;
+}
+.ant-select:not(.ant-select-borderless):not(.ant-select-disabled):hover .ant-select-selector,
+.ant-input:hover,
+.ant-input-affix-wrapper:hover,
+.ant-input-number:hover,
+.ant-picker:hover {
+  border-color: #7A7A7A !important;
+}
+.ant-select-focused:not(.ant-select-borderless) .ant-select-selector,
+.ant-input:focus,
+.ant-input-affix-wrapper-focused,
+.ant-input-number-focused,
+.ant-picker-focused {
+  border-color: #853953 !important;
+  box-shadow: 0 0 0 2px rgba(133, 57, 83, 0.12) !important;
+}
+
+/* Tables use Inter Tight (denser, designed for compact tabular data) at 12px */
+.ant-table,
+.ant-table *,
+.data-table,
+.data-table *,
+table,
+table * {
+  font-family: "Inter Tight", "Inter", -apple-system, BlinkMacSystemFont,
+               system-ui, sans-serif;
+  font-size: 12px;
+}
+
+/* Prevent the small-text rule from shrinking interactive controls inside tables */
+.ant-table .ant-btn,
+.ant-table .ant-tag,
+.ant-table .ant-input,
+.ant-table .ant-select,
+.data-table .ant-btn,
+.data-table .ant-tag {
+  font-size: 12px;
 }
 
 input,

@@ -20,7 +20,7 @@ import { reFetchData } from '../../store/slice/appSlice';
 import ApiService from '../../utils/apiService';
 import notificationWithIcon from '../../utils/notification';
 
-function CreateUser() {
+function CreateUser({ onSaved } = {}) {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
@@ -45,6 +45,7 @@ function CreateUser() {
         setLoading(false);
         if (response?.result_code === 0) {
           notificationWithIcon('success', 'SUCCESS', response?.result?.message || 'New user registration successful');
+          if (typeof onSaved === 'function') onSaved();
           form.resetFields();
           dispatch(reFetchData());
         } else {

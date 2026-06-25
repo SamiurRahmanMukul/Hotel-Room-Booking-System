@@ -9,10 +9,20 @@
 
 import { notification } from 'antd';
 
+// React throws "Objects are not valid as a React child" if a non-string (e.g. a raw
+// Mongoose error object) is passed as the description. Coerce defensively so a bad API
+// error shape can never white-screen the app.
+const toText = (msg) => {
+  if (msg == null) return '';
+  if (typeof msg === 'string') return msg;
+  if (typeof msg === 'object') return msg.message || msg.error || 'Something went wrong';
+  return String(msg);
+};
+
 const notificationWithIcon = (type, title, msg) => {
   notification[type]({
     message: title,
-    description: msg
+    description: toText(msg)
   });
 };
 

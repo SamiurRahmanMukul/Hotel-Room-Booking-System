@@ -11,10 +11,15 @@ const mongoose = require('mongoose');
 const { validateBookingDates } = require('../lib/booking.dates.validator');
 
 const bookingSchema = new mongoose.Schema({
+  // Canonical booking target: the counted room type. Availability is held against this.
+  roomTypeId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'RoomTypes'
+  },
+  // Physical room ASSIGNMENT — filled near check-in, not at booking time (nullable).
   room_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Rooms',
-    required: [true, 'Room id is required field']
+    ref: 'Rooms'
   },
   booking_dates: {
     type: [Date],
@@ -36,6 +41,41 @@ const bookingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Reviews'
   },
+  guests: {
+    adults: { type: Number, default: 1, min: 1 },
+    children: { type: Number, default: 0, min: 0 },
+    infants: { type: Number, default: 0, min: 0 }
+  },
+  guest_country: {
+    type: String,
+    default: '',
+    maxlength: 2 // ISO-3166-1 alpha-2
+  },
+  booking_source: {
+    type: String,
+    default: 'direct',
+    enum: ['direct', 'airbnb', 'booking.com', 'vrbo', 'expedia', 'other']
+  },
+  payment: {
+    amount: { type: Number, min: 0 },
+    currency: { type: String, default: 'EUR' },
+    method: {
+      type: String,
+      enum: [null, '', 'card', 'cash', 'check', 'bank_transfer', 'epay', 'apple_pay', 'google_pay', 'on_arrival'],
+      default: null
+    },
+    status: {
+      type: String,
+      enum: ['unpaid', 'pending', 'partial', 'paid', 'refunded'],
+      default: 'unpaid'
+    },
+    paid_at: { type: Date, default: null }
+  },
+  notes: {
+    type: String,
+    default: '',
+    maxlength: 2000
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -52,4 +92,7 @@ bookingSchema.pre('save', function (next) {
   next();
 });
 
-module.exports = mongoose.model('Bookings', bookingSchema);
+const MODEL_NAME = 'Bookings';
+const register = (conn) => conn.models[MODEL_NAME] || conn.model(MODEL_NAME, bookingSchema);
+
+module.exports = { schema: bookingSchema, modelName: MODEL_NAME, register };

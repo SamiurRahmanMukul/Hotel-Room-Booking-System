@@ -8,19 +8,26 @@
  */
 
 import {
-  DashboardOutlined, FileProtectOutlined, FullscreenExitOutlined, FullscreenOutlined, HomeOutlined, LogoutOutlined, TeamOutlined, UserOutlined
+  ApartmentOutlined, AppstoreOutlined, BankOutlined, CalendarOutlined, DashboardOutlined, DollarOutlined, FileProtectOutlined, FullscreenExitOutlined, FullscreenOutlined, GlobalOutlined, HomeOutlined, LogoutOutlined, SettingOutlined, TagsOutlined, TeamOutlined, UserOutlined
 } from '@ant-design/icons';
 import {
   Button, Layout, Menu, Tooltip
 } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Logo from '../assets/images/logo.svg';
 import UserBox from '../components/shared/UserBox';
 import Dashboard from '../components/tabs/Dashboard';
 import MyProfile from '../components/tabs/MyProfile';
 import Orders from '../components/tabs/Orders';
+import TapeChart from '../components/tabs/TapeChart';
+import BookingSitePreview from '../components/tabs/BookingSitePreview';
+import HotelSettings from '../components/tabs/HotelSettings';
+import Attributes from '../components/tabs/Attributes';
+import PriceList from '../components/tabs/PriceList';
+import Property from '../components/tabs/Property';
 import Rooms from '../components/tabs/Rooms';
+import RoomTypes from '../components/tabs/RoomTypes';
 import Users from '../components/tabs/Users';
 import useFullScreen from '../hooks/useFullScreen';
 import ApiService from '../utils/apiService';
@@ -37,6 +44,26 @@ function Main() {
   const [selectedKeys, setSelectedKeys] = useState('1');
   const navigate = useNavigate();
   const { tab } = useParams();
+
+  // setup gate — has the hotel property been captured yet?
+  const [propertyComplete, setPropertyComplete] = useState(null);
+  const refreshSetupStatus = useCallback(async () => {
+    try {
+      const res = await ApiService.get('/api/v1/onboarding/status');
+      setPropertyComplete(!!res?.propertyComplete);
+    } catch (e) {
+      setPropertyComplete(true); // fail open — never lock the admin out on a fetch error
+    }
+  }, []);
+  useEffect(() => { refreshSetupStatus(); }, [refreshSetupStatus]);
+  // until the property is captured, the only places to go are the dashboard (which shows the
+  // "create property" task), the property form, and profile/logout.
+  useEffect(() => {
+    const allowed = ['property', 'dashboard', 'profile', 'logout'];
+    if (propertyComplete === false && tab && !allowed.includes(tab)) {
+      navigate('/main/dashboard');
+    }
+  }, [propertyComplete, tab, navigate]);
 
   // function to handle user logout
   const userLogout = async () => {
@@ -56,6 +83,10 @@ function Main() {
 
   const handleTabChange = (key) => {
     switch (key) {
+      case '11': {
+        navigate('/main/property');
+        break;
+      }
       case '1': {
         navigate('/main/dashboard');
         break;
@@ -68,12 +99,36 @@ function Main() {
         navigate('/main/hotel-rooms');
         break;
       }
+      case '10': {
+        navigate('/main/room-types');
+        break;
+      }
+      case '12': {
+        navigate('/main/attributes');
+        break;
+      }
+      case '13': {
+        navigate('/main/price-list');
+        break;
+      }
+      case '9': {
+        navigate('/main/tape-chart');
+        break;
+      }
       case '4': {
         navigate('/main/booking-orders');
         break;
       }
       case '5': {
         navigate('/main/profile');
+        break;
+      }
+      case '7': {
+        navigate('/main/channels');
+        break;
+      }
+      case '8': {
+        navigate('/main/hotel-settings');
         break;
       }
       case '6': {
@@ -89,6 +144,10 @@ function Main() {
   useEffect(() => {
     if (tab) {
       switch (tab) {
+        case 'property': {
+          setSelectedKeys('11');
+          break;
+        }
         case 'dashboard': {
           setSelectedKeys('1');
           break;
@@ -101,12 +160,36 @@ function Main() {
           setSelectedKeys('3');
           break;
         }
+        case 'room-types': {
+          setSelectedKeys('10');
+          break;
+        }
+        case 'attributes': {
+          setSelectedKeys('12');
+          break;
+        }
+        case 'price-list': {
+          setSelectedKeys('13');
+          break;
+        }
+        case 'tape-chart': {
+          setSelectedKeys('9');
+          break;
+        }
         case 'booking-orders': {
           setSelectedKeys('4');
           break;
         }
         case 'profile': {
           setSelectedKeys('5');
+          break;
+        }
+        case 'channels': {
+          setSelectedKeys('7');
+          break;
+        }
+        case 'hotel-settings': {
+          setSelectedKeys('8');
           break;
         }
         case 'logout': {
@@ -122,6 +205,10 @@ function Main() {
 
   useEffect(() => {
     switch (selectedKeys) {
+      case '11': {
+        window.document.title = 'Beach Resort — Property';
+        break;
+      }
       case '1': {
         window.document.title = 'Beach Resort — Dashboard';
         break;
@@ -134,12 +221,36 @@ function Main() {
         window.document.title = 'Beach Resort — Hotel Rooms';
         break;
       }
+      case '10': {
+        window.document.title = 'Beach Resort — Room Types';
+        break;
+      }
+      case '9': {
+        window.document.title = 'Beach Resort — Room rack';
+        break;
+      }
       case '4': {
         window.document.title = 'Beach Resort — Booking Orders';
         break;
       }
       case '5': {
         window.document.title = 'Beach Resort — Profile';
+        break;
+      }
+      case '7': {
+        window.document.title = 'Beach Resort — Channels';
+        break;
+      }
+      case '8': {
+        window.document.title = 'Beach Resort — Hotel Settings';
+        break;
+      }
+      case '12': {
+        window.document.title = 'Beach Resort — Attributes';
+        break;
+      }
+      case '13': {
+        window.document.title = 'Beach Resort — Price list';
         break;
       }
       case '6': {
@@ -152,6 +263,37 @@ function Main() {
     }
   }, [selectedKeys]);
 
+  const setupSubmenu = {
+    key: 'sub-setup',
+    icon: <ApartmentOutlined />,
+    label: 'Hotel & units setup',
+    children: [
+      { key: '8', icon: <SettingOutlined />, label: 'Hotel specifics' },
+      { key: '10', icon: <AppstoreOutlined />, label: 'Room Types' },
+      { key: '12', icon: <TagsOutlined />, label: 'Attributes' },
+      { key: '3', icon: <HomeOutlined />, label: 'Rooms' }
+    ]
+  };
+  const fullMenu = [
+    { key: '11', icon: <BankOutlined />, label: 'Property' },
+    { key: '1', icon: <DashboardOutlined />, label: 'Dashboard' },
+    setupSubmenu,
+    { key: '9', icon: <CalendarOutlined />, label: 'Room rack' },
+    { key: '13', icon: <DollarOutlined />, label: 'Price list' },
+    { key: '4', icon: <FileProtectOutlined />, label: 'Booking Orders' },
+    { key: '2', icon: <TeamOutlined />, label: 'Users' },
+    { key: '7', icon: <GlobalOutlined />, label: 'Channels' },
+    { key: '5', icon: <UserOutlined />, label: 'My Profile' },
+    { key: '6', icon: <LogoutOutlined />, label: 'Logout' }
+  ];
+  const minimalMenu = [
+    { key: '11', icon: <BankOutlined />, label: 'Property' },
+    { key: '1', icon: <DashboardOutlined />, label: 'Dashboard' },
+    { key: '5', icon: <UserOutlined />, label: 'My Profile' },
+    { key: '6', icon: <LogoutOutlined />, label: 'Logout' }
+  ];
+  const menuItems = propertyComplete === false ? minimalMenu : fullMenu;
+
   return (
     <Layout className='w-full h-screen'>
       <Sider width={250} breakpoint='lg' collapsedWidth='0'>
@@ -161,41 +303,11 @@ function Main() {
           theme='dark'
           mode='inline'
           selectedKeys={[selectedKeys]}
+          defaultOpenKeys={['sub-setup']}
           onClick={(e) => {
             handleTabChange(e.key);
           }}
-          items={[
-            {
-              key: '1',
-              icon: <DashboardOutlined />,
-              label: 'Dashboard'
-            },
-            {
-              key: '2',
-              icon: <TeamOutlined />,
-              label: 'Users'
-            },
-            {
-              key: '3',
-              icon: <HomeOutlined />,
-              label: 'Hotel Rooms'
-            },
-            {
-              key: '4',
-              icon: <FileProtectOutlined />,
-              label: 'Booking Orders'
-            },
-            {
-              key: '5',
-              icon: <UserOutlined />,
-              label: 'My Profile'
-            },
-            {
-              key: '6',
-              icon: <LogoutOutlined />,
-              label: 'Logout'
-            }
-          ]}
+          items={menuItems}
         />
       </Sider>
 
@@ -225,11 +337,23 @@ function Main() {
         </Header>
 
         <Content className='bg-bg-white overflow-y-scroll m-2 p-2'>
-          {selectedKeys === '1' && (<Dashboard />)}
+          {selectedKeys === '11' && (<Property onSaved={refreshSetupStatus} />)}
+          {selectedKeys === '1' && (
+            <Dashboard
+              propertyComplete={propertyComplete}
+              goTo={(t) => navigate(`/main/${t}`)}
+            />
+          )}
           {selectedKeys === '2' && (<Users />)}
           {selectedKeys === '3' && (<Rooms />)}
+          {selectedKeys === '10' && (<RoomTypes />)}
+          {selectedKeys === '12' && (<Attributes />)}
+          {selectedKeys === '13' && (<PriceList />)}
           {selectedKeys === '4' && (<Orders />)}
+          {selectedKeys === '9' && (<TapeChart />)}
           {selectedKeys === '5' && (<MyProfile />)}
+          {selectedKeys === '7' && (<BookingSitePreview />)}
+          {selectedKeys === '8' && (<HotelSettings />)}
         </Content>
 
         <Footer className='text-center font-text-font font-medium '>

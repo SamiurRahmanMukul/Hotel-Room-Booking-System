@@ -9,7 +9,6 @@
 
 import { Button } from 'antd';
 import axios from 'axios';
-import getConfig from 'next/config';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -20,10 +19,9 @@ import StyledHero from '../../components/rooms/StyledHero';
 import Loading from '../../components/shared/Loading';
 import OrderPlaceModal from '../../components/utilities/OrderPlaceModal';
 import RoomReviewList from '../../components/utilities/RoomReviewList';
+import { getHotelSlugFromCtx } from '../../utils/tenant';
 import { getSessionToken, getSessionUser } from '../../utils/authentication';
 import notificationWithIcon from '../../utils/notification';
-
-const { publicRuntimeConfig } = getConfig();
 
 function RoomPreview(props) {
   const [bookingModal, setBookingModal] = useState({ open: false, roomId: null });
@@ -38,7 +36,17 @@ function RoomPreview(props) {
       router.push('/auth/login');
     } else {
       setBookingModal((prevState) => (
-        { ...prevState, open: true, roomId: props?.room?.data?.id }
+        {
+          ...prevState,
+          open: true,
+          roomId: props?.room?.data?.id,
+          pricePerNight: props?.room?.data?.room_price,
+          // canonical room type for the availability calendar; fall back to the room id
+          // for rooms not yet linked to a type (matches the backend's per-room fallback)
+          // eslint-disable-next-line no-underscore-dangle
+          roomTypeId: props?.room?.data?.roomTypeId || props?.room?.data?._id || props?.room?.data?.id,
+          hotelId: props?.room?.data?.hotelId
+        }
       ));
     }
   };
@@ -88,7 +96,7 @@ function RoomPreview(props) {
                     {`Price : $ ${props?.room?.data?.room_price}`}
                   </h6>
                   <h6>
-                    {`Size : ${props?.room?.data?.room_size} SQFT`}
+                    {`Size : ${props?.room?.data?.room_size} m²`}
                   </h6>
                   <h6>
                     Max capacity :
@@ -148,7 +156,8 @@ export async function getServerSideProps(ctx) {
   try {
     // Fetch data from the server-side API
     const response = await axios.get(
-      `${publicRuntimeConfig.API_BASE_URL}/api/v1/get-room-by-id-or-slug-name/${ctx.query.slug}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/get-room-by-id-or-slug-name/${ctx.query.slug}`,
+      { headers: { 'X-Hotel-Slug': getHotelSlugFromCtx(ctx) } }
     );
     const room = response?.data?.result;
 

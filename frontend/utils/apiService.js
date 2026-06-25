@@ -8,13 +8,11 @@
  */
 
 import axios from 'axios';
-import getConfig from 'next/config';
 import { getSessionToken, removeSessionAndLogoutUser } from './authentication';
-
-const { publicRuntimeConfig } = getConfig();
+import { getHotelSlug } from './tenant';
 
 const ApiService = axios.create({
-  baseURL: publicRuntimeConfig.API_BASE_URL
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL
 });
 
 /**
@@ -26,6 +24,9 @@ ApiService.interceptors.request.use(
      * Add your request interceptor logic here: setting headers, authorization etc.
      */
     config.headers['Content-Type'] = 'application/json';
+
+    // tell the backend which tenant this booking site is serving, resolved one way everywhere
+    config.headers['X-Hotel-Slug'] = getHotelSlug();
 
     if (!config?.noAuth) {
       const token = getSessionToken();

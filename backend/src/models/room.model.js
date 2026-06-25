@@ -10,34 +10,54 @@
 const mongoose = require('mongoose');
 
 const roomsSchema = new mongoose.Schema({
+  // Room number / identifier. Empty until a floor is assigned (rooms are generated from the
+  // type quantity first, then numbered per floor). Uniqueness of ASSIGNED numbers is enforced
+  // by a partial unique index below (empty values are exempt).
   room_name: {
     type: String,
-    unique: true,
-    required: [true, 'Room name filed is required']
+    default: ''
   },
   room_slug: {
     type: String,
     trim: true,
-    unique: true,
     lowercase: true,
-    required: [true, 'Room slug filed is required']
+    default: ''
   },
+  // Legacy category enum — optional now that the canonical type is roomTypeId.
   room_type: {
     type: String,
-    enum: ['single', 'couple', 'family', 'presidential'],
-    required: [true, 'Room type filed is required']
+    enum: ['single', 'couple', 'family', 'presidential']
   },
+  // Canonical room type this physical room belongs to. Availability is counted per type,
+  // not per room. A physical room is lightweight — its price/capacity come from the type.
+  roomTypeId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'RoomTypes'
+  },
+  // building level this room sits on (label, e.g. "Ground", "1", "Penthouse")
+  floor: {
+    type: String,
+    default: ''
+  },
+  // apaleo unit condition — housekeeping state, separate from booking occupancy
+  condition: {
+    type: String,
+    enum: ['Clean', 'Dirty', 'Inspected', 'OutOfService'],
+    default: 'Clean'
+  },
+  // reusable unit attributes attached to this room (Balcony, Street view, King bed…)
+  attributes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Attributes' }],
   room_price: {
     type: Number,
-    required: [true, 'Room price filed is required']
+    default: 0
   },
   room_size: {
     type: Number,
-    required: [true, 'Room size filed is required']
+    default: 0
   },
   room_capacity: {
     type: Number,
-    required: [true, 'Room capacity filed is required']
+    default: 1
   },
   allow_pets: {
     type: Boolean,
@@ -53,7 +73,7 @@ const roomsSchema = new mongoose.Schema({
   },
   room_description: {
     type: String,
-    required: [true, 'Room description filed is required']
+    default: ''
   },
   extra_facilities: [String],
   room_images: [
@@ -85,6 +105,12 @@ const roomsSchema = new mongoose.Schema({
   }
 });
 
+// Assigned room numbers must be unique within the hotel; unassigned (empty) rooms are exempt.
+roomsSchema.index(
+  { room_name: 1 },
+  { unique: true, partialFilterExpression: { room_name: { $gt: '' } } }
+);
+
 // Replace spaces with dashes in room_slug before saving
 roomsSchema.pre('save', function (next) {
   if (this.room_slug) {
@@ -93,4 +119,7 @@ roomsSchema.pre('save', function (next) {
   next();
 });
 
-module.exports = mongoose.model('Rooms', roomsSchema);
+const MODEL_NAME = 'Rooms';
+const register = (conn) => conn.models[MODEL_NAME] || conn.model(MODEL_NAME, roomsSchema);
+
+module.exports = { schema: roomsSchema, modelName: MODEL_NAME, register };

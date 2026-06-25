@@ -10,13 +10,14 @@
 const fs = require('fs');
 const appRoot = require('app-root-path');
 const { errorResponse, successResponse } = require('../configs/app.response');
-const User = require('../models/user.model');
 const logger = require('../middleware/winston.logger');
 const MyQueryHelper = require('../configs/api.feature');
 
 // TODO: Controller for get user info
 exports.getUser = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     const { user } = req;
 
     if (!user) {
@@ -43,6 +44,7 @@ exports.getUser = async (req, res) => {
         role: user.role,
         verified: user.verified,
         status: user.status,
+        mustChangePassword: !!user.mustChangePassword,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt
       }
@@ -59,6 +61,8 @@ exports.getUser = async (req, res) => {
 // TODO: Controller for get user info using id by admin
 exports.getUserById = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     // check if user exists
     const user = await User.findById(req.params.id);
 
@@ -87,6 +91,7 @@ exports.getUserById = async (req, res) => {
         role: user.role,
         verified: user.verified,
         status: user.status,
+        mustChangePassword: !!user.mustChangePassword,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt
       }
@@ -103,6 +108,8 @@ exports.getUserById = async (req, res) => {
 // TODO: Controller for update user info
 exports.updateUser = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     const { user } = req;
     const {
       fullName, phone, gender, dob, address
@@ -192,6 +199,8 @@ exports.updateUser = async (req, res) => {
 // TODO: Controller for update user avatar/image
 exports.avatarUpdate = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     const { user, file } = req;
 
     if (!user) {
@@ -263,6 +272,8 @@ exports.avatarUpdate = async (req, res) => {
 // TODO: Controller for delete user also database
 exports.deleteUser = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     const { user } = req;
 
     if (!user) {
@@ -306,6 +317,8 @@ exports.deleteUser = async (req, res) => {
 // TODO: Controller for delete user using id by admin
 exports.deleteUserById = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     // check if user exists
     const user = await User.findById(req.params.id);
 
@@ -358,6 +371,8 @@ exports.deleteUserById = async (req, res) => {
 // TODO: Controller for get users list for admin
 exports.getUsersList = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     const { user } = req;
 
     if (!user) {
@@ -424,6 +439,8 @@ exports.getUsersList = async (req, res) => {
 // TODO: Controller for blockedUser user by admin
 exports.blockedUser = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     // check if user exists
     const user = await User.findById(req.params.id);
 
@@ -490,6 +507,8 @@ exports.blockedUser = async (req, res) => {
 // TODO: Controller for unblockedUser user by admin
 exports.unblockedUser = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     // check if user exists
     const user = await User.findById(req.params.id);
 

@@ -17,6 +17,10 @@ function PrivateRoute({ children }) {
   if (!user && !token) {
     return <Navigate to='/auth/login' replace />;
   }
+  // Force the change-password screen until the flag is cleared
+  if (user?.mustChangePassword && window.location.pathname !== '/auth/change-password') {
+    return <Navigate to='/auth/change-password' replace />;
+  }
   return children;
 }
 

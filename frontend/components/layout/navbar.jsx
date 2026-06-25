@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FaAlignRight } from 'react-icons/fa';
 import { getSessionToken, getSessionUser } from '../../utils/authentication';
+import HotelLogo from './HotelLogo';
 import UserPopover from './popover';
 
 function Navbar() {
@@ -27,7 +28,7 @@ function Navbar() {
         <div className='nav-header'>
           {/* app logo */}
           <Link href='/'>
-            <img src='/images//svg/logo.svg' alt='Reach Resort' />
+            <HotelLogo />
           </Link>
 
           {/* navbar toggle button */}

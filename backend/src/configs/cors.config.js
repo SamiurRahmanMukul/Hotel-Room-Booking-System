@@ -8,6 +8,8 @@
  */
 
 const allowedOrigins = [
+  'http://localhost:3001',
+  'http://localhost:3002',
   'http://localhost:3033',
   'http://localhost:3034',
   'http://localhost:5500',

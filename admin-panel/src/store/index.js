@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [] // only that's reducer will be persisted
+  whitelist: ['app'] // persist app slice (theme, timeZone)
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

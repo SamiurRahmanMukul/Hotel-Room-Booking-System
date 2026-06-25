@@ -15,7 +15,7 @@ function PublicRoute({ children }) {
   const token = getSessionToken();
 
   if (user && token) {
-    return <Navigate to='/dashboard/main' replace />;
+    return <Navigate to='/main/dashboard' replace />;
   }
   return children;
 }

@@ -74,13 +74,13 @@ function RoomDetails({ id }) {
             label={<span className='whitespace-nowrap'>Room Price</span>}
             span={2}
           >
-            {`$ ${response?.data?.room_price}`}
+            {`€ ${response?.data?.room_price}`}
           </Descriptions.Item>
 
           <Descriptions.Item
             label={<span className='whitespace-nowrap'>Room Size</span>}
           >
-            {`${response?.data?.room_size} sq. ft.`}
+            {`${response?.data?.room_size} m²`}
           </Descriptions.Item>
           <Descriptions.Item
             label={<span className='whitespace-nowrap'>Room Capacity</span>}

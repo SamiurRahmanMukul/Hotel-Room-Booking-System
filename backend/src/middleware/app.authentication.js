@@ -9,7 +9,6 @@
 
 const jwt = require('jsonwebtoken');
 const { errorResponse } = require('../configs/app.response');
-const User = require('../models/user.model');
 
 // TODO: Middleware for detect authenticated logging user
 exports.isAuthenticatedUser = async (req, res, next) => {
@@ -38,8 +37,16 @@ exports.isAuthenticatedUser = async (req, res, next) => {
         ));
       }
 
-      // check if user exists
-      const user = await User.findById(dec.id);
+      // check if user exists — use per-tenant model when middleware runs after tenantResolver
+      const TenantUser = req.M?.Users;
+      if (!TenantUser) {
+        return res.status(500).json(errorResponse(
+          2,
+          'SERVER SIDE ERROR',
+          'Tenant context missing — auth must run after tenantResolver'
+        ));
+      }
+      const user = await TenantUser.findById(dec.id);
 
       if (!user) {
         return res.status(404).json(errorResponse(
@@ -87,18 +94,26 @@ exports.isRefreshTokenValid = async (req, res, next) => {
     // split token from authorization header
     const token = authorization.split(' ')[1];
 
-    // verify token
-    jwt.verify(token, process.env.JWT_REFRESH_TOKEN_SECRET_KEY, async (err, dec) => {
+    // verify refresh token (signed with JWT_SECRET_KEY in user.model.js)
+    jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, dec) => {
       if (err) {
         return res.status(404).json(errorResponse(
           11,
           'JWT TOKEN INVALID',
-          'JWT token is expired/invalid. Please logout and login again'
+          'Refresh token is expired/invalid. Please log in again.'
         ));
       }
 
-      // check if user exists
-      const user = await User.findById(dec.id);
+      // resolve hotel from claim if it wasn't already set (refresh hits before tenantResolver in some flows)
+      const TenantUser = req.M?.Users;
+      if (!TenantUser) {
+        return res.status(500).json(errorResponse(
+          2,
+          'SERVER SIDE ERROR',
+          'Tenant context missing — auth must run after tenantResolver'
+        ));
+      }
+      const user = await TenantUser.findById(dec.id);
 
       if (!user) {
         return res.status(404).json(errorResponse(
@@ -177,7 +192,7 @@ exports.isBlocked = async (req, res, next) => {
     }
 
     // check user status is blocked
-    if (user.role !== 'blocked') {
+    if (user.status !== 'blocked') {
       next();
     } else {
       return res.status(406).json(errorResponse(

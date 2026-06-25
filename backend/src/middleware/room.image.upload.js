@@ -40,21 +40,33 @@ const storage = multer.diskStorage({
   }
 });
 
+// Accept the formats most cameras and CMSs export today.
+const ALLOWED_MIME = new Set([
+  'image/png',
+  'image/jpg',
+  'image/jpeg',
+  'image/webp',
+  'image/avif',
+  'image/heic',
+  'image/heif'
+]);
+const MAX_BYTES = 8 * 1024 * 1024; // 8MB per image
+
 // prepare the final multer upload object
 const roomImageUpload = multer({
   storage,
   limits: {
-    fileSize: 1000000 // 1MB
+    fileSize: MAX_BYTES
   },
   fileFilter: (_req, files, cb) => {
-    if (files.fieldname === 'room_images') {
-      if (files.mimetype === 'image/png' || files.mimetype === 'image/jpg' || files.mimetype === 'image/jpeg') {
+    if (files.fieldname === 'room_images' || files.fieldname === 'avatar') {
+      if (ALLOWED_MIME.has(files.mimetype)) {
         cb(null, true);
       } else {
-        cb(new Error('Only .jpg, .png or .jpeg format allowed!'));
+        cb(new Error('Allowed image formats: JPG, PNG, WEBP, AVIF, HEIC. Got: ' + files.mimetype));
       }
     } else {
-      cb(new Error('There was an unknown error!'));
+      cb(new Error('Unexpected upload field: ' + files.fieldname));
     }
   }
 });

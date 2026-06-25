@@ -1,0 +1,56 @@
+# Caddyfile — local dev reverse proxy for the multi-tenant platform.
+#
+# Run from repo root:
+#   brew install caddy        # one-time
+#   caddy run                 # picks up this Caddyfile automatically
+#
+# Routes:
+#   admin.localhost           → super-admin console (admin-panel :3001 /superadmin/*)
+#   <slug>.admin.localhost    → hotel admin panel (admin-panel :3001) for that slug
+#   <slug>.book.localhost     → public booking site (frontend :3034) for that slug
+#   api.localhost             → backend API (:8000)
+#   sync.localhost            → calendar-sync worker (:8001)
+#
+# All *.localhost names resolve to 127.0.0.1 natively on macOS — no /etc/hosts edits needed.
+#
+# How tenant context is delivered:
+#   Caddy adds an X-Hotel-Slug header derived from the subdomain. Backend's tenantResolver
+#   already honors X-Hotel-Slug, so the Express app immediately knows which DB to use.
+#
+# For production: replace `localhost` with your real domain (book.platform.com etc.) and
+# Caddy will auto-provision Let's Encrypt certs. No code change needed.
+
+{
+    # Caddy v2 global options
+    auto_https off          # localhost gets no cert — http-only for dev
+    admin off
+}
+
+# ── Super-admin console ────────────────────────────────────────────────────
+http://admin.localhost {
+    reverse_proxy localhost:3001
+}
+
+# ── Per-hotel admin panel: <slug>.admin.localhost ─────────────────────────
+http://*.admin.localhost {
+    @slug header_regexp host Host ^(?P<slug>[^.]+)\.admin\.localhost
+    request_header X-Hotel-Slug {http.regexp.host.slug}
+    reverse_proxy localhost:3001
+}
+
+# ── Per-hotel public booking site: <slug>.book.localhost ──────────────────
+http://*.book.localhost {
+    @slug header_regexp host Host ^(?P<slug>[^.]+)\.book\.localhost
+    request_header X-Hotel-Slug {http.regexp.host.slug}
+    reverse_proxy localhost:3034
+}
+
+# ── Backend API at api.localhost (used by the apps' internal fetches) ─────
+http://api.localhost {
+    reverse_proxy localhost:8000
+}
+
+# ── Calendar-sync worker ──────────────────────────────────────────────────
+http://sync.localhost {
+    reverse_proxy localhost:8001
+}

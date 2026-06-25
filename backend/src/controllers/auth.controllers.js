@@ -10,15 +10,16 @@
 const fs = require('fs');
 const crypto = require('crypto');
 const appRoot = require('app-root-path');
-const User = require('../models/user.model');
 const logger = require('../middleware/winston.logger');
 const { errorResponse, successResponse } = require('../configs/app.response');
 const loginResponse = require('../configs/login.response');
-const sendEmail = require('../configs/send.mail');
+const { sendMail } = require('../lib/mailer');
 
 // TODO: Controller for registration new user
 exports.register = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     const {
       userName, fullName, email, phone, password, dob, address, gender, role
     } = req.body;
@@ -142,6 +143,8 @@ exports.register = async (req, res) => {
 // TODO: Controller for login existing user
 exports.loginUser = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     const { email, password } = req.body;
     const { loginType } = req.query;
 
@@ -202,8 +205,8 @@ exports.loginUser = async (req, res) => {
       { new: true }
     );
 
-    // response user with JWT access token token
-    loginResponse(res, logUser);
+    // response user with JWT access token (carries hotelSlug for tenantResolver)
+    loginResponse(res, logUser, null, req.hotel?.slug);
   } catch (error) {
     res.status(500).json(errorResponse(
       1,
@@ -216,6 +219,8 @@ exports.loginUser = async (req, res) => {
 // TODO: Controller for logout user
 exports.logoutUser = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     const { user } = req;
 
     if (!user) {
@@ -254,6 +259,8 @@ exports.logoutUser = async (req, res) => {
 // TODO: Controller for user forgot password
 exports.forgotPassword = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
@@ -272,12 +279,30 @@ exports.forgotPassword = async (req, res) => {
 
     // mailing data
     const url = `${process.env.APP_SERVICE_URL}/auth/forgot-password/${resetToken}`;
-    const subjects = 'Password Recovery Email';
+    const subject = 'Password Recovery Email';
     const message = 'Click below link to reset your password. If you have not requested this email simply ignore this email.';
     const title = 'Recovery Your Password';
 
-    // sending mail
-    sendEmail(res, user, url, subjects, message, title);
+    // sending mail via new mailer abstraction
+    try {
+      await sendMail({
+        to: user.email,
+        subject,
+        html: `<div><h4>${title}</h4><a href="${url}" target="_blank"> >>> Click Here</a></div>`,
+        text: `${message}\n\n${url}`
+      });
+      res.status(200).json(successResponse(
+        0,
+        'SUCCESS',
+        `Email sent to ${user.email} successful`
+      ));
+    } catch (mailErr) {
+      // rollback token on mail failure
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+      await user.save({ validateBeforeSave: false });
+      throw mailErr;
+    }
   } catch (error) {
     res.status(500).json(errorResponse(
       2,
@@ -290,6 +315,8 @@ exports.forgotPassword = async (req, res) => {
 // TODO: Controller for user reset password
 exports.resetPassword = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     if (req.params.token && req.body.password && req.body.confirmPassword) {
       // creating token crypto hash
       const resetPasswordToken = crypto
@@ -348,46 +375,44 @@ exports.resetPassword = async (req, res) => {
 // TODO: Controller for user change password
 exports.changePassword = async (req, res) => {
   try {
-    if (req.body.oldPassword && req.body.newPassword) {
-      const { user } = req;
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
 
-      if (!user) {
-        return res.status(404).json(errorResponse(
-          4,
-          'UNKNOWN ACCESS',
-          'User does not exist'
-        ));
-      }
-
-      const { email } = user;
-      const user2 = await User.findOne({ email }).select('+password');
-
-      // check old password matched
-      const isPasswordMatch = await user2.comparePassword(req.body.oldPassword.toString());
-      if (!isPasswordMatch) {
-        return res.status(400).json(errorResponse(
-          1,
-          'FAILED',
-          'User credentials are incorrect'
-        ));
-      }
-
-      // change user password in database
-      user.password = req.body.newPassword;
-      await user.save();
-
-      res.status(200).json(successResponse(
-        0,
-        'SUCCESS',
-        'User password reset successful'
-      ));
-    } else {
-      return res.status(400).json(errorResponse(
-        1,
-        'FAILED',
-        'Please enter all required fields'
-      ));
+    if (!req.body.newPassword) {
+      return res.status(400).json(errorResponse(1, 'FAILED', 'newPassword is required'));
     }
+    if (req.body.newPassword.length < 8) {
+      return res.status(400).json(errorResponse(1, 'FAILED', 'Password must be at least 8 characters'));
+    }
+    const { user } = req;
+    if (!user) {
+      return res.status(404).json(errorResponse(4, 'UNKNOWN ACCESS', 'User does not exist'));
+    }
+    const dbUser = await User.findById(user._id).select('+password');
+    if (!dbUser) {
+      return res.status(404).json(errorResponse(4, 'UNKNOWN ACCESS', 'User does not exist'));
+    }
+
+    // If the user is in forced-change mode, skip the oldPassword check.
+    // Otherwise require oldPassword to match.
+    if (!dbUser.mustChangePassword) {
+      if (!req.body.oldPassword) {
+        return res.status(400).json(errorResponse(1, 'FAILED', 'oldPassword is required'));
+      }
+      const isPasswordMatch = await dbUser.comparePassword(req.body.oldPassword.toString());
+      if (!isPasswordMatch) {
+        return res.status(400).json(errorResponse(1, 'FAILED', 'Current password is incorrect'));
+      }
+    }
+
+    dbUser.password = req.body.newPassword; // pre-save hashes
+    dbUser.mustChangePassword = false;
+    await dbUser.save();
+
+    return res.status(200).json(successResponse(
+      0,
+      'SUCCESS',
+      'Password updated successfully'
+    ));
   } catch (error) {
     res.status(500).json(errorResponse(
       2,
@@ -400,6 +425,8 @@ exports.changePassword = async (req, res) => {
 // TODO: Controller for user email verification link send
 exports.sendEmailVerificationLink = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     const { user } = req;
 
     if (!user) {
@@ -427,12 +454,30 @@ exports.sendEmailVerificationLink = async (req, res) => {
 
     // mailing data
     const url = `${process.env.APP_SERVICE_URL}/auth/verify-email/${verificationToken}`;
-    const subjects = 'User Email Verification';
+    const subject = 'User Email Verification';
     const message = 'Click below link to verify your email. If you have not requested this email simply ignore this email.';
     const title = 'Verify Your Email';
 
-    // sending mail
-    sendEmail(res, user, url, subjects, message, title);
+    // sending mail via new mailer abstraction
+    try {
+      await sendMail({
+        to: user.email,
+        subject,
+        html: `<div><h4>${title}</h4><a href="${url}" target="_blank"> >>> Click Here</a></div>`,
+        text: `${message}\n\n${url}`
+      });
+      res.status(200).json(successResponse(
+        0,
+        'SUCCESS',
+        `Email sent to ${user.email} successful`
+      ));
+    } catch (mailErr) {
+      // rollback token on mail failure
+      user.emailVerificationToken = undefined;
+      user.emailVerificationExpire = undefined;
+      await user.save({ validateBeforeSave: false });
+      throw mailErr;
+    }
   } catch (error) {
     res.status(500).json(errorResponse(
       2,
@@ -445,6 +490,8 @@ exports.sendEmailVerificationLink = async (req, res) => {
 // TODO: Controller for user email verification
 exports.emailVerification = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     if (req.params.token) {
       // creating token crypto hash
       const emailVerificationToken = crypto
@@ -495,6 +542,8 @@ exports.emailVerification = async (req, res) => {
 // TODO: Controller for user refresh-token
 exports.refreshToken = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     const { user } = req;
 
     if (!user) {
@@ -505,8 +554,9 @@ exports.refreshToken = async (req, res) => {
       ));
     }
 
-    const accessToken = user.getJWTToken();
-    const refreshToken = user.getJWTRefreshToken();
+    const slug = req.hotel?.slug;
+    const accessToken = user.getJWTToken(slug ? { hotelSlug: slug } : {});
+    const refreshToken = user.getJWTRefreshToken(slug ? { hotelSlug: slug } : {});
 
     // options for cookie
     const options = {

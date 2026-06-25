@@ -7,14 +7,14 @@
  *
  */
 
-const Booking = require('../models/booking.model');
-const Review = require('../models/review.modal');
 const { errorResponse, successResponse } = require('../configs/app.response');
 const MyQueryHelper = require('../configs/api.feature');
 
 // TODO: controller for room review add
 exports.roomReviewAdd = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     const { rating, message } = req.body;
 
     // check `rating` filed exits
@@ -111,6 +111,8 @@ exports.roomReviewAdd = async (req, res) => {
 // TODO: controller for get an room reviews list
 exports.getRoomReviewsList = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     // finding by a review by id
     let myReviews = null;
 
@@ -192,6 +194,8 @@ exports.getRoomReviewsList = async (req, res) => {
 // TODO: controller for edit self room review
 exports.editSelfRoomReview = async (req, res) => {
   try {
+    const { Rooms: Room, Bookings: Booking, Users: User, BookingClaims: BookingClaim, Reviews: Review } = req.M;
+
     const { rating, message } = req.body;
 
     // check `rating` filed exits

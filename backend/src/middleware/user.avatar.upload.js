@@ -40,21 +40,32 @@ const storage = multer.diskStorage({
   }
 });
 
+const ALLOWED_MIME = new Set([
+  'image/png',
+  'image/jpg',
+  'image/jpeg',
+  'image/webp',
+  'image/avif',
+  'image/heic',
+  'image/heif'
+]);
+const MAX_BYTES = 5 * 1024 * 1024; // 5MB
+
 // prepare the final multer upload object
 const avatarUpload = multer({
   storage,
   limits: {
-    fileSize: 1000000 // 1MB
+    fileSize: MAX_BYTES
   },
   fileFilter: (_req, file, cb) => {
     if (file.fieldname === 'avatar') {
-      if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
+      if (ALLOWED_MIME.has(file.mimetype)) {
         cb(null, true);
       } else {
-        cb(new Error('Only .jpg, .png or .jpeg format allowed!'));
+        cb(new Error('Allowed avatar formats: JPG, PNG, WEBP, AVIF, HEIC. Got: ' + file.mimetype));
       }
     } else {
-      cb(new Error('There was an unknown error!'));
+      cb(new Error('Unexpected upload field: ' + file.fieldname));
     }
   }
 });

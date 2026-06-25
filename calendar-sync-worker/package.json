@@ -1,0 +1,33 @@
+{
+  "name": "calendar-sync-worker",
+  "version": "0.0.1",
+  "description": "Calendar synchronization worker for the Hotel-Room-Booking-System platform. Polls OTA iCal feeds, serves outbound iCal, writes availability to a dedicated Mongo DB.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "lint": "eslint .",
+    "test": "jest --forceExit"
+  },
+  "dependencies": {
+    "bullmq": "^5.12.0",
+    "cors": "^2.8.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "ical-generator": "^7.2.0",
+    "ioredis": "^5.4.1",
+    "mongoose": "^8.6.0",
+    "node-fetch": "^2.7.0",
+    "node-ical": "^0.18.0",
+    "pino": "^9.4.0",
+    "pino-pretty": "^11.2.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "ISC"
+}

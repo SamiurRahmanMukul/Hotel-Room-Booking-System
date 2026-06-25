@@ -1,36 +1,21 @@
-/**
- * @name Hotel Room Booking System
- * @author Md. Samiur Rahman (Mukul)
- * @description Hotel Room Booking and Management System Software ~ Developed By Md. Samiur Rahman (Mukul)
- * @copyright ©2023 ― Md. Samiur Rahman (Mukul). All rights reserved.
- * @version v0.0.1
- *
- */
-
-import { LoadingOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+/* eslint-disable jsx-quotes, operator-linebreak, object-curly-newline, react/jsx-one-expression-per-line */
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import {
-  Alert, Button, Divider, Form, Input
+  Alert, Button, Card, Form, Input, Typography
 } from 'antd';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Logo from '../assets/images/logo.svg';
 import useTimeout from '../hooks/useTimeout';
 import ApiService from '../utils/apiService';
 import { setSessionUserAndToken } from '../utils/authentication';
 
 function Login() {
-  window.document.title = 'Beach Resort — Login';
+  window.document.title = 'Sign in';
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState('');
 
-  // timeout callback
-  const [timeout] = useTimeout(() => {
-    setErrMsg('');
-  }, 2000);
-
+  const [timeout] = useTimeout(() => setErrMsg(''), 4000);
   timeout();
 
-  // function to handle user login
   const onFinish = async (values) => {
     try {
       setLoading(true);
@@ -38,84 +23,86 @@ function Login() {
 
       if (response?.result_code === 0) {
         setSessionUserAndToken(response?.result?.data, response?.access_token, response?.refresh_token);
-        window.location.href = '/main/dashboard';
-        setLoading(false);
+        if (response?.result?.data?.mustChangePassword) {
+          window.location.href = '/auth/change-password';
+        } else {
+          window.location.href = '/main/dashboard';
+        }
       } else {
-        setErrMsg('Sorry! Something went wrong. App server error');
-        setLoading(false);
+        setErrMsg('Could not sign in. Please try again.');
       }
-      setLoading(false);
     } catch (error) {
-      setErrMsg(error?.response?.data?.result?.error || 'Sorry! Something went wrong. App server error');
+      setErrMsg(error?.response?.data?.result?.error?.message || error?.response?.data?.result?.error || 'Server error — please try again');
+    } finally {
       setLoading(false);
     }
   };
 
   return (
-    <section className='flex flex-col h-screen items-center justify-center'>
-      <div className='w-[90%] md:w-[450px]'>
-        <Link to='/'>
-          <img
-            className='w-[280px] h-[65px] mx-auto'
-            alt='beach-resort-logo'
-            src={Logo}
-          />
-        </Link>
+    <div
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#F3F4F4',
+        padding: 24
+      }}
+    >
+      <Card
+        style={{ width: 420, border: '1px solid rgba(44,44,44,0.08)', boxShadow: 'none' }}
+        bodyStyle={{ padding: 32 }}
+      >
+        <div style={{ textAlign: 'center', marginBottom: 28 }}>
+          <Typography.Title level={3} style={{ marginBottom: 4, fontWeight: 600, letterSpacing: '-0.01em' }}>
+            Sign in
+          </Typography.Title>
+          <Typography.Text type='secondary'>
+            Welcome back — log in to your hotel admin
+          </Typography.Text>
+        </div>
 
-        <Divider className='!mb-10'>LOGIN AUTHORIZED USER ONLY</Divider>
-        {errMsg && <Alert message={errMsg} type='error' className='!text-center' />}
+        {errMsg && <Alert message={errMsg} type='error' showIcon style={{ marginBottom: 16 }} />}
 
-        <Form
-          name='beach-resort-login'
-          className='login-form mt-5'
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          size='large'
-        >
+        <Form layout='vertical' onFinish={onFinish} requiredMark={false} size='large'>
           <Form.Item
+            label='Email'
             name='email'
-            rules={[{
-              type: 'email',
-              required: true,
-              message: 'Please input your Email!'
-            }]}
+            rules={[{ type: 'email', required: true, message: 'Enter your email' }]}
           >
             <Input
-              prefix={<MailOutlined className='site-form-item-icon mr-2' />}
-              placeholder='Enter here your Email'
+              prefix={<MailOutlined style={{ color: '#9CA3AF' }} />}
+              placeholder='you@hotel.com'
+              autoComplete='email'
             />
           </Form.Item>
 
           <Form.Item
+            label='Password'
             name='password'
-            rules={[{
-              required: true,
-              message: 'Please input your Password!'
-            }]}
+            rules={[{ required: true, message: 'Enter your password' }]}
           >
             <Input.Password
-              prefix={<LockOutlined className='site-form-item-icon mr-2' />}
-              placeholder='Enter here your Password'
-              type='password'
+              prefix={<LockOutlined style={{ color: '#9CA3AF' }} />}
+              placeholder='••••••••'
+              autoComplete='current-password'
             />
           </Form.Item>
 
-          {/* FORM SUBMIT BUTTON */}
-          <Form.Item>
+          <Form.Item style={{ marginBottom: 0, marginTop: 8 }}>
             <Button
-              className='login-form-button mt-5'
-              disabled={loading}
               loading={loading}
               htmlType='submit'
               type='primary'
               block
+              size='large'
             >
-              {loading ? <LoadingOutlined /> : 'Login'}
+              Sign in
             </Button>
           </Form.Item>
         </Form>
-      </div>
-    </section>
+      </Card>
+    </div>
   );
 }
 

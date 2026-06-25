@@ -9,8 +9,14 @@
 
 import React from 'react';
 import { v4 as uniqueId } from 'uuid';
-import services from '../../data/service';
 import Title from './Title';
+
+const services = [
+  { icon: '🍸', title: 'Cocktails', info: 'Enjoy handcrafted cocktails at our beachfront bar, made with fresh local ingredients and premium spirits.' },
+  { icon: '🥾', title: 'Hiking', info: 'Explore scenic coastal trails with guided hiking tours departing daily from the resort.' },
+  { icon: '🚐', title: 'Shuttle', info: 'Complimentary shuttle service to nearby attractions, shopping, and the airport.' },
+  { icon: '🍺', title: 'Beer', info: 'Sample local craft beers and imported favorites at our relaxed pub-style lounge.' }
+];
 
 function Services() {
   return (

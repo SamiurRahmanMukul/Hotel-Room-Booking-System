@@ -14,20 +14,21 @@
  * @returns {boolean} - Returns true if the array contains valid future dates without duplicates, otherwise false.
  */
 exports.validateBookingDates = (array) => {
-  if (array.length === 0) return false; // Array should not be empty
+  if (!Array.isArray(array) || array.length === 0) return false; // must be a non-empty array
 
-  const currentDate = new Date();
-  const uniqueDates = new Set(); // Using a Set to track unique dates
+  // Compare on the DATE (not the timestamp) in UTC, so a same-day booking is allowed —
+  // hotels accept same-day check-in. The old `<= now` check rejected today because
+  // midnight-of-today is before the current time.
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const uniqueDates = new Set();
 
-  // Check if each element is a valid date and in the future, and there are no duplicates
   for (const date of array) {
     const parsedDate = new Date(date);
-    // eslint-disable-next-line no-restricted-globals
-    if (isNaN(parsedDate) || parsedDate <= currentDate) return false;
-
-    // Check for duplicates
-    if (uniqueDates.has(parsedDate.toISOString())) return false;
-    uniqueDates.add(parsedDate.toISOString());
+    if (Number.isNaN(parsedDate.getTime())) return false; // invalid date
+    const dayStr = parsedDate.toISOString().slice(0, 10);
+    if (dayStr < todayStr) return false; // no past dates (today is allowed)
+    if (uniqueDates.has(dayStr)) return false; // no duplicates
+    uniqueDates.add(dayStr);
   }
 
   return true;
