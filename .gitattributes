@@ -1,0 +1,6 @@
+# Generated dependency lockfiles — kept in the repo for reproducible installs,
+# but collapsed in diffs and excluded from automated code review (Copilot, etc.).
+package-lock.json linguist-generated=true
+**/package-lock.json linguist-generated=true
+yarn.lock linguist-generated=true
+**/yarn.lock linguist-generated=true
