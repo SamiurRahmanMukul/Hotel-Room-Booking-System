@@ -20,7 +20,7 @@ const sendEmail = require('../configs/send.mail');
 exports.register = async (req, res) => {
   try {
     const {
-      userName, fullName, email, phone, password, dob, address, gender, role
+      userName, fullName, email, phone, password, dob, address, gender
     } = req.body;
 
     if (userName && fullName && email && password && dob && address) {
@@ -84,8 +84,7 @@ exports.register = async (req, res) => {
         avatar: req.file ? `/uploads/users/${req.file.filename}` : '/avatar.png',
         gender,
         dob,
-        address,
-        role
+        address
       });
 
       // success response with register new user
